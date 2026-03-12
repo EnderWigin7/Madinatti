@@ -19,17 +19,50 @@ class LanguageActivity : AppCompatActivity() {
         val btnEnglish = findViewById<TextView>(R.id.btnEnglish)
         val btnContinuer = findViewById<TextView>(R.id.btnContinuer)
 
+
+        fun animateButtonBackground(view: TextView, selected: Boolean) {
+            val fromColor = if (selected)
+                android.graphics.Color.parseColor("#332ECC71")
+            else
+                android.graphics.Color.parseColor("#442ECC71")
+
+            val toColor = if (selected)
+                android.graphics.Color.parseColor("#442ECC71")
+            else
+                android.graphics.Color.parseColor("#332ECC71")
+
+            val colorAnim = android.animation.ValueAnimator.ofObject(
+                android.animation.ArgbEvaluator(), fromColor, toColor
+            ).apply {
+                duration = 250
+                interpolator = android.view.animation.DecelerateInterpolator()
+                addUpdateListener { animator ->
+                    val color = animator.animatedValue as Int
+                    val drawable = android.graphics.drawable.GradientDrawable().apply {
+                        shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+                        cornerRadius = 21f
+                        setColor(color)
+                        if (selected) {
+                            setStroke(4, android.graphics.Color.parseColor("#B0D8C0"))
+                        } else {
+                            setStroke(1, android.graphics.Color.parseColor("#22FFFFFF"))
+                        }
+                    }
+                    view.background = drawable
+                }
+            }
+            colorAnim.start()
+        }
+
         fun updateSelection(lang: String) {
             selectedLanguage = lang
-            btnArabic.setBackgroundResource(
-                if (lang == "ar") R.drawable.bg_glass_button_selected
-                else R.drawable.bg_glass_button)
-            btnFrench.setBackgroundResource(
-                if (lang == "fr") R.drawable.bg_glass_button_selected
-                else R.drawable.bg_glass_button)
-            btnEnglish.setBackgroundResource(
-                if (lang == "en") R.drawable.bg_glass_button_selected
-                else R.drawable.bg_glass_button)
+            listOf(
+                Pair(btnArabic, "ar"),
+                Pair(btnFrench, "fr"),
+                Pair(btnEnglish, "en")
+            ).forEach { (btn, code) ->
+                animateButtonBackground(btn, code == lang)
+            }
         }
 
         updateSelection("fr")
@@ -42,7 +75,7 @@ class LanguageActivity : AppCompatActivity() {
             val prefs = getSharedPreferences("madinatti_prefs", MODE_PRIVATE)
             prefs.edit().putString("language", selectedLanguage).apply()
             animateView(it as TextView) {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
