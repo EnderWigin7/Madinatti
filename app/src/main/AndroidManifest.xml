@@ -25,8 +25,7 @@
             android:name=".LanguageActivity"
             android:exported="false"/>
 
-        <activity android:name=".LoginActivity" android:exported="false"/>
-        <activity android:name=".RegisterActivity" android:exported="false"/>
+        <activity android:name=".AuthActivity" android:exported="false"/>
 
     </application>
 </manifest>

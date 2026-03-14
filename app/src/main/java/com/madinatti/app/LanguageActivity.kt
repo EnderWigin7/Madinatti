@@ -1,65 +1,54 @@
 package com.madinatti.app
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
+import androidx.core.content.edit
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.view.animation.OvershootInterpolator
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.madinatti.app.databinding.ActivityLanguageBinding
 
 class LanguageActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityLanguageBinding
     private var selectedLanguage = "fr"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_language)
+        binding = ActivityLanguageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val btnArabic = findViewById<TextView>(R.id.btnArabic)
-        val btnFrench = findViewById<TextView>(R.id.btnFrench)
-        val btnEnglish = findViewById<TextView>(R.id.btnEnglish)
-        val btnContinuer = findViewById<TextView>(R.id.btnContinuer)
 
+        binding.btnArabic.background = makeBackground(0x332ECC71, borderColor = 0x22FFFFFF, borderWidthPx = 3)
+        binding.btnFrench.background = makeBackground(0x332ECC71, borderColor = 0x22FFFFFF, borderWidthPx = 3)
+        binding.btnEnglish.background = makeBackground(0x332ECC71, borderColor = 0x22FFFFFF, borderWidthPx = 3)
+        binding.btnContinuer.background = makeBackground(0xFF2ECC71.toInt())
 
         fun animateButtonBackground(view: TextView, selected: Boolean) {
-            val fromColor = if (selected)
-                android.graphics.Color.parseColor("#332ECC71")
-            else
-                android.graphics.Color.parseColor("#442ECC71")
-
-            val toColor = if (selected)
-                android.graphics.Color.parseColor("#442ECC71")
-            else
-                android.graphics.Color.parseColor("#332ECC71")
-
-            val colorAnim = android.animation.ValueAnimator.ofObject(
-                android.animation.ArgbEvaluator(), fromColor, toColor
-            ).apply {
-                duration = 250
+            val fromColor = if (selected) 0x332ECC71 else 0x442ECC71
+            val toColor = if (selected) 0x442ECC71 else 0x332ECC71
+            ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor).apply {
+                duration = 230
                 interpolator = android.view.animation.DecelerateInterpolator()
-                addUpdateListener { animator ->
-                    val color = animator.animatedValue as Int
-                    val drawable = android.graphics.drawable.GradientDrawable().apply {
-                        shape = android.graphics.drawable.GradientDrawable.RECTANGLE
-                        cornerRadius = 21f
-                        setColor(color)
-                        if (selected) {
-                            setStroke(4, android.graphics.Color.parseColor("#B0D8C0"))
-                        } else {
-                            setStroke(1, android.graphics.Color.parseColor("#22FFFFFF"))
-                        }
-                    }
-                    view.background = drawable
+                addUpdateListener { anim ->
+                    val color = anim.animatedValue as Int
+                    view.background = makeBackground(
+                        color = color,
+                        borderColor = if (selected) 0xFFB0D8C0.toInt() else 0x22FFFFFF,
+                        borderWidthPx = if (selected) 4 else 3
+                    )
                 }
-            }
-            colorAnim.start()
+            }.start()
         }
 
         fun updateSelection(lang: String) {
             selectedLanguage = lang
             listOf(
-                Pair(btnArabic, "ar"),
-                Pair(btnFrench, "fr"),
-                Pair(btnEnglish, "en")
+                Pair(binding.btnArabic, "ar"),
+                Pair(binding.btnFrench, "fr"),
+                Pair(binding.btnEnglish, "en")
             ).forEach { (btn, code) ->
                 animateButtonBackground(btn, code == lang)
             }
@@ -67,37 +56,51 @@ class LanguageActivity : AppCompatActivity() {
 
         updateSelection("fr")
 
-        btnArabic.setOnClickListener { animateView(it as TextView) { updateSelection("ar") } }
-        btnFrench.setOnClickListener { animateView(it as TextView) { updateSelection("fr") } }
-        btnEnglish.setOnClickListener { animateView(it as TextView) { updateSelection("en") } }
+        binding.btnArabic.setOnClickListener {
+            updateSelection("ar")
+            animateView(binding.btnArabic)
+        }
+        binding.btnFrench.setOnClickListener {
+            updateSelection("fr")
+            animateView(binding.btnFrench)
+        }
+        binding.btnEnglish.setOnClickListener {
+            updateSelection("en")
+            animateView(binding.btnEnglish)
+        }
 
-        btnContinuer.setOnClickListener {
+        binding.btnContinuer.setOnClickListener {
             val prefs = getSharedPreferences("madinatti_prefs", MODE_PRIVATE)
-            prefs.edit().putString("language", selectedLanguage).apply()
-            animateView(it as TextView) {
-                startActivity(Intent(this, LoginActivity::class.java))
+            prefs.edit {putString("language", selectedLanguage) }
+            animateView(binding.btnContinuer)
+            binding.btnContinuer.postDelayed({
+                startActivity(Intent(this, AuthActivity::class.java))
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
-            }
+            }, 300)
         }
     }
 
-    private fun animateView(view: TextView, onEnd: (() -> Unit)? = null) {
-        view.animate()
-            .scaleX(0.92f).scaleY(0.92f)
-            .setDuration(100)
+    private fun makeBackground(
+        color: Int, cornerDp: Float = 7f,
+        borderColor: Int = 0, borderWidthPx: Int = 0
+    ): GradientDrawable {
+        return GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = cornerDp * resources.displayMetrics.density
+            setColor(color)
+            if (borderWidthPx > 0) setStroke(borderWidthPx, borderColor)
+        }
+    }
+
+    private fun animateView(view: TextView) {
+        view.animate().scaleX(0.92f).scaleY(0.92f).setDuration(80)
             .setInterpolator(android.view.animation.DecelerateInterpolator())
             .withEndAction {
-                view.animate()
-                    .scaleX(1.04f).scaleY(1.04f)
-                    .setDuration(120)
-                    .setInterpolator(OvershootInterpolator(2f))
+                view.animate().scaleX(1.04f).scaleY(1.04f).setDuration(100)
+                    .setInterpolator(android.view.animation.OvershootInterpolator(2f))
                     .withEndAction {
-                        view.animate()
-                            .scaleX(1f).scaleY(1f)
-                            .setDuration(80)
-                            .withEndAction { onEnd?.invoke() }
-                            .start()
+                        view.animate().scaleX(1f).scaleY(1f).setDuration(60).start()
                     }.start()
             }.start()
     }

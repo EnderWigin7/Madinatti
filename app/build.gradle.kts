@@ -9,6 +9,10 @@ android {
         version = release(36)
     }
 
+    buildFeatures{
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.madinatti.app"
         minSdk = 30

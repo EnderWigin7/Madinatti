@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:contentDescription="@string/app_name"
         android:id="@+id/imgBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +23,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:id="@+id/imgLogo"
             android:layout_width="181dp"
             android:layout_height="123dp"
