@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">Madinatti</string>
+    <string name="connexion">Connexion</string>
+    <string name="sinscrire">S\'inscrire</string>
+    <string name="ou">ou</string>
+    <string name="connexion_social">Connexion via réseau social</string>
+    <string name="sinscrire_social">S\'inscrire via réseau social</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="mot_de_passe_oublie">Mot de passe oublié ?</string>
+    <string name="email">Email</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="confirmer_mot_de_passe">Confirmer mot de passe</string>
+    <string name="nom_complet">Nom complet</string>
+    <string name="telephone">Téléphone</string>
+    <string name="choisir_ville">Choisir votre ville</string>
+    <string name="continuer">Continuer</string>
+    <string name="commencer">Commencer</string>
+    <string name="choisir_langue">اختر اللغة\nChoisir la langue\nChoose language</string>
+    <string name="arabic">العربية</string>
+    <string name="francais">Français</string>
+    <string name="english">English</string>
+    <string name="tagline">Tout en un.</string>
+    <string name="continuer_apple">Continuer avec Apple</string>
+    <string name="continuer_facebook">Continuer avec Facebook</string>
+    <string name="continuer_google">Continuer avec Google</string>
+    <string name="continuer_phone">Continuer avec Téléphone</string>
 </resources>

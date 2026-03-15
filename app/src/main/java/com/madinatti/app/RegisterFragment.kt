@@ -2,6 +2,8 @@ package com.madinatti.app
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +59,35 @@ class RegisterFragment : Fragment() {
                 requireActivity().finish()
             }
         }
+
+        var passwordVisible = false
+        var confirmPasswordVisible = false
+
+        binding.ivTogglePassword.setOnClickListener {
+            passwordVisible = !passwordVisible
+            binding.etPassword.transformationMethod = if (passwordVisible)
+                HideReturnsTransformationMethod.getInstance()
+            else PasswordTransformationMethod.getInstance()
+            binding.etPassword.setSelection(binding.etPassword.text.length)
+            binding.ivTogglePassword.setImageResource(
+                if (passwordVisible) R.drawable.ic_eye_open
+                else R.drawable.ic_eye_closed
+            )
+        }
+
+        binding.ivToggleConfirmPassword.setOnClickListener {
+            confirmPasswordVisible = !confirmPasswordVisible
+            binding.etConfirmPassword.transformationMethod = if (confirmPasswordVisible)
+                HideReturnsTransformationMethod.getInstance()
+            else PasswordTransformationMethod.getInstance()
+            binding.etConfirmPassword.setSelection(binding.etConfirmPassword.text.length)
+            binding.ivToggleConfirmPassword.setImageResource(
+                if (confirmPasswordVisible) R.drawable.ic_eye_open
+                else R.drawable.ic_eye_closed
+            )
+        }
+
+
     }
 
     override fun onDestroyView() {

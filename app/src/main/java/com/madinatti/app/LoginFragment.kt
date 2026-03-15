@@ -45,9 +45,34 @@ class LoginFragment : Fragment() {
             )
         }
 
-        binding.tvForgotPassword.setOnClickListener { }
+        binding.tvForgotPassword.setOnClickListener {
+
+            binding.tvForgotPassword.animate()
+                .alpha(0.3f).setDuration(80)
+                .withEndAction {
+                    binding.tvForgotPassword.setTextColor(
+                        android.graphics.Color.parseColor("#2ECC71"))
+                    binding.tvForgotPassword.animate()
+                        .alpha(1f).setDuration(150)
+                        .withEndAction {
+
+                            binding.tvForgotPassword.postDelayed({
+                                binding.tvForgotPassword.animate()
+                                    .alpha(0.7f).setDuration(100)
+                                    .withEndAction {
+                                        binding.tvForgotPassword.setTextColor(
+                                            android.graphics.Color.WHITE)
+                                        binding.tvForgotPassword.animate()
+                                            .alpha(1f).setDuration(100).start()
+                                    }.start()
+                            }, 600)
+                        }.start()
+                }.start()
+            // TODO: navigate to forgot password screen
+        }
 
         binding.btnLogin.setOnClickListener {
+            (requireActivity() as AuthActivity).triggerParticleRipple(binding.btnLogin)
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString()
             if (email.isEmpty()) { binding.etEmail.error = "Email requis"; return@setOnClickListener }

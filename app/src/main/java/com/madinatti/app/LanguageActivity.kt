@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.view.MotionEvent
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.madinatti.app.databinding.ActivityLanguageBinding
@@ -19,7 +20,6 @@ class LanguageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         binding.btnArabic.background = makeBackground(0x332ECC71, borderColor = 0x22FFFFFF, borderWidthPx = 3)
         binding.btnFrench.background = makeBackground(0x332ECC71, borderColor = 0x22FFFFFF, borderWidthPx = 3)
@@ -59,17 +59,22 @@ class LanguageActivity : AppCompatActivity() {
         binding.btnArabic.setOnClickListener {
             updateSelection("ar")
             animateView(binding.btnArabic)
+            binding.particleView.triggerRippleFromView(binding.btnArabic)
         }
         binding.btnFrench.setOnClickListener {
             updateSelection("fr")
             animateView(binding.btnFrench)
+            binding.particleView.triggerRippleFromView(binding.btnFrench)
         }
         binding.btnEnglish.setOnClickListener {
             updateSelection("en")
             animateView(binding.btnEnglish)
+            binding.particleView.triggerRippleFromView(binding.btnEnglish)
         }
 
         binding.btnContinuer.setOnClickListener {
+            binding.particleView.triggerRippleFromView(binding.btnContinuer)
+            updateSelection(selectedLanguage)
             val prefs = getSharedPreferences("madinatti_prefs", MODE_PRIVATE)
             prefs.edit {putString("language", selectedLanguage) }
             animateView(binding.btnContinuer)
@@ -94,14 +99,26 @@ class LanguageActivity : AppCompatActivity() {
     }
 
     private fun animateView(view: TextView) {
-        view.animate().scaleX(0.92f).scaleY(0.92f).setDuration(80)
+        view.animate().scaleX(0.96f).scaleY(0.96f).setDuration(80)
             .setInterpolator(android.view.animation.DecelerateInterpolator())
             .withEndAction {
-                view.animate().scaleX(1.04f).scaleY(1.04f).setDuration(100)
-                    .setInterpolator(android.view.animation.OvershootInterpolator(2f))
+                view.animate().scaleX(1.02f).scaleY(1.02f).setDuration(100)
+                    .setInterpolator(android.view.animation.OvershootInterpolator(1.2f))
                     .withEndAction {
                         view.animate().scaleX(1f).scaleY(1f).setDuration(60).start()
                     }.start()
             }.start()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        android.util.Log.d("TOUCH", "x=${ev.rawX} y=${ev.rawY}")
+        val location = IntArray(2)
+        binding.particleView.getLocationOnScreen(location)
+        binding.particleView.onExternalTouch(
+            ev.rawX - location[0],
+            ev.rawY - location[1],
+            ev.action != MotionEvent.ACTION_UP && ev.action != MotionEvent.ACTION_CANCEL
+        )
+        return super.dispatchTouchEvent(ev)
     }
 }

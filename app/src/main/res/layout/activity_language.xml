@@ -6,6 +6,7 @@
     android:background="#0B1913">
 
     <com.madinatti.app.ParticleView
+        android:id="@+id/particleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -26,10 +27,12 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
+            android:lines="3"
+            android:gravity="center"
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="اختر اللغة&#10;Choisir la langue&#10;Choose language"
+            android:text="@string/choisir_langue"
             android:textColor="#FFFFFF"
             android:textSize="17sp"
             android:fontFamily="@font/poppins_regular"
@@ -59,7 +62,7 @@
                 android:id="@+id/btnArabic"
                 android:layout_width="150dp"
                 android:layout_height="42dp"
-                android:text="العربية"
+                android:text="@string/arabic"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:fontFamily="@font/poppins_bold"
@@ -74,7 +77,7 @@
                 android:id="@+id/btnFrench"
                 android:layout_width="150dp"
                 android:layout_height="42dp"
-                android:text="Français"
+                android:text="@string/francais"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:fontFamily="@font/poppins_bold"
@@ -89,7 +92,7 @@
                 android:id="@+id/btnEnglish"
                 android:layout_width="150dp"
                 android:layout_height="42dp"
-                android:text="English"
+                android:text="@string/english"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:fontFamily="@font/poppins_bold"
@@ -105,7 +108,7 @@
             android:id="@+id/btnContinuer"
             android:layout_width="141dp"
             android:layout_height="42dp"
-            android:text="Continuer"
+            android:text="@string/continuer"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:fontFamily="@font/poppins_bold"

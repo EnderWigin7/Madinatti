@@ -1,9 +1,8 @@
 package com.madinatti.app
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.madinatti.app.databinding.ActivityAuthBinding
@@ -18,44 +17,63 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        showFragment(LoginFragment(), false)
-        updateToggle(true)
+        showFragment(LoginFragment(), slideRight = false)
+        updateToggle(loginActive = true)
 
         binding.tvSegmentLogin.setOnClickListener {
             if (!isLoginActive) {
                 isLoginActive = true
-                updateToggle(true)
+                updateToggle(loginActive = true)
                 showFragment(LoginFragment(), slideRight = false)
                 binding.tvSocialLabel.text = "Connexion via réseau social"
+                binding.particleView.triggerRippleFromView(binding.tvSegmentLogin)
             }
         }
 
         binding.tvSegmentRegister.setOnClickListener {
             if (isLoginActive) {
                 isLoginActive = false
-                updateToggle(false)
+                updateToggle(loginActive = false)
                 showFragment(RegisterFragment(), slideRight = true)
                 binding.tvSocialLabel.text = "S'inscrire via réseau social"
+                binding.particleView.triggerRippleFromView(binding.tvSegmentRegister)
             }
         }
+
+        binding.btnSocialLogin.setOnClickListener {
+            binding.particleView.triggerRippleFromView(binding.btnSocialLogin)
+
+            val location = IntArray(2)
+            binding.btnSocialLogin.getLocationOnScreen(location)
+            val screenHeight = resources.displayMetrics.heightPixels
+            val buttonBottom = location[1] + binding.btnSocialLogin.height
+            val offsetFromBottom = screenHeight - buttonBottom + 16
+
+            val dialog = SocialLoginDialog()
+            dialog.anchorY = offsetFromBottom
+            dialog.show(supportFragmentManager, SocialLoginDialog.TAG)
+        }
+    }
+
+    fun triggerParticleRipple(view: View) {
+        binding.particleView.triggerRippleFromView(view)
     }
 
     private fun updateToggle(loginActive: Boolean) {
         val indicator = binding.segmentIndicator
 
-        // Slide indicator
-        indicator.animate()
-            .translationX(if (loginActive) 0f else indicator.width.toFloat())
-            .setDuration(250)
-            .setInterpolator(android.view.animation.DecelerateInterpolator())
-            .start()
+        indicator.post {
+            indicator.animate()
+                .translationX(if (loginActive) 0f else indicator.width.toFloat())
+                .setDuration(250)
+                .setInterpolator(android.view.animation.DecelerateInterpolator())
+                .start()
+        }
 
-        // Swap background shape (rounded left vs right)
         indicator.setBackgroundResource(
             if (loginActive) R.drawable.bg_segment_left
             else R.drawable.bg_segment_right
         )
-
 
         binding.tvSegmentLogin.setTextColor(
             if (loginActive) android.graphics.Color.parseColor("#0D1F17")
@@ -70,10 +88,21 @@ class AuthActivity : AppCompatActivity() {
     private fun showFragment(fragment: Fragment, slideRight: Boolean) {
         val enter = if (slideRight) R.anim.slide_in_right else R.anim.slide_in_left
         val exit = if (slideRight) R.anim.slide_out_left else R.anim.slide_out_right
-
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(enter, exit)
             .replace(R.id.fragmentContainer, fragment)
             .commit()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        android.util.Log.d("TOUCH", "x=${ev.rawX} y=${ev.rawY}")
+        val location = IntArray(2)
+        binding.particleView.getLocationOnScreen(location)
+        binding.particleView.onExternalTouch(
+            ev.rawX - location[0],
+            ev.rawY - location[1],
+            ev.action != MotionEvent.ACTION_UP && ev.action != MotionEvent.ACTION_CANCEL
+        )
+        return super.dispatchTouchEvent(ev)
     }
 }

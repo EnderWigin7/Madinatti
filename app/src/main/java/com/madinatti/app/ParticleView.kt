@@ -23,14 +23,29 @@ class ParticleView @JvmOverloads constructor(
     private var time = 0f
     private var w = 0f
     private var h = 0f
+
+    // Touch — subtle repulsion, not attraction
     private var touchX = -1f
     private var touchY = -1f
+    private var touchActive = false
+
+    // Ripple bursts from button clicks
+    data class Ripple(
+        val x: Float,
+        val y: Float,
+        var radius: Float = 0f,
+        var age: Float = 0f,
+        val maxAge: Float = 60f
+    )
+    private val ripples = ArrayList<Ripple>()
 
     companion object {
         const val LINE_COUNT = 120
         const val MAX_POINTS = 120
-        const val LINE_ALPHA = 0.35f
+        const val LINE_ALPHA = 0.55f
         const val SPEED = 0.6f
+        const val TOUCH_RADIUS = 280f
+        const val TOUCH_STRENGTH = 4.5f
     }
 
     inner class FlowLine {
@@ -70,6 +85,7 @@ class ParticleView @JvmOverloads constructor(
                 else -> LINE_ALPHA
             }
 
+            // Base flow field vector
             val nx = (x - w / 2f) * 0.008f
             val ny = (y - h / 2f) * 0.008f
             val n = noise(nx, ny, t * 0.00012f)
@@ -78,17 +94,33 @@ class ParticleView @JvmOverloads constructor(
             val r = sqrt(cx * cx + cy * cy)
             val mask = (1f - r / (minOf(w, h) * 0.5f)).coerceAtLeast(0f)
             val angle = n * PI.toFloat() * 4f + atan2(cy, cx)
-            val vx = cos(angle) * mask
-            val vy = sin(angle) * mask
+            var vx = cos(angle) * mask
+            var vy = sin(angle) * mask
 
-            // Touch attraction
-            if (touchX > 0) {
-                val dx = touchX - x
-                val dy = touchY - y
+
+            if (touchActive && touchX > 0) {
+                val dx = x - touchX
+                val dy = y - touchY
                 val dist = sqrt(dx * dx + dy * dy)
-                if (dist < 250f && dist > 0f) {
-                    x += dx / dist * 2f
-                    y += dy / dist * 2f
+                if (dist < TOUCH_RADIUS && dist > 0f) {
+                    val force = (1f - dist / TOUCH_RADIUS) * TOUCH_STRENGTH
+                    vx += (dx / dist) * force
+                    vy += (dy / dist) * force
+                }
+            }
+
+
+            for (ripple in ripples) {
+                val dx = x - ripple.x
+                val dy = y - ripple.y
+                val dist = sqrt(dx * dx + dy * dy)
+                val rippleRadius = ripple.radius
+                val band = 60f
+                if (dist > rippleRadius - band && dist < rippleRadius + band && dist > 0f) {
+                    val strength = (1f - abs(dist - rippleRadius) / band) * 1.2f *
+                            (1f - ripple.age / ripple.maxAge)
+                    vx += (dx / dist) * strength
+                    vy += (dy / dist) * strength
                 }
             }
 
@@ -103,7 +135,7 @@ class ParticleView @JvmOverloads constructor(
             y += vy * SPEED
 
             val mag = sqrt(vx * vx + vy * vy)
-            if (x < 0 || x > w || y < 0 || y > h || mag < 0.01f) return false
+            if (x < -50 || x > w + 50 || y < -50 || y > h + 50 || mag < 0.005f) return false
             return true
         }
 
@@ -125,6 +157,22 @@ class ParticleView @JvmOverloads constructor(
         }
     }
 
+    // Call this from any button click — pass button's center coords
+    fun triggerRipple(x: Float, y: Float) {
+        ripples.add(Ripple(x, y))
+    }
+
+    // Helper: trigger ripple from a View's position
+    fun triggerRippleFromView(view: View) {
+        val location = IntArray(2)
+        view.getLocationOnScreen(location)
+        val viewLocation = IntArray(2)
+        this.getLocationOnScreen(viewLocation)
+        val x = location[0] - viewLocation[0] + view.width / 2f
+        val y = location[1] - viewLocation[1] + view.height / 2f
+        triggerRipple(x, y)
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         this.w = w.toFloat()
@@ -133,15 +181,11 @@ class ParticleView @JvmOverloads constructor(
         repeat(LINE_COUNT) { lines.add(FlowLine()) }
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        touchX = event.x
-        touchY = event.y
-        if (event.action == MotionEvent.ACTION_UP) {
-            touchX = -1f
-            touchY = -1f
-        }
-        performClick()
-        return true
+    fun onExternalTouch(x: Float, y: Float, isDown: Boolean) {
+        touchX = x
+        touchY = y
+        touchActive = isDown
+        invalidate()
     }
 
     override fun performClick(): Boolean {
@@ -153,12 +197,24 @@ class ParticleView @JvmOverloads constructor(
         super.onDraw(canvas)
         if (w == 0f || h == 0f) return
         time += 1f
+
+
+        val deadRipples = ArrayList<Ripple>()
+        for (ripple in ripples) {
+            ripple.age += 1f
+            ripple.radius += 12f
+            if (ripple.age >= ripple.maxAge) deadRipples.add(ripple)
+        }
+        ripples.removeAll(deadRipples.toSet())
+
+
         val dead = ArrayList<Int>()
         lines.forEachIndexed { idx, line ->
             if (!line.update(time)) dead.add(idx)
             else line.draw(canvas)
         }
         dead.reversed().forEach { lines[it].reset() }
+
         postInvalidateOnAnimation()
     }
 }

@@ -48,7 +48,8 @@
                 android:id="@+id/tvSegmentLogin"
                 android:layout_width="107dp"
                 android:layout_height="match_parent"
-                android:text="Connexion"
+                android:text="@string/connexion"
+                android:textColor="#0D1F17"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_semibold"
                 android:gravity="center"
@@ -58,7 +59,8 @@
                 android:id="@+id/tvSegmentRegister"
                 android:layout_width="107dp"
                 android:layout_height="match_parent"
-                android:text="S'inscrire"
+                android:text="@string/sinscrire"
+                android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_semibold"
                 android:gravity="center"
@@ -84,7 +86,7 @@
             android:layout_height="37dp"
             android:paddingHorizontal="24dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@id/btnSocial"
+            app:layout_constraintBottom_toTopOf="@id/btnSocialLogin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -98,7 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ou"
+                android:text="@string/ou"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:fontFamily="@font/poppins_bold"
@@ -113,11 +115,13 @@
 
         </RelativeLayout>
 
-        <!-- Social button -->
-        <FrameLayout
-            android:id="@+id/btnSocial"
+
+        <LinearLayout
+            android:id="@+id/btnSocialLogin"
             android:layout_width="250dp"
             android:layout_height="32dp"
+            android:orientation="horizontal"
+            android:gravity="center"
             android:layout_marginBottom="36dp"
             android:background="@drawable/bg_surface"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -127,24 +131,21 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="12dp"
                 android:src="@android:drawable/ic_menu_share"
                 android:contentDescription="@string/app_name"
+                android:layout_marginEnd="8dp"
                 app:tint="#FFFFFF"/>
 
             <TextView
                 android:id="@+id/tvSocialLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="40dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Connexion via réseau social"
+                android:text="@string/connexion_social"
                 android:textColor="#FFFFFF"
-                android:textSize="10sp"/>
+                android:textSize="10sp"
+                android:fontFamily="@font/poppins_medium"/>
 
-        </FrameLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
