@@ -24,4 +24,10 @@
     <string name="continuer_facebook">Continuer avec Facebook</string>
     <string name="continuer_google">Continuer avec Google</string>
     <string name="continuer_phone">Continuer avec Téléphone</string>
+    <string name="continuer_avec">Continuer avec</string>
+    <string name="post_ad">Publier une annonce</string>
+    <string name="nav_home">Accueil</string>
+    <string name="nav_messages">Messages</string>
+    <string name="nav_ville">Ville</string>
+    <string name="nav_profile">Profil</string>
 </resources>

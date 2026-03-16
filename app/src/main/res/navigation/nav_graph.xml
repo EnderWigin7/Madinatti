@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.madinatti.app.HomeFragment"
+        android:label="Accueil"/>
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="com.madinatti.app.MessagesFragment"
+        android:label="Messages"/>
+    <fragment
+        android:id="@+id/villeFragment"
+        android:name="com.madinatti.app.VilleFragment"
+        android:label="Ville"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.madinatti.app.ProfileFragment"
+        android:label="Profil"/>
+
+</navigation>

@@ -108,6 +108,7 @@
             android:id="@+id/btnContinuer"
             android:layout_width="141dp"
             android:layout_height="42dp"
+            android:background="@drawable/bg_btn_green"
             android:text="@string/continuer"
             android:textColor="#FFFFFF"
             android:textSize="15sp"

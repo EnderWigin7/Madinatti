@@ -28,7 +28,9 @@ class LoginFragment : Fragment() {
         listOf(binding.etEmail, binding.etPassword).forEach { field ->
             field.setOnFocusChangeListener { _, hasFocus ->
                 field.setBackgroundResource(
-                    if (hasFocus) R.drawable.bg_input_focused else R.drawable.bg_input)
+                    if (hasFocus) R.drawable.bg_input_focused
+                    else R.drawable.bg_input
+                )
             }
         }
 
@@ -38,7 +40,6 @@ class LoginFragment : Fragment() {
                 HideReturnsTransformationMethod.getInstance()
             else PasswordTransformationMethod.getInstance()
             binding.etPassword.setSelection(binding.etPassword.text.length)
-
             binding.ivTogglePassword.setImageResource(
                 if (passwordVisible) R.drawable.ic_eye_open
                 else R.drawable.ic_eye_closed
@@ -46,46 +47,22 @@ class LoginFragment : Fragment() {
         }
 
         binding.tvForgotPassword.setOnClickListener {
-
-            binding.tvForgotPassword.animate()
-                .alpha(0.3f).setDuration(80)
+            binding.tvForgotPassword.animate().alpha(0.3f).setDuration(80)
                 .withEndAction {
                     binding.tvForgotPassword.setTextColor(
                         android.graphics.Color.parseColor("#2ECC71"))
-                    binding.tvForgotPassword.animate()
-                        .alpha(1f).setDuration(150)
+                    binding.tvForgotPassword.animate().alpha(1f).setDuration(150)
                         .withEndAction {
-
                             binding.tvForgotPassword.postDelayed({
-                                binding.tvForgotPassword.animate()
-                                    .alpha(0.7f).setDuration(100)
+                                binding.tvForgotPassword.animate().alpha(0.7f).setDuration(100)
                                     .withEndAction {
                                         binding.tvForgotPassword.setTextColor(
                                             android.graphics.Color.WHITE)
-                                        binding.tvForgotPassword.animate()
-                                            .alpha(1f).setDuration(100).start()
+                                        binding.tvForgotPassword.animate().alpha(1f).setDuration(100).start()
                                     }.start()
                             }, 600)
                         }.start()
                 }.start()
-            // TODO: navigate to forgot password screen
-        }
-
-        binding.btnLogin.setOnClickListener {
-            (requireActivity() as AuthActivity).triggerParticleRipple(binding.btnLogin)
-            val email = binding.etEmail.text.toString().trim()
-            val password = binding.etPassword.text.toString()
-            if (email.isEmpty()) { binding.etEmail.error = "Email requis"; return@setOnClickListener }
-            if (password.isEmpty()) { binding.etPassword.error = "Requis"; return@setOnClickListener }
-
-            animateButton(binding.btnLogin) {
-                // TODO: Firebase auth
-                val prefs = requireContext().getSharedPreferences("madinatti_prefs", 0)
-                prefs.edit().putBoolean("has_seen_splash", true).apply()
-                startActivity(Intent(requireContext(), MainActivity::class.java))
-                requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                requireActivity().finish()
-            }
         }
     }
 
@@ -101,5 +78,18 @@ class LoginFragment : Fragment() {
                     .setInterpolator(android.view.animation.OvershootInterpolator(2f))
                     .withEndAction { onEnd() }.start()
             }.start()
+    }
+
+    fun attemptLogin() {
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPassword.text.toString()
+        if (email.isEmpty()) { binding.etEmail.error = "Email requis"; return }
+        if (password.isEmpty()) { binding.etPassword.error = "Requis"; return }
+        // TODO: Firebase auth
+        val prefs = requireContext().getSharedPreferences("madinatti_prefs", 0)
+        prefs.edit().putBoolean("has_seen_splash", true).apply()
+        startActivity(Intent(requireContext(), MainActivity::class.java))
+        requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        requireActivity().finish()
     }
 }

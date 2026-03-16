@@ -16,6 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setDecorFitsSystemWindows(false)
 
         val prefs = getSharedPreferences("madinatti_prefs", MODE_PRIVATE)
         if (prefs.getBoolean("has_seen_splash", false)) {
@@ -27,7 +28,6 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Background shake
         binding.imgBackground.scaleX = 1.08f
         binding.imgBackground.scaleY = 1.08f
 

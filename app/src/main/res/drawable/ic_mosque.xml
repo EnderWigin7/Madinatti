@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="100" android:viewportHeight="100">
+
+    <!-- Base ground -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M8,78 L92,78 L92,82 L8,82 Z"/>
+
+    <!-- Left minaret -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M14,78 L14,46 L22,46 L22,78 Z"/>
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M18,28 C15,34 13,40 13,46 L23,46 C23,40 21,34 18,28 Z"/>
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M18,22 L15.5,28 L20.5,28 Z"/>
+
+    <!-- Right minaret -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M78,78 L78,46 L86,46 L86,78 Z"/>
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M82,28 C79,34 77,40 77,46 L87,46 C87,40 85,34 82,28 Z"/>
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M82,22 L79.5,28 L84.5,28 Z"/>
+
+    <!-- Main dome -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M50,18 C34,18 23,30 23,45 L77,45 C77,30 66,18 50,18 Z"/>
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M50,11 L47,18 L53,18 Z"/>
+
+    <!-- Main body -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M22,45 L78,45 L78,78 L22,78 Z"/>
+
+    <!-- Door arch — use stroke outline approach -->
+    <path android:fillColor="#FFFFFF"
+        android:strokeColor="#0D1F17"
+        android:strokeWidth="2"
+        android:pathData="M43,78 L43,60 Q43,51 50,51 Q57,51 57,60 L57,78 Z"/>
+
+    <!-- Left window -->
+    <path android:fillColor="#FFFFFF"
+        android:strokeColor="#0D1F17"
+        android:strokeWidth="2"
+        android:pathData="M29,68 L29,59 Q29,54 34,54 Q39,54 39,59 L39,68 Z"/>
+
+    <!-- Right window -->
+    <path android:fillColor="#FFFFFF"
+        android:strokeColor="#0D1F17"
+        android:strokeWidth="2"
+        android:pathData="M61,68 L61,59 Q61,54 66,54 Q71,54 71,59 L71,68 Z"/>
+
+</vector>

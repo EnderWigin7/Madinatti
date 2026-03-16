@@ -17,12 +17,11 @@ class SocialLoginDialog : DialogFragment() {
 
     private var _binding: DialogSocialLoginBinding? = null
     private val binding get() = _binding!!
-
-    // Y position of social button passed from AuthActivity
     var anchorY: Int = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         dialog?.window?.apply {
@@ -35,12 +34,11 @@ class SocialLoginDialog : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        // Position dialog at bottom, just above the social button
         dialog?.window?.apply {
             val params: WindowManager.LayoutParams = attributes
             params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-            params.y = anchorY  // offset from bottom
-            params.width = WindowManager.LayoutParams.WRAP_CONTENT
+            params.y = anchorY
+            params.width = (resources.displayMetrics.widthPixels * 0.88f).toInt()
             params.height = WindowManager.LayoutParams.WRAP_CONTENT
             attributes = params
         }
@@ -49,27 +47,26 @@ class SocialLoginDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Pop-in from below
-        binding.root.translationY = 80f
+        binding.root.translationY = 60f
         binding.root.alpha = 0f
         binding.root.animate()
             .translationY(0f)
             .alpha(1f)
-            .setDuration(280)
-            .setInterpolator(OvershootInterpolator(1.2f))
+            .setDuration(260)
+            .setInterpolator(OvershootInterpolator(1.1f))
             .start()
 
         binding.btnApple.setOnClickListener {
-            animateRow(it) { /* TODO: Apple */ dismiss() }
+            animateRow(it) { dismiss() }
         }
         binding.btnFacebook.setOnClickListener {
-            animateRow(it) { /* TODO: Facebook */ dismiss() }
+            animateRow(it) { dismiss() }
         }
         binding.btnGoogle.setOnClickListener {
-            animateRow(it) { /* TODO: Google */ dismiss() }
+            animateRow(it) { dismiss() }
         }
         binding.btnPhone.setOnClickListener {
-            animateRow(it) { /* TODO: Phone */ dismiss() }
+            animateRow(it) { dismiss() }
         }
 
         dialog?.setCanceledOnTouchOutside(true)

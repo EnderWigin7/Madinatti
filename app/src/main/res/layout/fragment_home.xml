@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- STICKY TOP BAR — always at top, never scrolls -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="61dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="8dp"
+        android:background="#132D1F"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="65dp"
+            android:layout_height="44dp"
+            android:src="@drawable/madinatilogopdf"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"/>
+
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/citySelector"
+            android:layout_width="130dp"
+            android:layout_height="34dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/bg_city_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_green">
+
+            <TextView
+                android:id="@+id/tvCityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marrakech"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ▾"
+                android:textColor="#7FA68A"
+                android:textSize="15sp"
+                android:layout_marginStart="4dp"/>
+
+        </LinearLayout>
+
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/ivNotifications"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ic_bell"
+            android:contentDescription="@string/app_name"
+            android:padding="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_green"
+            app:tint="#FFFFFF"/>
+
+    </LinearLayout>
+
+    <!-- SCROLLABLE CONTENT — starts below topBar -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <!-- SEARCH BAR -->
+            <LinearLayout
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginHorizontal="21dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:background="@drawable/bg_search"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/ripple_green_rounded">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rechercher des lieux, annonces..."
+                    android:textColor="#7FA68A"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_search"
+                    android:contentDescription="@string/app_name"
+                    app:tint="#7FA68A"/>
+
+            </LinearLayout>
+
+            <!-- EXPLORER TITLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explorer Marrakech"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="14dp"/>
+
+            <!-- BIG 4 CARDS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="9dp"
+                android:layout_marginTop="8dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:id="@+id/cardMarketplace"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/bg_card_marketplace"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/ic_marketplace"
+                        android:contentDescription="@string/app_name"
+                        android:layout_marginBottom="4dp"
+                        app:tint="#FFFFFF"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Marketplace"
+                        android:textColor="#FFFFFF"
+                        android:textSize="9sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tvMarketplaceCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="124 nouvelles"
+                        android:textColor="#3FE66E"
+                        android:textSize="8sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardPrieres"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="3dp"
+                    android:background="@drawable/bg_card_prieres"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/ic_mosque"
+                        android:contentDescription="@string/app_name"
+                        android:layout_marginBottom="4dp"
+                        app:tint="#FFFFFF"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Prières"
+                        android:textColor="#FFFFFF"
+                        android:textSize="9sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <TextView
+                        android:id="@+id/tvNextPrayer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Maghrib 19:12"
+                        android:textColor="#3FE66E"
+                        android:textSize="8sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardMeteo"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="3dp"
+                    android:background="@drawable/bg_card_meteo"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/ic_weather"
+                        android:contentDescription="@string/app_name"
+                        android:layout_marginBottom="4dp"
+                        app:tint="#FFFFFF"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Météo"
+                        android:textColor="#FFFFFF"
+                        android:textSize="9sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <TextView
+                        android:id="@+id/tvWeatherTemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="31°C"
+                        android:textColor="#3FE66E"
+                        android:textSize="8sp"
+                        android:fontFamily="@font/poppins_semibold"/>
+
+                    <TextView
+                        android:id="@+id/tvWeatherDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ensoleillé"
+                        android:textColor="#3FE66E"
+                        android:textSize="8sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardEvenements"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginStart="3dp"
+                    android:background="@drawable/bg_card_evenements"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/ic_calendar"
+                        android:contentDescription="@string/app_name"
+                        android:layout_marginBottom="4dp"
+                        app:tint="#FFFFFF"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Événements"
+                        android:textColor="#FFFFFF"
+                        android:textSize="9sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tvEventsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4 à venir"
+                        android:textColor="#3FE66E"
+                        android:textSize="8sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- AUTOUR DE MOI -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autour de moi"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="16dp"/>
+
+            <!-- FILTER CHIPS -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:scrollbars="none"
+                android:paddingHorizontal="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/chipTout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/bg_chip_selected"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tout" android:textColor="#0D1F17" android:textSize="9sp" android:fontFamily="@font/poppins_medium"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/chipMarketplace" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🛒" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Annonces" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/chipPharmacie" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💊" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pharmacies" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/chipRestaurant" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🍽️" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Restos" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/chipHotel" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏨" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hôtels" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/chipCafe" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="☕" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cafés" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/chipHammam" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🛁" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hammams" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/chipMosquee" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🕌" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mosquées" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- ANNONCES HEADER -->
+            <LinearLayout
+                android:id="@+id/annoncesHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="14dp"
+                android:paddingHorizontal="16dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Annonces récentes" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
+                <TextView android:id="@+id/tvVoirToutAnnonces" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="voir tout →" android:textColor="#2ECC71" android:textSize="11sp" android:fontFamily="@font/poppins_regular" android:clickable="true" android:focusable="true"/>
+            </LinearLayout>
+
+            <!-- AD GRID -->
+            <GridLayout
+                android:id="@+id/adsGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="8dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="2dp">
+
+                <LinearLayout android:id="@+id/adCard1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginEnd="4dp" android:layout_marginBottom="8dp" android:orientation="vertical" android:paddingBottom="8dp" android:background="@drawable/bg_ad_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green" android:elevation="2dp">
+                    <ImageView android:id="@+id/adImage1" android:layout_width="match_parent" android:layout_height="90dp" android:scaleType="centerCrop" android:src="@color/surface" android:contentDescription="@string/app_name"/>
+                    <TextView android:id="@+id/adTitle1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tapis tissé à la main 2*3M" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
+                    <TextView android:id="@+id/adPrice1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAD 1800" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Aïcha · Marrakech" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/adCard2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginStart="4dp" android:layout_marginBottom="8dp" android:orientation="vertical" android:paddingBottom="8dp" android:background="@drawable/bg_ad_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green" android:elevation="2dp">
+                    <ImageView android:id="@+id/adImage2" android:layout_width="match_parent" android:layout_height="90dp" android:scaleType="centerCrop" android:src="@color/surface" android:contentDescription="@string/app_name"/>
+                    <TextView android:id="@+id/adTitle2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Lampe traditionnelle" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
+                    <TextView android:id="@+id/adPrice2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAD 350" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Aïcha · Marrakech" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/adCard3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginEnd="4dp" android:orientation="vertical" android:paddingBottom="8dp" android:background="@drawable/bg_ad_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green" android:elevation="2dp">
+                    <ImageView android:id="@+id/adImage3" android:layout_width="match_parent" android:layout_height="90dp" android:scaleType="centerCrop" android:src="@color/surface" android:contentDescription="@string/app_name"/>
+                    <TextView android:id="@+id/adTitle3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Table bois artisanale" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
+                    <TextView android:id="@+id/adPrice3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAD 2200" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hassan · Fès" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/adCard4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginStart="4dp" android:orientation="vertical" android:paddingBottom="8dp" android:background="@drawable/bg_ad_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green" android:elevation="2dp">
+                    <ImageView android:id="@+id/adImage4" android:layout_width="match_parent" android:layout_height="90dp" android:scaleType="centerCrop" android:src="@color/surface" android:contentDescription="@string/app_name"/>
+                    <TextView android:id="@+id/adTitle4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Vase céramique fait main" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
+                    <TextView android:id="@+id/adPrice4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAD 180" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fatima · Casablanca" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
+                </LinearLayout>
+
+            </GridLayout>
+
+            <!-- RESTAURANTS HEADER -->
+            <LinearLayout
+                android:id="@+id/restaurantsHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="14dp"
+                android:paddingHorizontal="16dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Restaurants à proximité" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
+                <TextView android:id="@+id/tvVoirToutRestaurants" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="voir tout →" android:textColor="#2ECC71" android:textSize="11sp" android:fontFamily="@font/poppins_regular" android:clickable="true" android:focusable="true"/>
+            </LinearLayout>
+
+            <!-- RESTAURANT CARDS -->
+            <HorizontalScrollView
+                android:id="@+id/restaurantsScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:scrollbars="none"
+                android:paddingHorizontal="12dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="155dp"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <LinearLayout android:id="@+id/restaurantCard1" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:layout_marginEnd="8dp" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
+                        <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🍲" android:textSize="36sp"/>
+                        </FrameLayout>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Restaurant Atlas" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="📍 0.8km · Médina" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
+                        <TextView android:layout_width="42dp" android:layout_height="16dp" android:text="Ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/restaurantCard2" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:layout_marginEnd="8dp" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
+                        <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🥙" android:textSize="36sp"/>
+                        </FrameLayout>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Café Arabe" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="📍 1.2km · Guéliz" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
+                        <TextView android:layout_width="42dp" android:layout_height="16dp" android:text="Ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/restaurantCard3" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
+                        <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🍕" android:textSize="36sp"/>
+                        </FrameLayout>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Pizza Roma" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="📍 2.1km · Hivernage" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
+                        <TextView android:layout_width="42dp" android:layout_height="16dp" android:text="Ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

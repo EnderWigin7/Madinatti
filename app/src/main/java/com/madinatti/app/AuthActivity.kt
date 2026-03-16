@@ -14,6 +14,7 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setDecorFitsSystemWindows(false)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -40,18 +41,31 @@ class AuthActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnAuthAction.setOnClickListener {
+            binding.particleView.triggerRippleFromView(binding.btnAuthAction)
+            if (isLoginActive) {
+
+                (supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+                        as? LoginFragment)?.attemptLogin()
+            } else {
+                (supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+                        as? RegisterFragment)?.attemptRegister()
+            }
+        }
+
         binding.btnSocialLogin.setOnClickListener {
             binding.particleView.triggerRippleFromView(binding.btnSocialLogin)
 
             val location = IntArray(2)
             binding.btnSocialLogin.getLocationOnScreen(location)
             val screenHeight = resources.displayMetrics.heightPixels
-            val buttonBottom = location[1] + binding.btnSocialLogin.height
-            val offsetFromBottom = screenHeight - buttonBottom + 16
 
-            val dialog = SocialLoginDialog()
-            dialog.anchorY = offsetFromBottom
-            dialog.show(supportFragmentManager, SocialLoginDialog.TAG)
+            val offsetFromBottom = screenHeight - location[1] +
+                    (8 * resources.displayMetrics.density).toInt()
+
+            SocialLoginDialog().apply {
+                anchorY = offsetFromBottom
+            }.show(supportFragmentManager, SocialLoginDialog.TAG)
         }
     }
 
@@ -83,6 +97,8 @@ class AuthActivity : AppCompatActivity() {
             if (loginActive) android.graphics.Color.WHITE
             else android.graphics.Color.parseColor("#0D1F17")
         )
+
+        binding.btnAuthAction.text = if (loginActive) "Se connecter" else "S'inscrire"
     }
 
     private fun showFragment(fragment: Fragment, slideRight: Boolean) {

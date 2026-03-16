@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:fillViewport="true">
 
     <LinearLayout
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="40dp"
+        android:paddingBottom="32dp"
         android:gravity="center_horizontal">
 
         <FrameLayout
@@ -24,7 +26,7 @@
                 android:id="@+id/tvCitySelector"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Choisir votre ville"
+                android:text="@string/choisir_ville"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_regular"
@@ -134,6 +136,7 @@
                 android:layout_height="match_parent"
                 android:hint="@string/confirmer_mot_de_passe"
                 android:inputType="textPassword"
+                android:layout_marginBottom="24dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#4DFFFFFF"
                 android:textSize="12sp"
@@ -155,20 +158,6 @@
 
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/btnRegister"
-            android:layout_width="141dp"
-            android:layout_height="42dp"
-            android:text="S'inscrire"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
-            android:shadowColor="#40000000"
-            android:shadowDx="7"
-            android:shadowDy="7"
-            android:shadowRadius="7"
-            android:background="@drawable/bg_btn_green"/>
 
     </LinearLayout>
 </ScrollView>
