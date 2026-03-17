@@ -22,4 +22,9 @@
         android:name="com.madinatti.app.ProfileFragment"
         android:label="Profil"/>
 
+    <fragment
+        android:id="@+id/marketplaceFragment"
+        android:name="com.madinatti.app.MarketplaceFragment"
+        android:label="Marketplace"/>
+
 </navigation>

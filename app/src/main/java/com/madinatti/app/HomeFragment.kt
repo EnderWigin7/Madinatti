@@ -37,7 +37,14 @@ class HomeFragment : Fragment() {
         binding.ivNotifications.setOnClickListener { /* TODO: notifications */ }
         binding.searchBar.setOnClickListener { /* TODO: search */ }
 
-        binding.cardMarketplace.setOnClickListener { /* TODO: marketplace */ }
+        binding.cardMarketplace.setOnClickListener {
+            triggerRipple(binding.cardMarketplace)
+            requireActivity().let {
+                androidx.navigation.Navigation
+                    .findNavController(it, R.id.navHostFragment)
+                    .navigate(R.id.marketplaceFragment)
+            }
+        }
         binding.cardPrieres.setOnClickListener { /* TODO: ville prières */ }
         binding.cardMeteo.setOnClickListener { /* TODO: ville météo */ }
         binding.cardEvenements.setOnClickListener { /* TODO: événements */ }
@@ -49,12 +56,6 @@ class HomeFragment : Fragment() {
         binding.restaurantCard2.setOnClickListener { /* TODO */ }
         binding.restaurantCard3.setOnClickListener { /* TODO */ }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.topBar) { v, insets ->
-            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-
-            v.setPadding(0, statusBar, 0, resources.getDimensionPixelSize(R.dimen.topbar_bottom_padding))
-            insets
-        }
     }
 
     private fun setupChips() {
@@ -149,4 +150,5 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

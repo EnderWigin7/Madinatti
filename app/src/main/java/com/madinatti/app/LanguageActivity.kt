@@ -51,49 +51,36 @@ class LanguageActivity : AppCompatActivity() {
     private fun updateSelection(lang: String) {
         selectedLanguage = lang
         glowAnimator?.cancel()
+
         listOf(
             Pair(binding.btnArabic, "ar"),
             Pair(binding.btnFrench, "fr"),
             Pair(binding.btnEnglish, "en")
         ).forEach { (btn, code) ->
             if (code == lang) {
-                startGlowPulse(btn)
+
+                glowAnimator = android.animation.ValueAnimator.ofFloat(0f, 1f).apply {
+                    duration = 400
+                    interpolator = android.view.animation.DecelerateInterpolator()
+                    addUpdateListener { anim ->
+                        val t = anim.animatedValue as Float
+                        val fillAlpha = (t * 0.45f * 255).toInt()
+                        val strokeAlpha = (t * 255).toInt()
+                        btn.background = android.graphics.drawable.GradientDrawable().apply {
+                            shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+                            cornerRadius = 21f
+                            setColor(android.graphics.Color.argb(fillAlpha, 46, 204, 113))
+                            setStroke(3, android.graphics.Color.argb(strokeAlpha, 46, 204, 113))
+                        }
+                    }
+                }
+                glowAnimator?.start()
             } else {
-                btn.setLayerType(android.view.View.LAYER_TYPE_HARDWARE, null)
                 btn.setBackgroundResource(R.drawable.bg_btn_glass)
             }
         }
     }
 
-    private fun startGlowPulse(view: TextView) {
-        glowAnimator?.cancel()
-        view.setLayerType(android.view.View.LAYER_TYPE_SOFTWARE, null)
-
-        glowAnimator = ValueAnimator.ofFloat(0.4f, 1f).apply {
-            duration = 900
-            repeatCount = ValueAnimator.INFINITE
-            repeatMode = ValueAnimator.REVERSE
-            interpolator = android.view.animation.AccelerateDecelerateInterpolator()
-            addUpdateListener { anim ->
-                val alpha = anim.animatedValue as Float
-                val glowPaint = android.graphics.Paint().apply {
-                    isAntiAlias = true
-                    setShadowLayer(20f, 0f, 0f,
-                        android.graphics.Color.argb((alpha * 255).toInt(), 46, 204, 113))
-                }
-                view.background = android.graphics.drawable.GradientDrawable().apply {
-                    shape = android.graphics.drawable.GradientDrawable.RECTANGLE
-                    cornerRadius = 21f
-                    setColor(android.graphics.Color.argb(
-                        (alpha * 0.5f * 255).toInt(), 46, 204, 113))
-                    setStroke(3, android.graphics.Color.argb(
-                        (alpha * 255).toInt(), 46, 204, 113))
-                }
-                view.invalidate()
-            }
-        }
-        glowAnimator?.start()
-    }
 
     private fun animateView(view: TextView) {
         view.animate().scaleX(0.97f).scaleY(0.97f).setDuration(80)

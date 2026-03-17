@@ -4,16 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="40dp"
-        android:paddingBottom="32dp"
-        android:gravity="center_horizontal">
+        android:paddingTop="24dp"
+        android:paddingBottom="48dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_vertical">
 
         <FrameLayout
             android:id="@+id/cityContainer"
@@ -21,18 +23,16 @@
             android:layout_height="40dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_surface">
-
             <TextView
                 android:id="@+id/tvCitySelector"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/choisir_ville"
+                android:text="Choisir votre ville"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="16dp"/>
-
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
@@ -41,7 +41,6 @@
                 android:src="@android:drawable/arrow_down_float"
                 android:contentDescription="@string/app_name"
                 app:tint="#FFFFFF"/>
-
         </FrameLayout>
 
         <EditText
@@ -89,18 +88,17 @@
             android:background="@drawable/bg_input"
             android:singleLine="true"/>
 
-        <!-- Replace etPassword with this: -->
+        <!-- Password with eye icon -->
         <FrameLayout
             android:id="@+id/passwordContainer"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginBottom="12dp">
-
             <EditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/mot_de_passe"
+                android:hint="Mot de passe"
                 android:inputType="textPassword"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#4DFFFFFF"
@@ -110,7 +108,6 @@
                 android:paddingEnd="44dp"
                 android:background="@drawable/bg_input"
                 android:singleLine="true"/>
-
             <ImageView
                 android:id="@+id/ivTogglePassword"
                 android:layout_width="32dp"
@@ -120,23 +117,20 @@
                 android:src="@drawable/ic_eye_closed"
                 android:contentDescription="@string/app_name"
                 app:tint="#7FA68A"/>
-
         </FrameLayout>
 
-
+        <!-- Confirm password with eye icon -->
         <FrameLayout
             android:id="@+id/confirmPasswordContainer"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginBottom="20dp">
-
+            android:layout_marginBottom="0dp">
             <EditText
                 android:id="@+id/etConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/confirmer_mot_de_passe"
+                android:hint="Confirmer mot de passe"
                 android:inputType="textPassword"
-                android:layout_marginBottom="24dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#4DFFFFFF"
                 android:textSize="12sp"
@@ -145,7 +139,6 @@
                 android:paddingEnd="44dp"
                 android:background="@drawable/bg_input"
                 android:singleLine="true"/>
-
             <ImageView
                 android:id="@+id/ivToggleConfirmPassword"
                 android:layout_width="32dp"
@@ -155,9 +148,7 @@
                 android:src="@drawable/ic_eye_closed"
                 android:contentDescription="@string/app_name"
                 app:tint="#7FA68A"/>
-
         </FrameLayout>
-
 
     </LinearLayout>
 </ScrollView>
