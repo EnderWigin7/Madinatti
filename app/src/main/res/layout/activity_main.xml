@@ -34,20 +34,36 @@
             android:layout_height="1dp"
             android:background="#222ECC71"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNav"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_gravity="bottom"
-            android:elevation="0dp"
-            android:outlineAmbientShadowColor="@android:color/transparent"
-            android:background="#0D1F17"
-            app:menu="@menu/bottom_nav_menu"
-            app:itemIconTint="@drawable/bottom_nav_icon_color"
-            app:itemTextColor="@drawable/bottom_nav_icon_color"
-            app:itemBackground="@android:color/transparent"
-            app:elevation="16dp"
-            app:labelVisibilityMode="labeled"/>
+            android:layout_height="64dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNav"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@android:color/transparent"
+                app:menu="@menu/bottom_nav_menu"
+                app:itemIconTint="@drawable/bottom_nav_icon_color"
+                app:itemTextColor="@drawable/bottom_nav_icon_color"
+                app:itemBackground="@android:color/transparent"
+                app:labelVisibilityMode="labeled"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabPostAd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="56dp"
+                android:src="@drawable/ic_add"
+                android:contentDescription="@string/post_ad"
+                android:visibility="gone"
+                app:backgroundTint="@color/primary_green"
+                app:tint="#0D1F17"
+                app:fabSize="mini"
+                app:elevation="12dp"/>
+
+        </FrameLayout>
     </LinearLayout>
 
 

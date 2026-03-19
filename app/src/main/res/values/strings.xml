@@ -30,4 +30,16 @@
     <string name="nav_messages">Messages</string>
     <string name="nav_ville">Ville</string>
     <string name="nav_profile">Profil</string>
+    <string name="rechercher_lieux">Rechercher des lieux, annonces...</string>
+    <string name="explorer_marrakech">Explorer Marrakech</string>
+    <string name="autour_de_moi">Autour de moi</string>
+    <string name="tout">Tout</string>
+    <string name="voir_tout">voir tout →</string>
+    <string name="annonces">Annonces</string>
+    <string name="pharmacies">Pharmacies</string>
+    <string name="restos">Restos</string>
+    <string name="hotels">Hôtels</string>
+    <string name="cafes">Cafés</string>
+    <string name="hammams">Hammams</string>
+    <string name="mosquees">Mosquées</string>
 </resources>

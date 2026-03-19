@@ -15,6 +15,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.statusBarColor = android.graphics.Color.parseColor("#132D1F")
         super.onCreate(savedInstanceState)
         window.setDecorFitsSystemWindows(false)
 

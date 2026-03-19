@@ -16,6 +16,7 @@ class MarketplaceFragment : Fragment() {
     private var _binding: FragmentMarketplaceBinding? = null
     private val binding get() = _binding!!
     private var selectedCategory = "tout"
+    private val bookmarkStates = mutableMapOf<Int, Boolean>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMarketplaceBinding.inflate(inflater, container, false)
@@ -25,19 +26,61 @@ class MarketplaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.marketTopBar) { v, insets ->
-            val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            v.setPadding(v.paddingLeft, statusBar, v.paddingRight, v.paddingBottom)
-            insets
-        }
+        applyStatusBarSpacer()
+
+        TopBarHelper.setup(
+            topBarBinding = binding.topBarInclude,
+            showBackButton = true,
+            onBack = {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        )
+
+        val navController = androidx.navigation.Navigation
+            .findNavController(requireActivity(), R.id.navHostFragment)
+        val particleView = (requireActivity() as MainActivity).binding.particleView
+        ShortcutCardsHelper.setup(binding.root, navController, "marketplace", particleView)
+
+        binding.topBarInclude.citySelector.setOnClickListener { }
+        binding.topBarInclude.ivNotifications.setOnClickListener { }
 
         setupCategoryChips()
+        setupBookmarks()
 
         binding.marketSearchBar.setOnClickListener { }
         binding.tvSort.setOnClickListener { }
+
         listOf(binding.marketAdCard1, binding.marketAdCard2,
-            binding.marketAdCard3, binding.marketAdCard4).forEach {
-            it.setOnClickListener { }
+            binding.marketAdCard3, binding.marketAdCard4).forEach { card ->
+            card.setOnClickListener {
+                // TODO: navigate to ad detail
+            }
+        }
+
+    }
+
+    private fun setupBookmarks() {
+        val bookmarks = listOf(
+            binding.ivBookmark1,
+            binding.ivBookmark2,
+            binding.ivBookmark3,
+            binding.ivBookmark4
+        )
+        bookmarks.forEachIndexed { index, imageView ->
+            bookmarkStates[index] = false
+            imageView.setOnClickListener {
+                val current = bookmarkStates[index] ?: false
+                bookmarkStates[index] = !current
+                imageView.setImageResource(
+                    if (!current) R.drawable.ic_bookmark_filled
+                    else R.drawable.ic_bookmark_outline
+                )
+                imageView.animate()
+                    .scaleX(1.3f).scaleY(1.3f).setDuration(100)
+                    .withEndAction {
+                        imageView.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+                    }.start()
+            }
         }
     }
 
@@ -55,20 +98,35 @@ class MarketplaceFragment : Fragment() {
             chip.setOnClickListener {
                 selectedCategory = tag
                 chips.forEach { (c, t) ->
+                    val isSelected = t == selectedCategory
                     c.setBackgroundResource(
-                        if (t == selectedCategory) R.drawable.bg_chip_selected
-                        else R.drawable.bg_chip)
+                        if (isSelected) R.drawable.bg_chip_selected else R.drawable.bg_chip)
                     val label = c.getChildAt(if (c.childCount > 1) 1 else 0)
-                    if (label is TextView) label.setTextColor(
-                        if (t == selectedCategory) android.graphics.Color.parseColor("#0D1F17")
-                        else android.graphics.Color.parseColor("#7FA68A"))
+                    if (label is TextView) {
+                        label.setTextColor(
+                            if (isSelected) android.graphics.Color.parseColor("#0D1F17")
+                            else android.graphics.Color.parseColor("#7FA68A"))
+                    }
                 }
             }
         }
     }
 
+    private fun triggerRipple(view: View) {
+        (requireActivity() as? MainActivity)?.binding?.particleView?.triggerRippleFromView(view)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun applyStatusBarSpacer() {
+        val statusBarHeight = requireContext()
+            .getSharedPreferences("ui_prefs", 0)
+            .getInt("status_bar_height", 0)
+        binding.topBarInclude.statusBarSpacer
+            .layoutParams.height = statusBarHeight
+        binding.topBarInclude.statusBarSpacer.requestLayout()
     }
 }

@@ -16,6 +16,7 @@ class LanguageActivity : AppCompatActivity() {
     private var glowAnimator: ValueAnimator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.statusBarColor = android.graphics.Color.parseColor("#132D1F")
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)

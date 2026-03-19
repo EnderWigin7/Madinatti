@@ -6,12 +6,9 @@
         <item name="colorAccent">@color/primary_green</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:navigationBarColor">@color/background</item>
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16dp</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="colorSecondaryContainer">#22FFFFFF</item>
-        <item name="colorOnSecondaryContainer">#FFFFFF</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">#132D1F</item>
+        <item name="colorSecondaryContainer">#22FFFFFF</item>
+        <item name="colorOnSecondaryContainer">#FFFFFF</item>
     </style>
 </resources>

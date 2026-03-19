@@ -21,10 +21,23 @@
         android:id="@+id/profileFragment"
         android:name="com.madinatti.app.ProfileFragment"
         android:label="Profil"/>
-
     <fragment
         android:id="@+id/marketplaceFragment"
         android:name="com.madinatti.app.MarketplaceFragment"
         android:label="Marketplace"/>
+
+    <!-- ADD THESE 3 -->
+    <fragment
+        android:id="@+id/prieresFragment"
+        android:name="com.madinatti.app.PrieresFragment"
+        android:label="Prières"/>
+    <fragment
+        android:id="@+id/meteoFragment"
+        android:name="com.madinatti.app.MeteoFragment"
+        android:label="Météo"/>
+    <fragment
+        android:id="@+id/evenementsFragment"
+        android:name="com.madinatti.app.EvenementsFragment"
+        android:label="Événements"/>
 
 </navigation>

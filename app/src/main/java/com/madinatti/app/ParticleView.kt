@@ -24,7 +24,6 @@ class ParticleView @JvmOverloads constructor(
     private var w = 0f
     private var h = 0f
 
-    // Touch — subtle repulsion, not attraction
     private var touchX = -1f
     private var touchY = -1f
     private var touchActive = false

@@ -5,9 +5,7 @@ plugins {
 
 android {
     namespace = "com.madinatti.app"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     buildFeatures{
         viewBinding = true

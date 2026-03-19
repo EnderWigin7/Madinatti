@@ -13,6 +13,7 @@ class AuthActivity : AppCompatActivity() {
     private var isLoginActive = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.statusBarColor = android.graphics.Color.parseColor("#132D1F")
         super.onCreate(savedInstanceState)
         window.setDecorFitsSystemWindows(false)
         binding = ActivityAuthBinding.inflate(layoutInflater)

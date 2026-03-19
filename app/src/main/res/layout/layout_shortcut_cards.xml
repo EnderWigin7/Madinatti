@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shortcutCardsRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="9dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="4dp">
+
+    <LinearLayout
+        android:id="@+id/shortcutMarketplace"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/bg_card_marketplace"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_green">
+        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_marketplace" android:contentDescription="@string/app_name" android:layout_marginBottom="3dp" app:tint="#FFFFFF"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Marketplace" android:textColor="#FFFFFF" android:textSize="8sp" android:fontFamily="@font/poppins_medium" android:gravity="center"/>
+        <TextView android:id="@+id/tvShortcutMarket" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="124 nouvelles" android:textColor="#3FE66E" android:textSize="7sp" android:fontFamily="@font/poppins_regular"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/shortcutPrieres"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginHorizontal="3dp"
+        android:background="@drawable/bg_card_prieres"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_green">
+        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_mosque" android:contentDescription="@string/app_name" android:layout_marginBottom="3dp" app:tint="#FFFFFF"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Prières" android:textColor="#FFFFFF" android:textSize="8sp" android:fontFamily="@font/poppins_medium"/>
+        <TextView android:id="@+id/tvShortcutPrayer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Maghrib 19:12" android:textColor="#3FE66E" android:textSize="7sp" android:fontFamily="@font/poppins_regular"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/shortcutMeteo"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginHorizontal="3dp"
+        android:background="@drawable/bg_card_meteo"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_green">
+        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_weather" android:contentDescription="@string/app_name" android:layout_marginBottom="3dp" app:tint="#FFFFFF"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Météo" android:textColor="#FFFFFF" android:textSize="8sp" android:fontFamily="@font/poppins_medium"/>
+        <TextView android:id="@+id/tvShortcutWeather" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="31°C" android:textColor="#3FE66E" android:textSize="7sp" android:fontFamily="@font/poppins_semibold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/shortcutEvenements"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginStart="3dp"
+        android:background="@drawable/bg_card_evenements"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_green">
+        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" android:contentDescription="@string/app_name" android:layout_marginBottom="3dp" app:tint="#FFFFFF"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Événements" android:textColor="#FFFFFF" android:textSize="8sp" android:fontFamily="@font/poppins_medium" android:gravity="center"/>
+        <TextView android:id="@+id/tvShortcutEvents" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4 à venir" android:textColor="#3FE66E" android:textSize="7sp" android:fontFamily="@font/poppins_regular"/>
+    </LinearLayout>
+
+</LinearLayout>
