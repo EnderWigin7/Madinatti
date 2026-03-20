@@ -116,7 +116,8 @@
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/chipMarketplace" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🛒" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/emoji_cart" android:textSize="12sp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -124,42 +125,49 @@
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/chipPharmacie" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💊" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/emoji_pill" android:textSize="12sp"/>
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/pharmacies" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/chipRestaurant" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🍽️" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/emoji_restaurant"
+                            android:textSize="12sp"/>
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/restos" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/chipHotel" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏨" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/emoji_hotel" android:textSize="12sp"/>
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/hotels" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/chipCafe" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="☕" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/emoji_coffee" android:textSize="12sp"/>
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/cafes" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/chipHammam" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🛁" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/emoji_hammam" android:textSize="12sp"/>
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/hammams" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/chipMosquee" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="8dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🕌" android:textSize="12sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/emoji_mosque" android:textSize="12sp"/>
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mosquees" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="3dp"/>
@@ -176,11 +184,12 @@
                 android:gravity="center_vertical"
                 android:layout_marginTop="14dp"
                 android:paddingHorizontal="16dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Annonces récentes" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
-                <TextView android:id="@+id/tvVoirToutAnnonces" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="voir tout →" android:textColor="#2ECC71" android:textSize="11sp" android:fontFamily="@font/poppins_regular" android:clickable="true" android:focusable="true"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="@string/annonces_recentes" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
+                <TextView android:id="@+id/tvVoirToutAnnonces" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/voir_tout_arrow" android:textColor="#2ECC71" android:textSize="11sp" android:fontFamily="@font/poppins_regular" android:clickable="true" android:focusable="true"/>
             </LinearLayout>
 
-            <!-- AD GRID -->
             <GridLayout
                 android:id="@+id/adsGrid"
                 android:layout_width="match_parent"
@@ -194,35 +203,46 @@
 
                 <LinearLayout android:id="@+id/adCard1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginEnd="4dp" android:layout_marginBottom="8dp" android:orientation="vertical" android:paddingBottom="8dp" android:background="@drawable/bg_ad_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green" android:elevation="2dp">
                     <ImageView android:id="@+id/adImage1" android:layout_width="match_parent" android:layout_height="90dp" android:scaleType="centerCrop" android:src="@color/surface" android:contentDescription="@string/app_name"/>
-                    <TextView android:id="@+id/adTitle1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tapis tissé à la main 2*3M" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
-                    <TextView android:id="@+id/adPrice1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAD 1800" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Aïcha · Marrakech" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
+                    <TextView android:id="@+id/adTitle1" android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="@string/ad_title_tapis" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
+                    <TextView android:id="@+id/adPrice1" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/ad_price_1800" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/ad_seller_aicha" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/adCard2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginStart="4dp" android:layout_marginBottom="8dp" android:orientation="vertical" android:paddingBottom="8dp" android:background="@drawable/bg_ad_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green" android:elevation="2dp">
                     <ImageView android:id="@+id/adImage2" android:layout_width="match_parent" android:layout_height="90dp" android:scaleType="centerCrop" android:src="@color/surface" android:contentDescription="@string/app_name"/>
-                    <TextView android:id="@+id/adTitle2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Lampe traditionnelle" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
-                    <TextView android:id="@+id/adPrice2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAD 350" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Aïcha · Marrakech" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
+                    <TextView android:id="@+id/adTitle2" android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="@string/ad_title_lampe" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
+                    <TextView android:id="@+id/adPrice2" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/ad_price_3" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/ad_seller_aicha" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/adCard3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginEnd="4dp" android:orientation="vertical" android:paddingBottom="8dp" android:background="@drawable/bg_ad_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green" android:elevation="2dp">
                     <ImageView android:id="@+id/adImage3" android:layout_width="match_parent" android:layout_height="90dp" android:scaleType="centerCrop" android:src="@color/surface" android:contentDescription="@string/app_name"/>
-                    <TextView android:id="@+id/adTitle3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Table bois artisanale" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
-                    <TextView android:id="@+id/adPrice3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAD 2200" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hassan · Fès" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
+                    <TextView android:id="@+id/adTitle3" android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="@string/product_title_1" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
+                    <TextView android:id="@+id/adPrice3" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/product_price_1" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/product_seller_1" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/adCard4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_marginStart="4dp" android:orientation="vertical" android:paddingBottom="8dp" android:background="@drawable/bg_ad_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green" android:elevation="2dp">
                     <ImageView android:id="@+id/adImage4" android:layout_width="match_parent" android:layout_height="90dp" android:scaleType="centerCrop" android:src="@color/surface" android:contentDescription="@string/app_name"/>
-                    <TextView android:id="@+id/adTitle4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Vase céramique fait main" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
-                    <TextView android:id="@+id/adPrice4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MAD 180" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fatima · Casablanca" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
+                    <TextView android:id="@+id/adTitle4" android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="@string/home_item_title" android:textColor="#FFFFFF" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="6dp" android:layout_marginHorizontal="8dp" android:maxLines="2"/>
+                    <TextView android:id="@+id/adPrice4" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/home_item_price" android:textColor="#2ECC71" android:textSize="9sp" android:fontFamily="@font/poppins_semibold" android:layout_marginHorizontal="8dp" android:layout_marginTop="2dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/home_item_location" android:textColor="#7FA68A" android:textSize="8sp" android:fontFamily="@font/poppins_regular" android:layout_marginHorizontal="8dp" android:layout_marginTop="1dp"/>
                 </LinearLayout>
 
             </GridLayout>
 
-            <!-- RESTAURANTS HEADER -->
             <LinearLayout
                 android:id="@+id/restaurantsHeader"
                 android:layout_width="match_parent"
@@ -231,11 +251,12 @@
                 android:gravity="center_vertical"
                 android:layout_marginTop="14dp"
                 android:paddingHorizontal="16dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Restaurants à proximité" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
-                <TextView android:id="@+id/tvVoirToutRestaurants" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="voir tout →" android:textColor="#2ECC71" android:textSize="11sp" android:fontFamily="@font/poppins_regular" android:clickable="true" android:focusable="true"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="@string/home_nearby_restaurants" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
+                <TextView android:id="@+id/tvVoirToutRestaurants" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/voir_tout_arrow" android:textColor="#2ECC71" android:textSize="11sp" android:fontFamily="@font/poppins_regular" android:clickable="true" android:focusable="true"/>
             </LinearLayout>
 
-            <!-- RESTAURANT CARDS -->
             <HorizontalScrollView
                 android:id="@+id/restaurantsScrollView"
                 android:layout_width="match_parent"
@@ -255,29 +276,41 @@
 
                     <LinearLayout android:id="@+id/restaurantCard1" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:layout_marginEnd="8dp" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
                         <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🍲" android:textSize="36sp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
+                                android:text="@string/emoji_soup" android:textSize="36sp"/>
                         </FrameLayout>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Restaurant Atlas" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="📍 0.8km · Médina" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
-                        <TextView android:layout_width="42dp" android:layout_height="16dp" android:text="Ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="@string/rest_name_1" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="@string/rest_loc_1" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
+                        <TextView android:layout_width="42dp" android:layout_height="16dp"
+                            android:text="@string/ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/restaurantCard2" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:layout_marginEnd="8dp" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
                         <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🥙" android:textSize="36sp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
+                                android:text="@string/emoji_sandwich" android:textSize="36sp"/>
                         </FrameLayout>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Café Arabe" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="📍 1.2km · Guéliz" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
-                        <TextView android:layout_width="42dp" android:layout_height="16dp" android:text="Ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="@string/restaurant_cafe_arabe" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="@string/restaurant_cafe_arabe_distance" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
+                        <TextView android:layout_width="42dp" android:layout_height="16dp"
+                            android:text="@string/status_ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
                     </LinearLayout>
 
                     <LinearLayout android:id="@+id/restaurantCard3" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
                         <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🍕" android:textSize="36sp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
+                                android:text="@string/emoji_pizza" android:textSize="36sp"/>
                         </FrameLayout>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Pizza Roma" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="📍 2.1km · Hivernage" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
-                        <TextView android:layout_width="42dp" android:layout_height="16dp" android:text="Ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="@string/restaurant_pizza_roma" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="@string/restaurant_distance_hivernage" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
+                        <TextView android:layout_width="42dp" android:layout_height="16dp"
+                            android:text="@string/status_ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
                     </LinearLayout>
 
                 </LinearLayout>

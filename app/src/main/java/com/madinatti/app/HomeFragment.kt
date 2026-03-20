@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.madinatti.app.databinding.FragmentHomeBinding
@@ -31,9 +29,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 1. DYNAMIC CLICKS: Loop through every item in the Grid automatically!
+        // When you add Firebase later, we will use a RecyclerView instead of a Grid.
+        for (i in 0 until binding.adsGrid.childCount) {
+            val childView = binding.adsGrid.getChildAt(i)
+            childView.setOnClickListener {
+                val bottomSheet = AdDetailBottomSheet()
+                bottomSheet.show(parentFragmentManager, "AdDetail")
+            }
+        }
 
         applyStatusBarSpacer()
-
 
         TopBarHelper.setup(
             topBarBinding = binding.topBarInclude,
@@ -42,20 +48,27 @@ class HomeFragment : Fragment() {
         binding.topBarInclude.citySelector.setOnClickListener { }
         binding.topBarInclude.ivNotifications.setOnClickListener { }
 
-
         val navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment)
-        val particleView = (requireActivity() as MainActivity).binding.particleView
-        ShortcutCardsHelper.setup(binding.root, navController, "", particleView)
+
+        binding.root.findViewById<LinearLayout>(R.id.shortcutMarketplace)
+            ?.setOnClickListener {
+                (requireActivity() as MainActivity).navigateToVilleTab("marketplace")
+            }
+        binding.root.findViewById<LinearLayout>(R.id.shortcutPrieres)
+            ?.setOnClickListener {
+                (requireActivity() as MainActivity).navigateToVilleTab("prieres")
+            }
+        binding.root.findViewById<LinearLayout>(R.id.shortcutMeteo)
+            ?.setOnClickListener {
+                (requireActivity() as MainActivity).navigateToVilleTab("meteo")
+            }
+        binding.root.findViewById<LinearLayout>(R.id.shortcutEvenements)
+            ?.setOnClickListener {
+                (requireActivity() as MainActivity).navigateToVilleTab("evenements")
+            }
 
         setupChips()
         startWeatherPulse()
-
-        binding.searchBar.setOnClickListener { }
-        binding.tvVoirToutAnnonces.setOnClickListener { }
-        binding.tvVoirToutRestaurants.setOnClickListener { }
-        binding.restaurantCard1.setOnClickListener { }
-        binding.restaurantCard2.setOnClickListener { }
-        binding.restaurantCard3.setOnClickListener { }
     }
 
     private fun setupChips() {
@@ -78,7 +91,6 @@ class HomeFragment : Fragment() {
                 triggerRipple(chipView)
             }
         }
-
         updateChipStyles(chipMap)
         updateExploreSection("tout")
     }
@@ -86,13 +98,13 @@ class HomeFragment : Fragment() {
     private fun updateChipStyles(chipMap: Map<LinearLayout, String>) {
         chipMap.forEach { (chip, tag) ->
             val isSelected = tag == selectedChip
-            chip.setBackgroundResource(
-                if (isSelected) R.drawable.bg_chip_selected else R.drawable.bg_chip)
+            chip.setBackgroundResource(if (isSelected) R.drawable.bg_chip_selected else R.drawable.bg_chip)
             val label = chip.getChildAt(if (chip.childCount > 1) 1 else 0)
             if (label is TextView) {
                 label.setTextColor(
                     if (isSelected) android.graphics.Color.parseColor("#0D1F17")
-                    else android.graphics.Color.parseColor("#7FA68A"))
+                    else android.graphics.Color.parseColor("#7FA68A")
+                )
             }
         }
     }
@@ -104,16 +116,14 @@ class HomeFragment : Fragment() {
 
         binding.adsGrid.visibility = if (showAds) View.VISIBLE else View.GONE
         binding.annoncesHeader.visibility = if (showAds) View.VISIBLE else View.GONE
-        binding.restaurantsScrollView.visibility =
-            if (showRestaurants) View.VISIBLE else View.GONE
-        binding.restaurantsHeader.visibility =
-            if (showRestaurants) View.VISIBLE else View.GONE
+        binding.restaurantsScrollView.visibility = if (showRestaurants) View.VISIBLE else View.GONE
+        binding.restaurantsHeader.visibility = if (showRestaurants) View.VISIBLE else View.GONE
     }
 
     private fun triggerRipple(view: View) {
-        (requireActivity() as? MainActivity)?.binding?.particleView
-            ?.triggerRippleFromView(view)
+        (requireActivity() as? MainActivity)?.binding?.particleView?.triggerRippleFromView(view)
     }
+
     private fun startWeatherPulse() {
         val tvWeather = binding.root.findViewById<TextView>(R.id.tvShortcutWeather)
         tvWeather?.let {
@@ -125,17 +135,16 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun applyStatusBarSpacer() {
         val statusBarHeight = requireContext()
             .getSharedPreferences("ui_prefs", 0)
             .getInt("status_bar_height", 0)
-        binding.topBarInclude.statusBarSpacer
-            .layoutParams.height = statusBarHeight
+        binding.topBarInclude.statusBarSpacer.layoutParams.height = statusBarHeight
         binding.topBarInclude.statusBarSpacer.requestLayout()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

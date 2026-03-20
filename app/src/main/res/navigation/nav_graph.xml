@@ -5,39 +5,25 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <fragment
-        android:id="@+id/homeFragment"
+    <fragment android:id="@+id/homeFragment"
         android:name="com.madinatti.app.HomeFragment"
         android:label="Accueil"/>
-    <fragment
-        android:id="@+id/messagesFragment"
+
+    <fragment android:id="@+id/messagesFragment"
         android:name="com.madinatti.app.MessagesFragment"
         android:label="Messages"/>
-    <fragment
-        android:id="@+id/villeFragment"
+
+    <fragment android:id="@+id/villeFragment"
         android:name="com.madinatti.app.VilleFragment"
-        android:label="Ville"/>
-    <fragment
-        android:id="@+id/profileFragment"
+        android:label="Ville">
+         <argument
+            android:name="selectedTab"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+
+    <fragment android:id="@+id/profileFragment"
         android:name="com.madinatti.app.ProfileFragment"
         android:label="Profil"/>
-    <fragment
-        android:id="@+id/marketplaceFragment"
-        android:name="com.madinatti.app.MarketplaceFragment"
-        android:label="Marketplace"/>
-
-    <!-- ADD THESE 3 -->
-    <fragment
-        android:id="@+id/prieresFragment"
-        android:name="com.madinatti.app.PrieresFragment"
-        android:label="Prières"/>
-    <fragment
-        android:id="@+id/meteoFragment"
-        android:name="com.madinatti.app.MeteoFragment"
-        android:label="Météo"/>
-    <fragment
-        android:id="@+id/evenementsFragment"
-        android:name="com.madinatti.app.EvenementsFragment"
-        android:label="Événements"/>
 
 </navigation>

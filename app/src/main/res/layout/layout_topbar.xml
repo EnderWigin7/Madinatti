@@ -8,19 +8,18 @@
     android:orientation="vertical"
     android:background="#132D1F">
 
-    <!-- Status bar spacer — height set in code -->
+
     <View
         android:id="@+id/statusBarSpacer"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
-    <!-- Content row -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:paddingHorizontal="12dp">
 
-        <!-- Back button (hidden by default, shown on sub-screens) -->
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="36dp"
