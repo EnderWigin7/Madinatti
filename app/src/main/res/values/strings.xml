@@ -159,5 +159,122 @@
     <string name="verified_badge">✅</string>
     <string name="btn_appeler">📞 Appeler</string>
 
+    <string name="save_ad">Enregistrer l’annonce</string>
+    <string name="previous_image">Image précédente</string>
+    <string name="next_image">Image suivante</string>
+    <string name="emoji_vase">🏺</string>
+    <string name="rating_label">Note vendeur:</string>
+    <string name="rating_value">8.5</string>
+    <string name="rating_max">/10</string>
+    <string name="btn_report">⚠️ Signaler cette annonce</string>
+    <string name="post_ad_title">Publier une annonce</string>
+    <string name="add_photos">Ajouter des photos</string>
+    <string name="add_photo_label">Ajouter</string>
+    <string name="ad_field_title">Titre de l\'annonce</string>
+    <string name="hint_title">Ex: Galaxy S25…</string>
+    <string name="ad_field_category">Catégorie</string>
+    <string name="hint_category">Choisir catégorie</string>
+    <string name="ad_field_price">Prix (MAD)</string>
+    <string name="hint_price">0.00</string>
+    <string name="currency_mad">MAD</string>
+    <string name="ad_field_city">Ville</string>
+    <string name="hint_city">Choisir votre ville</string>
+    <string name="ad_field_description">Description</string>
+    <string name="hint_description">Décrivez votre article</string>
+    <string name="char_count_initial">0/500</string>
+    <string name="ad_field_duration">Durée de l\'annonce:</string>
+    <string name="duration_days_label">Nombre de jours</string>
+    <string name="expiry_placeholder">Expire le:</string>
+    <string name="btn_publish">Publier l\'annonce</string>
+    <string name="back">Retour</string>
+
+    <string name="emoji_lamp">🪔</string>
+    <string name="market_ad_lamp">Lampe traditionnelle</string>
+    <string name="market_ad_lamp_loc">📍 Marrakech · Médina</string>
+    <string name="market_ad_lamp_price">450 MAD</string>
+    <string name="market_ad_lamp_time">Il y a 5h</string>
+
+    <string name="market_ad_tapis">Tapis tissé 2×3M</string>
+    <string name="market_ad_tapis_loc">📍 Marrakech · Guéliz</string>
+    <string name="market_ad_tapis_price">1 800 MAD</string>
+    <string name="market_ad_tapis_time">Il y a 2h</string>
+
+    <string name="market_ad_samsung">Samsung Galaxy S25</string>
+    <string name="market_ad_samsung_loc">📍 Casablanca · Maarif</string>
+    <string name="market_ad_samsung_price">3 200 MAD</string>
+    <string name="market_ad_samsung_time">Hier</string>
+
+    <string name="market_ad_canape">Canapé salon</string>
+    <string name="market_ad_canape_loc">📍 Rabat · Agdal</string>
+    <string name="market_ad_canape_price">950 MAD</string>
+    <string name="market_ad_canape_time">Hier</string>
+
+    <string name="meteo_coming_soon">Météo — Coming soon</string>
+
+    <string name="hint_duration_default">30</string>
+
+    <string name="qibla_title">Direction Qibla</string>
+    <string name="qibla_towards_mecca">Vers La Mecque</string>
+    <string name="qibla_compass_unavailable">● Boussole indisponible</string>
+    <string name="qibla_accuracy_high">● Précision élevée</string>
+    <string name="qibla_accuracy_medium">● Précision moyenne</string>
+    <string name="qibla_accuracy_low">● Précision faible — Calibrez</string>
+    <string name="qibla_tip">Tenez votre téléphone à plat\npour plus de précision</string>
+    <string name="qibla_city_format">📍 %s</string>
+
+    <string name="qibla_bearing_format">%.1f° · %s</string>
+    <string name="qibla_distance_format">%.0f km vers La Mecque</string>
+    <string name="qibla_emoji">🕌</string>
+    <string name="qibla_chevron">›</string>
+
+    <string name="prayer_date_placeholder">Aujourd\'hui, Vendredi 7 Mars 2026</string>
+    <string name="prayer_hijri_placeholder">Ramadan · 7ème jour</string>
+    <string name="prayer_next_label">Prochaine\nprière</string>
+    <string name="prayer_next_name_placeholder">Isha</string>
+    <string name="prayer_next_countdown_placeholder">dans 1h 26min</string>
+    <string name="prayer_fajr">Fajr</string>
+    <string name="prayer_sunrise">Lever du soleil</string>
+    <string name="prayer_dhuhr">Dhuhr</string>
+    <string name="prayer_asr">Asr</string>
+    <string name="prayer_maghrib">Maghrib</string>
+    <string name="prayer_isha">Isha</string>
+    <string name="prayer_time_fajr">05:23</string>
+    <string name="prayer_time_sunrise">06:45</string>
+    <string name="prayer_time_dhuhr">13:15</string>
+    <string name="prayer_time_asr">16:45</string>
+    <string name="prayer_time_maghrib">19:12</string>
+    <string name="prayer_time_isha">20:38</string>
+    <string name="emoji_sunrise">🌅</string>
+    <string name="emoji_dawn">🌄</string>
+    <string name="emoji_sun">☀️</string>
+    <string name="emoji_partly_sunny">🌤️</string>
+    <string name="emoji_sunset">🌇</string>
+    <string name="emoji_moon">🌙</string>
+    <string name="prayer_qibla_direction">Direction Qibla</string>
+    <string name="prayer_qibla_subtitle">Vers La Mecque</string>
+
+    <string name="qibla_compass_active">Boussole active</string>
+    <string name="qibla_loading">Recherche GPS…</string>
+    <string name="qibla_no_gps">Activez la localisation</string>
+    <string name="shortcut_marketplace">Marketplace</string>
+    <string name="shortcut_marketplace_sub">124 nouvelles</string>
+    <string name="shortcut_prieres">Prières</string>
+    <string name="shortcut_prieres_sub">Maghrib 19:12</string>
+    <string name="shortcut_meteo">Météo</string>
+    <string name="shortcut_meteo_sub">31°C</string>
+    <string name="shortcut_evenements">Événements</string>
+    <string name="shortcut_evenements_sub">4 à venir</string>
+
+    <string name="weather_humidity">Humidité</string>
+    <string name="weather_wind">Vent</string>
+    <string name="weather_feels_like">Ressenti %s</string>
+    <string name="weather_forecast_7day">Prévisions 7 jours</string>
+    <string name="weather_today">Aujourd\'hui</string>
+    <string name="weather_today_desc">Ciel partiellement nuageux. Minimum 8°C.</string>
+    <string name="weather_percent">%s%%</string>
+    <string name="weather_kmh">%s km/h</string>
+    <string name="weather_temp_format">%d°C</string>
+    <string name="weather_temp_short">%d°</string>
+
 
 </resources>

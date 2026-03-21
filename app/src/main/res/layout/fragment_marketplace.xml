@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@android:color/transparent">
 
     <LinearLayout
         android:id="@+id/marketSearchBar"
@@ -20,307 +20,113 @@
         android:background="@drawable/bg_search"
         android:clickable="true"
         android:focusable="true">
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/search_annonces"
-            android:textColor="#7FA68A" android:textSize="12sp" android:fontFamily="@font/poppins_regular"/>
-        <ImageView android:layout_width="16dp" android:layout_height="16dp"
-            android:src="@drawable/ic_search" android:contentDescription="@string/app_name"
+            android:textColor="#7FA68A"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"/>
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_search"
+            android:contentDescription="@string/app_name"
             app:tint="#7FA68A"/>
     </LinearLayout>
 
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:scrollbars="none"
-            android:paddingHorizontal="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <LinearLayout android:id="@+id/catTout" android:layout_width="wrap_content" android:layout_height="30dp" android:gravity="center" android:paddingHorizontal="12dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip_selected" android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/cat_tout" android:textColor="#0D1F17" android:textSize="11sp" android:fontFamily="@font/poppins_medium"/>
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/catMaison" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/emoji_sofa"
-                        android:textSize="13sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/cat_maison" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/catElectronique" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/emoji_phone" android:textSize="13sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/cat_electronique" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/catVoitures" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/emoji_car" android:textSize="13sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/cat_voitures" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/catVetements" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/emoji_dress" android:textSize="13sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/vetements" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/catImmobilier" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/emoji_house" android:textSize="13sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/immobilier" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/catArtisanat" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/emoji_art" android:textSize="13sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/cat_artisanat" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
-                </LinearLayout>
-
-            </LinearLayout>
-        </HorizontalScrollView>
-
+    <!-- Category chips -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        android:paddingHorizontal="10dp">
 
         <LinearLayout
-            android:id="@+id/sortRow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp">
+            android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tvAdCount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/ad_count_placeholder"
-                android:textColor="#7FA68A"
-                android:textSize="12sp"
-                android:fontFamily="@font/poppins_regular"/>
+            <LinearLayout android:id="@+id/catTout" android:layout_width="wrap_content" android:layout_height="30dp" android:gravity="center" android:paddingHorizontal="12dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip_selected" android:clickable="true" android:focusable="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_tout" android:textColor="#0D1F17" android:textSize="11sp" android:fontFamily="@font/poppins_medium"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvSort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sort_recent"
-                android:textColor="#2ECC71"
-                android:textSize="12sp"
-                android:fontFamily="@font/poppins_regular"
-                android:clickable="true"
-                android:focusable="true"/>
+            <LinearLayout android:id="@+id/catMaison" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_sofa" android:textSize="13sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_maison" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
 
+            <LinearLayout android:id="@+id/catElectronique" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_phone" android:textSize="13sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_electronique" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/catVoitures" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_car" android:textSize="13sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_voitures" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/catVetements" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_dress" android:textSize="13sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_vetements" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/catImmobilier" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_house" android:textSize="13sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_immobilier" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/catArtisanat" android:layout_width="wrap_content" android:layout_height="30dp" android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="10dp" android:background="@drawable/bg_chip" android:clickable="true" android:focusable="true">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_art" android:textSize="13sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_artisanat" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
         </LinearLayout>
+    </HorizontalScrollView>
 
+    <LinearLayout
+        android:id="@+id/sortRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <TextView
+            android:id="@+id/tvAdCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:clipChildren="false"
-            android:clipToPadding="false">
+            android:text="@string/ad_count_placeholder"
+            android:textColor="#7FA68A"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"/>
 
-            <GridLayout
-                android:id="@+id/marketAdsGrid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:padding="12dp"
-                android:paddingBottom="80dp"
-                android:clipChildren="false">
-
-                <!-- Ad Card 1 -->
-                <LinearLayout
-                    android:id="@+id/marketAdCard1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_ad_card"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/ripple_green"
-                    android:elevation="2dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:background="#1E3D2A">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
-                            android:text="🪔" android:textSize="40sp"/>
-                        <ImageView
-                            android:id="@+id/ivBookmark1"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="top|end"
-                            android:layout_margin="6dp"
-                            android:src="@drawable/ic_bookmark_outline"
-                            android:contentDescription="@string/app_name"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="2dp"/>
-                    </FrameLayout>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:text="Lampe traditionnelle" android:textColor="#FFFFFF" android:textSize="12sp" android:fontFamily="@font/poppins_semibold" android:maxLines="2"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📍 Marrakech · Médina" android:textColor="#7FA68A" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="3dp"/>
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="6dp">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="450 MAD" android:textColor="#2ECC71" android:textSize="13sp" android:fontFamily="@font/poppins_bold"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Il y a 5h" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Ad Card 2 -->
-                <LinearLayout
-                    android:id="@+id/marketAdCard2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_ad_card"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/ripple_green"
-                    android:elevation="2dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:background="#1E3D2A">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🏺" android:textSize="40sp"/>
-                        <ImageView
-                            android:id="@+id/ivBookmark2"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="top|end"
-                            android:layout_margin="6dp"
-                            android:src="@drawable/ic_bookmark_outline"
-                            android:contentDescription="@string/app_name"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="2dp"/>
-                    </FrameLayout>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tapis tissé 2*3M" android:textColor="#FFFFFF" android:textSize="12sp" android:fontFamily="@font/poppins_semibold" android:maxLines="2"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📍 Marrakech · Guéliz" android:textColor="#7FA68A" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="3dp"/>
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="6dp">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="1 800 MAD" android:textColor="#2ECC71" android:textSize="13sp" android:fontFamily="@font/poppins_bold"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Il y a 2h" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Ad Card 3 -->
-                <LinearLayout
-                    android:id="@+id/marketAdCard3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_ad_card"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/ripple_green"
-                    android:elevation="2dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:background="#1E3D2A">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="📱" android:textSize="40sp"/>
-                        <ImageView
-                            android:id="@+id/ivBookmark3"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="top|end"
-                            android:layout_margin="6dp"
-                            android:src="@drawable/ic_bookmark_outline"
-                            android:contentDescription="@string/app_name"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="2dp"/>
-                    </FrameLayout>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Samsung Galaxy S25" android:textColor="#FFFFFF" android:textSize="12sp" android:fontFamily="@font/poppins_semibold" android:maxLines="2"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📍 Casablanca · Maarif" android:textColor="#7FA68A" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="3dp"/>
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="6dp">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="3 200 MAD" android:textColor="#2ECC71" android:textSize="13sp" android:fontFamily="@font/poppins_bold"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hier" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Ad Card 4 -->
-                <LinearLayout
-                    android:id="@+id/marketAdCard4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_ad_card"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/ripple_green"
-                    android:elevation="2dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:background="#1E3D2A">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🛋️" android:textSize="40sp"/>
-                        <ImageView
-                            android:id="@+id/ivBookmark4"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="top|end"
-                            android:layout_margin="6dp"
-                            android:src="@drawable/ic_bookmark_outline"
-                            android:contentDescription="@string/app_name"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="2dp"/>
-                    </FrameLayout>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Canapé salon" android:textColor="#FFFFFF" android:textSize="12sp" android:fontFamily="@font/poppins_semibold" android:maxLines="2"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📍 Rabat · Agdal" android:textColor="#7FA68A" android:textSize="10sp" android:fontFamily="@font/poppins_regular" android:layout_marginTop="3dp"/>
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="6dp">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="950 MAD" android:textColor="#2ECC71" android:textSize="13sp" android:fontFamily="@font/poppins_bold"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hier" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-            </GridLayout>
-        </androidx.core.widget.NestedScrollView>
-
+        <TextView
+            android:id="@+id/tvSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_recent"
+            android:textColor="#2ECC71"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"
+            android:clickable="true"
+            android:focusable="true"/>
     </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAds"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"/>
+
+</LinearLayout>

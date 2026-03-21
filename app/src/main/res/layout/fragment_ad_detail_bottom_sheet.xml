@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:paddingBottom="32dp">
 
-        <!-- Drag Handle -->
         <View
             android:layout_width="40dp"
             android:layout_height="4dp"
@@ -22,21 +21,61 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_drag_handle"/>
 
-        <!-- Ad Image Placeholder -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_marginHorizontal="16dp"
             android:background="@drawable/bg_ad_image_placeholder">
 
+            <ImageView
+                android:id="@+id/ivPrevImage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_chevron_left"
+                android:contentDescription="@string/previous_image"
+                android:padding="8dp"
+                android:background="@drawable/bg_image_counter"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <ImageView
+                android:id="@+id/ivNextImage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_chevron_right"
+                android:contentDescription="@string/next_image"
+                android:padding="8dp"
+                android:background="@drawable/bg_image_counter"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <ImageView
+                android:id="@+id/ivSaveAd"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="12dp"
+                android:src="@drawable/ic_bookmark_outline"
+                android:contentDescription="@string/save_ad"
+                android:padding="4dp"
+                android:background="@drawable/bg_image_counter"
+                android:clickable="true"
+                android:focusable="true"/>
+
             <TextView
+                android:id="@+id/tvImageEmoji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="🪔"
+                android:text="@string/emoji_vase"
                 android:textSize="64sp"/>
 
             <TextView
+                android:id="@+id/tvImageCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -140,7 +179,6 @@
                 android:layout_marginTop="8dp"/>
         </LinearLayout>
 
-        <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -148,7 +186,6 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="16dp"/>
 
-        <!-- Seller Info -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -156,7 +193,6 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp">
 
-            <!-- Avatar -->
             <FrameLayout
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -196,15 +232,77 @@
                     android:fontFamily="@font/poppins_regular"/>
             </LinearLayout>
 
-            <!-- Verified badge -->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:layout_marginTop="8dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/verified_badge"
-                android:textSize="18sp"/>
+                android:text="@string/rating_label"
+                android:textColor="#7FA68A"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="0dp"/>
+
+            <!-- Rating bar visual -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:background="@drawable/bg_rating_badge">
+
+                <TextView
+                    android:id="@+id/tvSellerRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rating_value"
+                    android:textColor="#2ECC71"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/poppins_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rating_max"
+                    android:textColor="#7FA68A"
+                    android:textSize="9sp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Action Buttons -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1AFFFFFF"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="12dp"/>
+
+        <TextView
+            android:id="@+id/btnReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btn_report"
+            android:textColor="#CC5555"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -213,7 +311,6 @@
             android:layout_marginTop="20dp"
             android:gravity="center">
 
-            <!-- Message Button -->
             <LinearLayout
                 android:id="@+id/btnMessage"
                 android:layout_width="0dp"

@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     internal lateinit var binding: ActivityMainBinding
     private var fabVisible = false
+    private var suppressNavListener = false  // ← KEY FIX
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +43,10 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val defaultNavOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.homeFragment, false)
-            .setLaunchSingleTop(true)
-            .build()
-
         binding.bottomNav.setOnItemSelectedListener { item ->
-            // Animate fade transition on nav items
+            if (suppressNavListener) return@setOnItemSelectedListener true
+
+            // Animate fade transition
             val menuView = binding.bottomNav.getChildAt(0) as? ViewGroup
             menuView?.let { mv ->
                 for (i in 0 until mv.childCount) {
@@ -59,10 +57,6 @@ class MainActivity : AppCompatActivity() {
                         .start()
                 }
             }
-
-            val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.navHostFragment) as NavHostFragment
-            val navController = navHostFragment.navController
 
             val defaultNavOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.homeFragment, false)
@@ -97,7 +91,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-// Set initial alpha state (home selected by default)
         binding.bottomNav.post {
             val menuView = binding.bottomNav.getChildAt(0) as? ViewGroup
             menuView?.let { mv ->
@@ -115,11 +108,25 @@ class MainActivity : AppCompatActivity() {
             if (menuItem != null) {
                 menuItem.isChecked = true
             }
+
+            // Update nav item alphas
+            val menuView = binding.bottomNav.getChildAt(0) as? ViewGroup
+            menuView?.let { mv ->
+                for (i in 0 until mv.childCount) {
+                    val child = mv.getChildAt(i)
+                    child.animate()
+                        .alpha(if (binding.bottomNav.menu.getItem(i).isChecked) 1f else 0.6f)
+                        .setDuration(150)
+                        .start()
+                }
+            }
         }
 
         binding.fabPostAd.setOnClickListener {
             binding.particleView.triggerRippleFromView(binding.fabPostAd)
-            // TODO: Open "Create Ad" screen
+            val navHostFragment = supportFragmentManager
+                .findFragmentById(R.id.navHostFragment) as NavHostFragment
+            navHostFragment.navController.navigate(R.id.postAdFragment)
         }
     }
 
@@ -136,7 +143,11 @@ class MainActivity : AppCompatActivity() {
                 .setLaunchSingleTop(false)
                 .build()
         )
+
+        // Suppress the listener so it doesn't re-navigate with "marketplace"
+        suppressNavListener = true
         binding.bottomNav.selectedItemId = R.id.villeFragment
+        suppressNavListener = false
     }
 
     fun updateFabVisibility(show: Boolean) {
@@ -175,8 +186,6 @@ class MainActivity : AppCompatActivity() {
         val itemCount = menuView.childCount
         if (itemCount < 4) return
 
-        // Inner items (Messages, Ville) move MORE
-        // Outer items (Home, Profile) move LESS
         val innerShift = dpToPx(24).toFloat()
         val outerShift = dpToPx(6).toFloat()
 
@@ -184,10 +193,10 @@ class MainActivity : AppCompatActivity() {
             val itemView = menuView.getChildAt(i)
             val targetX = if (spread) {
                 when (i) {
-                    0 -> -outerShift      // Home: slight left
-                    1 -> -innerShift      // Messages: more left
-                    2 -> innerShift       // Ville: more right
-                    3 -> outerShift       // Profile: slight right
+                    0 -> -outerShift
+                    1 -> -innerShift
+                    2 -> innerShift
+                    3 -> outerShift
                     else -> 0f
                 }
             } else {
@@ -216,6 +225,4 @@ class MainActivity : AppCompatActivity() {
         )
         return super.dispatchTouchEvent(ev)
     }
-
-
 }

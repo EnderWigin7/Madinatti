@@ -16,7 +16,7 @@
     <fragment android:id="@+id/villeFragment"
         android:name="com.madinatti.app.VilleFragment"
         android:label="Ville">
-         <argument
+        <argument
             android:name="selectedTab"
             app:argType="string"
             app:nullable="true"/>
@@ -25,5 +25,13 @@
     <fragment android:id="@+id/profileFragment"
         android:name="com.madinatti.app.ProfileFragment"
         android:label="Profil"/>
+
+    <fragment android:id="@+id/postAdFragment"
+        android:name="com.madinatti.app.PostAdFragment"
+        android:label="Publier"/>
+
+    <fragment android:id="@+id/qiblaFragment"
+        android:name="com.madinatti.app.QiblaFragment"
+        android:label="Qibla"/>
 
 </navigation>
