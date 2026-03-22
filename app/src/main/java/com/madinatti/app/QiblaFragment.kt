@@ -24,6 +24,9 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import kotlin.math.*
+import android.location.LocationManager
+import android.content.Intent
+import android.provider.Settings
 
 class QiblaFragment : Fragment(), SensorEventListener {
 
@@ -69,9 +72,9 @@ class QiblaFragment : Fragment(), SensorEventListener {
         } else {
             tvGpsStatus?.text = getString(R.string.qibla_no_gps)
             tvGpsStatus?.setTextColor(Color.parseColor("#CC5555"))
-            gpsIndicator?.setBackgroundColor(
-                Color.parseColor("#CC5555")
-            )
+            gpsIndicator?.setBackgroundResource(R.drawable.bg_gps_dot_inactive)
+
+            onLocationReceived(31.6295, -7.9811)
         }
     }
 
@@ -118,6 +121,32 @@ class QiblaFragment : Fragment(), SensorEventListener {
     }
 
     private fun checkAndRequestLocation() {
+        // First check if location services are enabled
+        val locationManager = requireContext().getSystemService(
+            Context.LOCATION_SERVICE
+        ) as LocationManager
+
+        val gpsEnabled = locationManager.isProviderEnabled(
+            LocationManager.GPS_PROVIDER
+        )
+        val networkEnabled = locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+
+        if (!gpsEnabled && !networkEnabled) {
+            tvGpsStatus?.text = getString(R.string.qibla_no_gps)
+            tvGpsStatus?.setTextColor(Color.parseColor("#CC5555"))
+            gpsIndicator?.setBackgroundResource(R.drawable.bg_gps_dot_inactive)
+
+            // Prompt user to enable location
+            try {
+                startActivity(
+                    Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                )
+            } catch (_: Exception) {}
+            return
+        }
+
         val fine = ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -140,6 +169,7 @@ class QiblaFragment : Fragment(), SensorEventListener {
             )
         }
     }
+
 
     @SuppressLint("MissingPermission")
     private fun requestLocation() {

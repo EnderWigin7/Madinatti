@@ -47,7 +47,8 @@
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_regular"
                 android:paddingHorizontal="16dp"
-                android:paddingEnd="44dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:background="@drawable/bg_input"
                 android:singleLine="true"/>
 

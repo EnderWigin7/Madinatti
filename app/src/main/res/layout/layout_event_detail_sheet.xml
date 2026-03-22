@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_glass"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_drag_handle"/>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/bg_ad_image_placeholder">
+
+
+            <ImageView
+                android:id="@+id/ivPrevImage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_chevron_left"
+                android:contentDescription="@string/previous_image"
+                android:padding="8dp"
+                android:background="@drawable/bg_image_counter"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <ImageView
+                android:id="@+id/ivNextImage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_chevron_right"
+                android:contentDescription="@string/next_image"
+                android:padding="8dp"
+                android:background="@drawable/bg_image_counter"
+                android:clickable="true"
+                android:focusable="true"/>
+
+
+            <TextView
+                android:id="@+id/tvHeroEmoji"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="72sp"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bg_event_detail_header"/>
+
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:paddingHorizontal="14dp"
+                android:background="@drawable/bg_interested_btn"
+                android:textColor="#0D1F17"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins_bold"/>
+
+            <!-- Image dots -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginHorizontal="3dp"
+                    android:background="@drawable/bg_avatar"/>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginHorizontal="3dp"
+                    android:background="@drawable/bg_gps_dot_inactive"/>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginHorizontal="3dp"
+                    android:background="@drawable/bg_gps_dot_inactive"/>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins_bold"
+            android:lineSpacingMultiplier="1.3"/>
+
+        <!-- Info rows -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:layout_marginTop="14dp">
+
+            <!-- Date -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_calendar"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvDetailDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/tvDetailDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_pin"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvDetailVenue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/tvDetailNeighborhood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+
+            <!-- Time -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_clock"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvDetailTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+
+            <!-- Price -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_ticket"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvDetailPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/tvDetailPriceSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1AFFFFFF"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="16dp"/>
+
+        <!-- About -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/event_about"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <TextView
+            android:id="@+id/tvDetailDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#7FA68A"
+            android:textSize="13sp"
+            android:fontFamily="@font/poppins_regular"
+            android:lineSpacingMultiplier="1.6"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1AFFFFFF"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="16dp"/>
+
+        <!-- Organizer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_event_organizer"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="12dp">
+
+            <FrameLayout
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_organizer_avatar"
+                android:layout_marginEnd="12dp">
+
+                <TextView
+                    android:id="@+id/tvOrganizerEmoji"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="22sp"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/event_organizer_label"
+                    android:textColor="#7FA68A"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/tvOrganizerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_semibold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_official_badge"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:text="@string/event_official_badge"
+                    android:textColor="#2ECC71"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1AFFFFFF"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="16dp"/>
+
+        <!-- Location card -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/event_location_title"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/bg_event_organizer">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/emoji_map"
+                android:textSize="36sp"/>
+
+            <TextView
+                android:id="@+id/tvMapAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginTop="6dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvMapsLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_maps_link"
+                android:textColor="#7FA68A"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginTop="2dp"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1AFFFFFF"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="16dp"/>
+
+        <!-- Interested people -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_interested_row"
+            android:paddingHorizontal="14dp">
+
+            <FrameLayout
+                android:layout_width="88dp"
+                android:layout_height="32dp">
+
+                <TextView android:layout_width="28dp" android:layout_height="28dp" android:layout_gravity="center_vertical" android:layout_marginStart="0dp" android:gravity="center" android:background="@drawable/bg_attendee_avatar"
+                    android:text="😊" android:textSize="14sp"/>
+                <TextView android:layout_width="28dp" android:layout_height="28dp" android:layout_gravity="center_vertical" android:layout_marginStart="18dp" android:gravity="center" android:background="@drawable/bg_attendee_avatar" android:text="👤" android:textSize="14sp"/>
+                <TextView android:layout_width="28dp" android:layout_height="28dp" android:layout_gravity="center_vertical" android:layout_marginStart="36dp" android:gravity="center" android:background="@drawable/bg_attendee_avatar" android:text="🧑" android:textSize="14sp"/>
+                <TextView android:layout_width="28dp" android:layout_height="28dp" android:layout_gravity="center_vertical" android:layout_marginStart="54dp" android:gravity="center" android:background="@drawable/bg_attendee_avatar" android:text="👩" android:textSize="14sp"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvInterestedLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:textColor="#7FA68A"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <!-- Bookmark -->
+            <FrameLayout
+                android:id="@+id/btnBookmark"
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_button_outline_green"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/ripple_green_rounded">
+
+                <TextView
+                    android:id="@+id/tvBookmarkIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="🔖"
+                    android:textSize="20sp"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/btnInterested"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:background="@drawable/bg_button_green"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/ripple_green_rounded">
+
+                <TextView
+                    android:id="@+id/tvInterestedBtnLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/event_interested_btn"
+                    android:textColor="#0D1F17"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_bold"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

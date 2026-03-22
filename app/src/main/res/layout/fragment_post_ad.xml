@@ -220,6 +220,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:paddingHorizontal="12dp"
                     android:paddingEnd="48dp"
+                    android:paddingStart="7dp"
                     android:inputType="numberDecimal"
                     android:maxLines="1"/>
 

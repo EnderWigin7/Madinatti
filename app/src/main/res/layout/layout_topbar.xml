@@ -63,7 +63,7 @@
                 android:id="@+id/tvCityName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Marrakech"
+                android:text="@string/city_default"
                 android:textColor="#FFFFFF"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_regular"/>
@@ -71,7 +71,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" ▾"
+                android:text="@string/dropdown_arrow"
                 android:textColor="#7FA68A"
                 android:textSize="15sp"/>
 
