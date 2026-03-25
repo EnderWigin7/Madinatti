@@ -20,7 +20,6 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"/>
 
-    <!-- Wrapper to hold the line and the nav bar -->
     <LinearLayout
         android:id="@+id/bottomNavContainer"
         android:layout_width="match_parent"
@@ -28,7 +27,7 @@
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
-        <!-- The 1dp Green Border Line -->
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

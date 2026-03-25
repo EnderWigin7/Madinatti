@@ -8,7 +8,6 @@
     android:padding="16dp"
     android:background="@drawable/bg_dialog_glass">
 
-    <!-- Apple -->
     <LinearLayout
         android:id="@+id/btnApple"
         android:layout_width="match_parent"

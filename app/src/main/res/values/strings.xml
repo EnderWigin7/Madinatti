@@ -60,12 +60,6 @@
     <string name="emoji_art">🎨</string>
 
     <string name="cat_tout">Tout</string>
-    <string name="cat_maison">\ Maison</string>
-    <string name="cat_electronique">\ Électronique</string>
-    <string name="cat_voitures">\ Voitures</string>
-    <string name="cat_vetements">\ Vêtements</string>
-    <string name="cat_immobilier">\ Immobilier</string>
-    <string name="cat_artisanat">\ Artisanat</string>
     <string name="search_annonces">Rechercher des annonces…</string>
     <string name="ad_count_placeholder">1 248 annonces</string>
     <string name="sort_recent">⇅ Plus récent</string>
@@ -159,7 +153,7 @@
     <string name="verified_badge">✅</string>
     <string name="btn_appeler">📞 Appeler</string>
 
-    <string name="save_ad">Enregistrer l’annonce</string>
+    <string name="save_ad">Enregistrer l\'annonce</string>
     <string name="previous_image">Image précédente</string>
     <string name="next_image">Image suivante</string>
     <string name="emoji_vase">🏺</string>
@@ -330,5 +324,15 @@
     <string name="emoji_ticket">🎟️</string>
     <string name="emoji_map">🗺️</string>
 
+    <string name="cat_maison">Maison</string>
+    <string name="cat_electronique">Électronique</string>
+    <string name="cat_voitures">Voitures</string>
+    <string name="cat_vetements">Vêtements</string>
+    <string name="cat_immobilier">Immobilier</string>
+    <string name="cat_artisanat">Artisanat</string>
+
+    <string name="notifications">Notifications</string>
+    <string name="mark_all_read">Tout marquer lu</string>
+    <string name="today">AUJOURD\'HUI</string>
 
 </resources>

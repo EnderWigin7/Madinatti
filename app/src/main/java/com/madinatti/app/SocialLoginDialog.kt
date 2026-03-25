@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.OvershootInterpolator
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.madinatti.app.databinding.DialogSocialLoginBinding
 
@@ -56,17 +57,35 @@ class SocialLoginDialog : DialogFragment() {
             .setInterpolator(OvershootInterpolator(1.1f))
             .start()
 
+        // Apple — not supported yet
         binding.btnApple.setOnClickListener {
-            animateRow(it) { dismiss() }
+            animateRow(it) {
+                Toast.makeText(requireContext(), "🍎 Apple Sign-In — bientôt disponible", Toast.LENGTH_SHORT).show()
+                dismiss()
+            }
         }
+
+        // Facebook — not supported yet
         binding.btnFacebook.setOnClickListener {
-            animateRow(it) { dismiss() }
+            animateRow(it) {
+                Toast.makeText(requireContext(), "📘 Facebook — bientôt disponible", Toast.LENGTH_SHORT).show()
+                dismiss()
+            }
         }
+
+        // ── Google Sign-In — REAL ──
         binding.btnGoogle.setOnClickListener {
-            animateRow(it) { dismiss() }
+            animateRow(it) {
+                dismiss()
+                (requireActivity() as? AuthActivity)?.launchGoogleSignIn()
+            }
         }
+
         binding.btnPhone.setOnClickListener {
-            animateRow(it) { dismiss() }
+            animateRow(it) {
+                Toast.makeText(requireContext(), "📱 Phone Sign-In — bientôt disponible", Toast.LENGTH_SHORT).show()
+                dismiss()
+            }
         }
 
         dialog?.setCanceledOnTouchOutside(true)

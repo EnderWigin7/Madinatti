@@ -23,7 +23,10 @@
 
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false"/>
+
+
 
         <activity
             android:name=".LanguageActivity"

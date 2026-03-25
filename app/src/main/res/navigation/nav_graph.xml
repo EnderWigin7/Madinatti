@@ -34,4 +34,19 @@
         android:name="com.madinatti.app.QiblaFragment"
         android:label="Qibla"/>
 
+    <fragment
+        android:id="@+id/dmFragment"
+        android:name="com.madinatti.app.DmFragment"
+        android:label="DM"/>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.madinatti.app.EditProfileFragment"
+        android:label="Edit Profile"/>
+
+    <fragment
+        android:id="@+id/mesAnnoncesFragment"
+        android:name="com.madinatti.app.MesAnnoncesFragment"
+        android:label="Mes Annonces"/>
+
 </navigation>

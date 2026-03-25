@@ -17,6 +17,7 @@
         android:gravity="center_horizontal"
         android:layout_gravity="center_vertical">
 
+        <!-- City picker -->
         <FrameLayout
             android:id="@+id/cityContainer"
             android:layout_width="match_parent"
@@ -43,6 +44,7 @@
                 app:tint="#FFFFFF"/>
         </FrameLayout>
 
+        <!-- Full name -->
         <EditText
             android:id="@+id/etNom"
             android:layout_width="match_parent"
@@ -58,6 +60,7 @@
             android:background="@drawable/bg_input"
             android:singleLine="true"/>
 
+        <!-- Email -->
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
@@ -73,6 +76,7 @@
             android:background="@drawable/bg_input"
             android:singleLine="true"/>
 
+        <!-- Phone -->
         <EditText
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
@@ -88,7 +92,24 @@
             android:background="@drawable/bg_input"
             android:singleLine="true"/>
 
-        <!-- Password with eye icon -->
+        <!-- AGE (NEW) -->
+        <EditText
+            android:id="@+id/etAge"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="12dp"
+            android:hint="Âge"
+            android:inputType="number"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#4DFFFFFF"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/bg_input"
+            android:singleLine="true"
+            android:maxLength="3"/>
+
+        <!-- Password -->
         <FrameLayout
             android:id="@+id/passwordContainer"
             android:layout_width="match_parent"
@@ -119,7 +140,7 @@
                 app:tint="#7FA68A"/>
         </FrameLayout>
 
-        <!-- Confirm password with eye icon -->
+        <!-- Confirm password -->
         <FrameLayout
             android:id="@+id/confirmPasswordContainer"
             android:layout_width="match_parent"

@@ -44,10 +44,9 @@ class MessagesFragment : Fragment() {
         ).forEach { conv ->
             conv.setOnClickListener {
                 triggerRipple(conv)
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.navHostFragment, DmFragment())
-                    .addToBackStack(null)
-                    .commit()
+                androidx.navigation.Navigation
+                    .findNavController(requireActivity(), R.id.navHostFragment)
+                    .navigate(R.id.dmFragment)
             }
         }
     }

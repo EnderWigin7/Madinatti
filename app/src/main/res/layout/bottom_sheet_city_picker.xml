@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_bottom_sheet"
+    android:paddingTop="12dp">
+
+    <!-- Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_drag_handle"/>
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choisir une ville"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:paddingVertical="14dp"/>
+
+    <!-- Search field -->
+    <EditText
+        android:id="@+id/etCitySearch"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:hint="🔍  Rechercher une ville..."
+        android:textColor="#FFFFFF"
+        android:textColorHint="#4D7FA68A"
+        android:textSize="13sp"
+        android:fontFamily="@font/poppins_regular"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_input"
+        android:singleLine="true"
+        android:inputType="text"
+        android:imeOptions="actionSearch"/>
+
+    <!-- City list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCities"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"/>
+
+</LinearLayout>

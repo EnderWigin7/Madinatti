@@ -29,8 +29,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 1. DYNAMIC CLICKS: Loop through every item in the Grid automatically!
-        // When you add Firebase later, we will use a RecyclerView instead of a Grid.
         for (i in 0 until binding.adsGrid.childCount) {
             val childView = binding.adsGrid.getChildAt(i)
             childView.setOnClickListener {
@@ -39,14 +37,23 @@ class HomeFragment : Fragment() {
             }
         }
 
+        binding.topBarInclude.ivNotifications.setOnClickListener {
+            NotificationsBottomSheet.newInstance()
+                .show(parentFragmentManager, "notifications")
+        }
+
         applyStatusBarSpacer()
 
         TopBarHelper.setup(
             topBarBinding = binding.topBarInclude,
-            showBackButton = false
+            showBackButton = false,
+            fragmentManager = parentFragmentManager
         )
         binding.topBarInclude.citySelector.setOnClickListener { }
-        binding.topBarInclude.ivNotifications.setOnClickListener { }
+        binding.topBarInclude.ivNotifications.setOnClickListener {
+            NotificationsBottomSheet.newInstance()
+                .show(parentFragmentManager, "notifications")
+        }
 
         val navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment)
 

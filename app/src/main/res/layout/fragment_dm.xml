@@ -27,7 +27,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- Back arrow -->
             <ImageView
                 android:id="@+id/ivDmBack"
                 android:layout_width="40dp"
@@ -43,7 +42,7 @@
                 android:id="@+id/tvDmAvatar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:text="@sA"
+                android:text="A"
                 android:textColor="#0D1F17"
                 android:textSize="18sp"
                 android:fontFamily="@font/poppins_bold"
@@ -77,11 +76,12 @@
 
             </LinearLayout>
 
-            <!-- Call icon (placeholder) -->
+
             <ImageView
+                android:id="@+id/ivDmCall"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/ic_bell"
+                android:src="@drawable/ic_call"
                 android:contentDescription="@string/app_name"
                 android:padding="6dp"
                 android:clickable="true"
@@ -91,7 +91,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- MESSAGES LIST -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMessages"
         android:layout_width="match_parent"

@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,426 +7,421 @@
     android:orientation="vertical"
     android:background="@color/background">
 
+    <include android:id="@+id/topBarInclude"
+        layout="@layout/layout_topbar"/>
 
-<include android:id="@+id/topBarInclude"
-    layout="@layout/layout_topbar"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
-
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:fillViewport="true">
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="32dp">
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:fillViewport="true">
 
-        <!-- AVATAR + NAME SECTION -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:paddingTop="24dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="32dp">
 
-            <!-- Avatar -->
-            <FrameLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp">
+            <!-- PROFILE HEADER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingTop="24dp"
+                android:paddingBottom="20dp">
 
-                <ImageView
-                    android:id="@+id/ivAvatar"
+                <!-- Avatar -->
+                <FrameLayout
                     android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_profile"
-                    android:contentDescription="@string/app_name"
-                    android:background="@drawable/bg_avatar_circle"
-                    android:padding="20dp"
-                    app:tint="#7FA68A"/>
+                    android:layout_height="100dp">
 
-                <!-- Edit badge -->
+                    <ImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/bg_avatar_circle"
+                        android:visibility="gone"
+                        android:contentDescription="avatar"/>
+
+                    <TextView
+                        android:id="@+id/tvAvatarFallback"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:text="👤"
+                        android:textSize="44sp"
+                        android:gravity="center"
+                        android:background="@drawable/bg_avatar_circle"
+                        android:visibility="visible"/>
+
+                    <LinearLayout
+                        android:id="@+id/btnEditAvatar"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="bottom|end"
+                        android:background="@drawable/bg_btn_green"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📷"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_marginTop="12dp"/>
+
+                <TextView
+                    android:id="@+id/tvUserEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#7FA68A"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginTop="2dp"/>
+
                 <LinearLayout
-                    android:id="@+id/btnEditAvatar"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="bottom|end"
-                    android:background="@drawable/bg_btn_green"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="4dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="✏️"
+                        android:text="📍 "
                         android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/tvUserCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#7FA68A"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppins_regular"/>
                 </LinearLayout>
 
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/tvUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ender Wigin"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:fontFamily="@font/poppins_bold"
-                android:layout_marginTop="12dp"/>
-
-            <!-- City -->
-            <TextView
-                android:id="@+id/tvUserCity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kenitra"
-                android:textColor="#7FA68A"
-                android:textSize="14sp"
-                android:fontFamily="@font/poppins_regular"
-                android:layout_marginTop="2dp"/>
-
-            <!-- Member since -->
-            <TextView
-                android:id="@+id/tvMemberSince"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Membre depuis 2024"
-                android:textColor="#7FA68A"
-                android:textSize="11sp"
-                android:fontFamily="@font/poppins_regular"
-                android:layout_marginTop="2dp"/>
-
-            <!-- Customize profile prompt -->
-            <TextView
-                android:id="@+id/tvCustomizeProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="✏️ Personnalisez votre profil"
-                android:textColor="#2ECC71"
-                android:textSize="11sp"
-                android:fontFamily="@font/poppins_regular"
-                android:layout_marginTop="6dp"
-                android:clickable="true"
-                android:focusable="true"/>
-
-        </LinearLayout>
-
-        <!-- DIVIDER -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1E3D2A"/>
-
-        <!-- MENU ROWS -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Mes annonces -->
-            <LinearLayout
-                android:id="@+id/rowMesAnnonces"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
-
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="📦   Mes annonces"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/poppins_regular"/>
-
-                <TextView
-                    android:id="@+id/tvAnnoncesCount"
+                    android:id="@+id/tvMemberSince"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12"
-                    android:textColor="#FB282B"
-                    android:textSize="14sp"
+                    android:text=""
+                    android:textColor="#4D7FA68A"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvCustomizeProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✏️ Personnalisez votre profil"
+                    android:textColor="#2ECC71"
+                    android:textSize="11sp"
                     android:fontFamily="@font/poppins_medium"
-                    android:layout_marginEnd="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="→"
-                    android:textColor="#7FA68A"
-                    android:textSize="16sp"/>
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
             </LinearLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Favoris -->
-            <LinearLayout
-                android:id="@+id/rowFavoris"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
+                android:layout_height="1dp"
+                android:background="#1E3D2A"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="🔖   Favoris"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/poppins_regular"/>
-
-                <TextView
-                    android:id="@+id/tvFavorisCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5"
-                    android:textColor="#FB282B"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:layout_marginEnd="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="→"
-                    android:textColor="#7FA68A"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Messages -->
+            <!-- MENU ROWS -->
             <LinearLayout
-                android:id="@+id/rowMessages"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="4dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="💬   Messages"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/poppins_regular"/>
+                <!-- Mes annonces -->
+                <LinearLayout
+                    android:id="@+id/rowMesAnnonces"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_surface"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
 
-                <TextView
-                    android:id="@+id/tvMessagesCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3"
-                    android:textColor="#FB282B"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:layout_marginEnd="8dp"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="📦   Mes annonces"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_regular"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="→"
-                    android:textColor="#7FA68A"
-                    android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/tvAnnoncesCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#2ECC71"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="#7FA68A"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                    android:background="#1E3D2A" android:layout_marginHorizontal="16dp"/>
+
+                <!-- Favoris -->
+                <LinearLayout
+                    android:id="@+id/rowFavoris"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_surface"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="🔖   Favoris"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                    <TextView
+                        android:id="@+id/tvFavorisCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#2ECC71"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="#7FA68A"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                    android:background="#1E3D2A" android:layout_marginHorizontal="16dp"/>
+
+                <!-- Messages -->
+                <LinearLayout
+                    android:id="@+id/rowMessages"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_surface"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="💬   Messages"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                    <TextView
+                        android:id="@+id/tvMessagesCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#2ECC71"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="#7FA68A"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                    android:background="#1E3D2A" android:layout_marginHorizontal="16dp"/>
+
+                <!-- Notifications -->
+                <LinearLayout
+                    android:id="@+id/rowNotifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_surface"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="🔔   Notifications"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="#7FA68A"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                    android:background="#1E3D2A" android:layout_marginHorizontal="16dp"/>
+
+                <!-- Paramètres -->
+                <LinearLayout
+                    android:id="@+id/rowParametres"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_surface"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="⚙️   Paramètres"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="#7FA68A"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                    android:background="#1E3D2A" android:layout_marginHorizontal="16dp"/>
+
+                <!-- Langue -->
+                <LinearLayout
+                    android:id="@+id/rowLangue"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_surface"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="🌍   Langue"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppins_regular"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="#7FA68A"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Notifications -->
-            <LinearLayout
-                android:id="@+id/rowNotifications"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
+                android:layout_height="1dp"
+                android:background="#1E3D2A"
+                android:layout_marginTop="8dp"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="🔔   Notifications"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/poppins_regular"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="→"
-                    android:textColor="#7FA68A"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Paramètres -->
+            <!-- LOGOUT -->
             <LinearLayout
-                android:id="@+id/rowParametres"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="⚙️   Paramètres"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/poppins_regular"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="→"
-                    android:textColor="#7FA68A"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Langue -->
-            <LinearLayout
-                android:id="@+id/rowLangue"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="🌍   Langue"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/poppins_regular"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="→"
-                    android:textColor="#7FA68A"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Changer de ville -->
-            <LinearLayout
-                android:id="@+id/rowChangerVille"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="🏙️   Changer de ville"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/poppins_regular"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="→"
-                    android:textColor="#7FA68A"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- DIVIDER -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#1E3D2A"
-            android:layout_marginTop="8dp"/>
-
-        <!-- LOGOUT BUTTON -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp">
-
-            <LinearLayout
-                android:id="@+id/btnLogout"
-                android:layout_width="150dp"
-                android:layout_height="42dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:background="@drawable/bg_btn_logout"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Se déconnecter"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/poppins_bold"/>
+                <LinearLayout
+                    android:id="@+id/btnLogout"
+                    android:layout_width="160dp"
+                    android:layout_height="44dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_btn_logout"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_green">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🚪 Se déconnecter"
+                        android:textColor="#E74C3C"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppins_semibold"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

@@ -40,7 +40,7 @@ class DmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Status bar
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.dmTopBar) { v, insets ->
             val h = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             binding.statusBarSpacer.layoutParams.height = h
@@ -52,15 +52,18 @@ class DmFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        // Setup RecyclerView
+        binding.ivDmCall.setOnClickListener {
+            android.widget.Toast.makeText(requireContext(), "Appel bientôt disponible", android.widget.Toast.LENGTH_SHORT).show()
+        }
+
         val adapter = DmAdapter(messages)
         val layoutManager = LinearLayoutManager(requireContext()).apply {
-            stackFromEnd = true // messages start from bottom like WhatsApp
+            stackFromEnd = true
         }
+
         binding.rvMessages.layoutManager = layoutManager
         binding.rvMessages.adapter = adapter
 
-        // Send message
         binding.btnSend.setOnClickListener {
             val text = binding.etMessage.text.toString().trim()
             if (text.isNotEmpty()) {

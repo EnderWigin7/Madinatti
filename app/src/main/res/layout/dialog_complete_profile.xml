@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#132D1F">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quelques infos supplémentaires"
+        android:textColor="#7FA68A"
+        android:textSize="12sp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etDialogPhone"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginBottom="12dp"
+        android:hint="📱 Numéro de téléphone"
+        android:inputType="phone"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#4D7FA68A"
+        android:textSize="13sp"
+        android:fontFamily="@font/poppins_regular"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_input"/>
+
+    <EditText
+        android:id="@+id/etDialogAge"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginBottom="12dp"
+        android:hint="🎂 Âge"
+        android:inputType="number"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#4D7FA68A"
+        android:textSize="13sp"
+        android:fontFamily="@font/poppins_regular"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_input"
+        android:maxLength="3"/>
+
+    <TextView
+        android:id="@+id/tvDialogCity"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:text="📍 Choisir une ville"
+        android:textColor="#4D7FA68A"
+        android:textSize="13sp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_input"
+        android:clickable="true"
+        android:focusable="true"/>
+
+</LinearLayout>

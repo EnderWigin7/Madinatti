@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_my_ad_card"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple_green">
+
+    <!-- TOP SECTION: Image + Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="13dp">
+
+        <!-- Emoji thumbnail -->
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_ad_thumbnail">
+
+            <TextView
+                android:id="@+id/tvAdEmoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="34sp"/>
+        </FrameLayout>
+
+        <!-- Info section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/tvAdTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_medium"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/tvAdPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#2ECC71"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="2dp"/>
+
+            <!-- Status badge -->
+            <LinearLayout
+                android:id="@+id/badgeContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_status_active">
+
+                <View
+                    android:id="@+id/statusDot"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:background="@drawable/bg_online_dot"
+                    android:layout_marginEnd="6dp"/>
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="#2ECC71"/>
+            </LinearLayout>
+
+            <!-- Time -->
+            <TextView
+                android:id="@+id/tvAdTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#7FA68A"
+                android:textSize="10sp"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+        <!-- Options button (3 dots) -->
+        <TextView
+            android:id="@+id/btnOptions"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="⋮"
+            android:textColor="#7FA68A"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </LinearLayout>
+
+    <!-- DIVIDER -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1A2E22"
+        android:layout_marginHorizontal="13dp"/>
+
+    <!-- BOTTOM SECTION: Stats row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <!-- Views -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="👁 "
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/tvAdViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 vues"
+                android:textColor="#7FA68A"
+                android:textSize="10sp"
+                android:fontFamily="@font/poppins_regular"/>
+        </LinearLayout>
+
+        <!-- Messages -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💬 "
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/tvAdMessages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 msgs"
+                android:textColor="#7FA68A"
+                android:textSize="10sp"
+                android:fontFamily="@font/poppins_regular"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🏷 "
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/tvAdCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="#7FA68A"
+                android:textSize="10sp"
+                android:fontFamily="@font/poppins_regular"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

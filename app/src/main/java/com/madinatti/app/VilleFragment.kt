@@ -31,7 +31,12 @@ class VilleFragment : Fragment() {
             showBackButton = false
         )
 
-        // DEBUG: Log what we receive
+
+        binding.topBarInclude.ivNotifications.setOnClickListener {
+            NotificationsBottomSheet.newInstance()
+                .show(parentFragmentManager, "notifications")
+        }
+
         val receivedTab = arguments?.getString("selectedTab")
         android.util.Log.d("VILLE", "Received selectedTab = $receivedTab")
         android.util.Log.d("VILLE", "Full arguments = ${arguments?.keySet()?.map { "$it=${arguments?.get(it)}" }}")
@@ -42,7 +47,6 @@ class VilleFragment : Fragment() {
         selectTab(currentTab)
 
         binding.topBarInclude.citySelector.setOnClickListener { }
-        binding.topBarInclude.ivNotifications.setOnClickListener { }
     }
 
     private fun setupShortcutCards() {

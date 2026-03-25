@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.madinatti.app.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -16,14 +18,19 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private var passwordVisible = false
+    private lateinit var auth: FirebaseAuth
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
 
         listOf(binding.etEmail, binding.etPassword).forEach { field ->
             field.setOnFocusChangeListener { _, hasFocus ->
@@ -46,29 +53,110 @@ class LoginFragment : Fragment() {
             )
         }
 
+        // Forgot password — REAL Firebase reset
         binding.tvForgotPassword.setOnClickListener {
-            binding.tvForgotPassword.animate().alpha(0.3f).setDuration(80)
-                .withEndAction {
-                    binding.tvForgotPassword.setTextColor(
-                        android.graphics.Color.parseColor("#2ECC71"))
-                    binding.tvForgotPassword.animate().alpha(1f).setDuration(150)
-                        .withEndAction {
-                            binding.tvForgotPassword.postDelayed({
-                                binding.tvForgotPassword.animate().alpha(0.7f).setDuration(100)
-                                    .withEndAction {
-                                        binding.tvForgotPassword.setTextColor(
-                                            android.graphics.Color.WHITE)
-                                        binding.tvForgotPassword.animate().alpha(1f).setDuration(100).start()
-                                    }.start()
-                            }, 600)
-                        }.start()
-                }.start()
+            val email = binding.etEmail.text.toString().trim()
+            if (email.isEmpty()) {
+                binding.etEmail.error = "Entrez votre email d'abord"
+                binding.etEmail.requestFocus()
+                return@setOnClickListener
+            }
+
+            binding.tvForgotPassword.isEnabled = false
+            auth.sendPasswordResetEmail(email)
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "📧 Email de réinitialisation envoyé à $email",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    binding.tvForgotPassword.isEnabled = true
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(
+                        requireContext(),
+                        getFirebaseErrorMessage(e),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    binding.tvForgotPassword.isEnabled = true
+                }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    fun attemptLogin() {
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPassword.text.toString()
+
+        // Validation
+        if (email.isEmpty()) {
+            binding.etEmail.error = "Email requis"
+            binding.etEmail.requestFocus()
+            return
+        }
+        if (password.isEmpty()) {
+            binding.etPassword.error = "Mot de passe requis"
+            binding.etPassword.requestFocus()
+            return
+        }
+        if (password.length < 6) {
+            binding.etPassword.error = "Minimum 6 caractères"
+            binding.etPassword.requestFocus()
+            return
+        }
+
+        setLoading(true)
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                setLoading(false)
+                navigateToMain()
+            }
+            .addOnFailureListener { e ->
+                setLoading(false)
+                Toast.makeText(
+                    requireContext(),
+                    getFirebaseErrorMessage(e),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    fun navigateToMain() {
+        val prefs = requireContext().getSharedPreferences("madinatti_prefs", 0)
+        prefs.edit().putBoolean("has_seen_splash", true).apply()
+        startActivity(
+            Intent(requireContext(), MainActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        requireActivity().overridePendingTransition(
+            android.R.anim.fade_in, android.R.anim.fade_out
+        )
+        requireActivity().finish()
+    }
+
+    private fun setLoading(loading: Boolean) {
+        binding.etEmail.isEnabled = !loading
+        binding.etPassword.isEnabled = !loading
+        binding.ivTogglePassword.isEnabled = !loading
+        binding.tvForgotPassword.isEnabled = !loading
+    }
+
+    private fun getFirebaseErrorMessage(e: Exception): String {
+        return when {
+            e.message?.contains("no user record") == true ->
+                "❌ Aucun compte trouvé avec cet email"
+            e.message?.contains("password is invalid") == true ->
+                "❌ Mot de passe incorrect"
+            e.message?.contains("badly formatted") == true ->
+                "❌ Format d'email invalide"
+            e.message?.contains("network error") == true ->
+                "❌ Pas de connexion internet"
+            e.message?.contains("too many requests") == true ->
+                "⏳ Trop de tentatives. Réessayez plus tard"
+            e.message?.contains("user has been disabled") == true ->
+                "🚫 Ce compte a été désactivé"
+            else -> "❌ Erreur: ${e.localizedMessage}"
+        }
     }
 
     private fun animateButton(view: TextView, onEnd: () -> Unit) {
@@ -80,16 +168,8 @@ class LoginFragment : Fragment() {
             }.start()
     }
 
-    fun attemptLogin() {
-        val email = binding.etEmail.text.toString().trim()
-        val password = binding.etPassword.text.toString()
-        if (email.isEmpty()) { binding.etEmail.error = "Email requis"; return }
-        if (password.isEmpty()) { binding.etPassword.error = "Requis"; return }
-        // TODO: Firebase auth
-        val prefs = requireContext().getSharedPreferences("madinatti_prefs", 0)
-        prefs.edit().putBoolean("has_seen_splash", true).apply()
-        startActivity(Intent(requireContext(), MainActivity::class.java))
-        requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        requireActivity().finish()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
