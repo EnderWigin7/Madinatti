@@ -1,5 +1,6 @@
 package com.madinatti.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -10,19 +11,36 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.madinatti.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     internal lateinit var binding: ActivityMainBinding
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    private var unreadListener: ListenerRegistration? = null
     private var fabVisible = false
-    private var suppressNavListener = false  // ← KEY FIX
+    private var suppressNavListener = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        val lang = getSharedPreferences("madinatti_prefs", 0)
+            .getString("app_language", "fr") ?: "fr"
+        val locale = java.util.Locale(lang)
+        java.util.Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        createConfigurationContext(config)
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        window.addFlags(
+            android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(
+            android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.statusBarColor = android.graphics.Color.parseColor("#132D1F")
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -33,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         binding.fabPostAd.visibility = View.GONE
 
         androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val h = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.statusBars()).top
+            val h = insets.getInsets(
+                androidx.core.view.WindowInsetsCompat.Type.statusBars()).top
             getSharedPreferences("ui_prefs", MODE_PRIVATE).edit()
                 .putInt("status_bar_height", h).apply()
             insets
@@ -46,15 +65,12 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener { item ->
             if (suppressNavListener) return@setOnItemSelectedListener true
 
-            // Animate fade transition
             val menuView = binding.bottomNav.getChildAt(0) as? ViewGroup
             menuView?.let { mv ->
                 for (i in 0 until mv.childCount) {
-                    val child = mv.getChildAt(i)
-                    child.animate()
+                    mv.getChildAt(i).animate()
                         .alpha(if (i == item.order) 1f else 0.6f)
-                        .setDuration(150)
-                        .start()
+                        .setDuration(150).start()
                 }
             }
 
@@ -80,11 +96,13 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.messagesFragment -> {
-                    navController.navigate(R.id.messagesFragment, null, defaultNavOptions)
+                    navController.navigate(
+                        R.id.messagesFragment, null, defaultNavOptions)
                     true
                 }
                 R.id.profileFragment -> {
-                    navController.navigate(R.id.profileFragment, null, defaultNavOptions)
+                    navController.navigate(
+                        R.id.profileFragment, null, defaultNavOptions)
                     true
                 }
                 else -> false
@@ -101,39 +119,149 @@ class MainActivity : AppCompatActivity() {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id != R.id.villeFragment) {
-                hideFab()
-            }
+            if (destination.id != R.id.villeFragment) hideFab()
             val menuItem = binding.bottomNav.menu.findItem(destination.id)
-            if (menuItem != null) {
-                menuItem.isChecked = true
-            }
+            menuItem?.isChecked = true
 
-            // Update nav item alphas
             val menuView = binding.bottomNav.getChildAt(0) as? ViewGroup
             menuView?.let { mv ->
                 for (i in 0 until mv.childCount) {
-                    val child = mv.getChildAt(i)
-                    child.animate()
-                        .alpha(if (binding.bottomNav.menu.getItem(i).isChecked) 1f else 0.6f)
-                        .setDuration(150)
-                        .start()
+                    mv.getChildAt(i).animate()
+                        .alpha(if (binding.bottomNav.menu.getItem(i)
+                                .isChecked) 1f else 0.6f)
+                        .setDuration(150).start()
                 }
             }
         }
 
         binding.fabPostAd.setOnClickListener {
             binding.particleView.triggerRippleFromView(binding.fabPostAd)
-            val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.navHostFragment) as NavHostFragment
-            navHostFragment.navController.navigate(R.id.postAdFragment)
+            (supportFragmentManager.findFragmentById(R.id.navHostFragment)
+                    as NavHostFragment).navController.navigate(R.id.postAdFragment)
+        }
+
+        // Start observing unread messages
+        observeUnreadMessages()
+    }
+
+    // ─────────────────────────────────────────
+    // ONLINE STATUS - single clean function
+    // ─────────────────────────────────────────
+    private fun setUserOnlineStatus(
+        online: Boolean,
+        onDone: (() -> Unit)? = null
+    ) {
+        val uid = auth.currentUser?.uid ?: run {
+            onDone?.invoke()
+            return
+        }
+        db.collection("users").document(uid)
+            .update(mapOf(
+                "isOnline" to online,
+                "lastSeen" to com.google.firebase.Timestamp.now()
+            ))
+            .addOnCompleteListener {
+                onDone?.invoke()
+            }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (auth.currentUser != null) {
+            setUserOnlineStatus(true)
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        if (auth.currentUser != null) {
+            setUserOnlineStatus(false)
+        }
+    }
+
+    // ─────────────────────────────────────────
+    // LOGOUT - waits for Firestore before signing out
+    // ─────────────────────────────────────────
+    fun performLogout() {
+        val uid = auth.currentUser?.uid
+        if (uid != null) {
+            setUserOnlineStatus(false) {
+                // Only runs AFTER Firestore confirms offline
+                auth.signOut()
+                try {
+                    com.google.android.gms.auth.api.signin.GoogleSignIn
+                        .getClient(
+                            this,
+                            com.google.android.gms.auth.api.signin
+                                .GoogleSignInOptions.Builder(
+                                    com.google.android.gms.auth.api.signin
+                                        .GoogleSignInOptions.DEFAULT_SIGN_IN
+                                ).build()
+                        ).signOut()
+                } catch (_: Exception) {}
+
+                getSharedPreferences("madinatti_prefs", 0)
+                    .edit().clear().apply()
+
+                startActivity(
+                    Intent(this, AuthActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                )
+            }
+        } else {
+            auth.signOut()
+            startActivity(
+                Intent(this, AuthActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            )
+        }
+    }
+
+    // ─────────────────────────────────────────
+    // UNREAD BADGE
+    // ─────────────────────────────────────────
+    private fun observeUnreadMessages() {
+        val uid = auth.currentUser?.uid ?: return
+
+        unreadListener?.remove()
+        unreadListener = db.collection("chats")
+            .whereArrayContains("participants", uid)
+            .addSnapshotListener { result, _ ->
+                if (result == null) return@addSnapshotListener
+                val totalUnread = result.documents.sumOf { doc ->
+                    (doc.getLong("unread_$uid") ?: 0).toInt()
+                }
+                runOnUiThread {
+                    val badge = binding.bottomNav
+                        .getOrCreateBadge(R.id.messagesFragment)
+                    if (totalUnread > 0) {
+                        badge.isVisible = true
+                        badge.number = totalUnread
+                        badge.backgroundColor =
+                            android.graphics.Color.parseColor("#2ECC71")
+                        badge.badgeTextColor =
+                            android.graphics.Color.parseColor("#0D1F17")
+                    } else {
+                        badge.isVisible = false
+                    }
+                }
+            }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unreadListener?.remove()
+    }
+
+    // ─────────────────────────────────────────
+    // NAVIGATION HELPERS
+    // ─────────────────────────────────────────
     fun navigateToVilleTab(tab: String) {
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.navHostFragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        val navController = (supportFragmentManager
+            .findFragmentById(R.id.navHostFragment) as NavHostFragment)
+            .navController
 
         navController.navigate(
             R.id.villeFragment,
@@ -143,8 +271,6 @@ class MainActivity : AppCompatActivity() {
                 .setLaunchSingleTop(false)
                 .build()
         )
-
-        // Suppress the listener so it doesn't re-navigate with "marketplace"
         suppressNavListener = true
         binding.bottomNav.selectedItemId = R.id.villeFragment
         suppressNavListener = false
@@ -157,27 +283,23 @@ class MainActivity : AppCompatActivity() {
     private fun showFab() {
         if (fabVisible) return
         fabVisible = true
-
         binding.fabPostAd.visibility = View.VISIBLE
         binding.fabPostAd.animate()
             .scaleX(1f).scaleY(1f)
             .setDuration(300)
             .setInterpolator(OvershootInterpolator(2f))
             .start()
-
         animateNavItemsSpread(true)
     }
 
     private fun hideFab() {
         if (!fabVisible) return
         fabVisible = false
-
         binding.fabPostAd.animate()
             .scaleX(0f).scaleY(0f)
             .setDuration(200)
             .withEndAction { binding.fabPostAd.visibility = View.GONE }
             .start()
-
         animateNavItemsSpread(false)
     }
 
@@ -190,7 +312,6 @@ class MainActivity : AppCompatActivity() {
         val outerShift = dpToPx(6).toFloat()
 
         for (i in 0 until itemCount) {
-            val itemView = menuView.getChildAt(i)
             val targetX = if (spread) {
                 when (i) {
                     0 -> -outerShift
@@ -199,11 +320,9 @@ class MainActivity : AppCompatActivity() {
                     3 -> outerShift
                     else -> 0f
                 }
-            } else {
-                0f
-            }
+            } else 0f
 
-            itemView.animate()
+            menuView.getChildAt(i).animate()
                 .translationX(targetX)
                 .setDuration(250)
                 .setInterpolator(DecelerateInterpolator())
@@ -211,15 +330,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun dpToPx(dp: Int): Int {
-        return (dp * resources.displayMetrics.density).toInt()
-    }
+    private fun dpToPx(dp: Int) =
+        (dp * resources.displayMetrics.density).toInt()
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val location = IntArray(2)
         binding.particleView.getLocationOnScreen(location)
         binding.particleView.onExternalTouch(
-            ev.rawX - location[0], ev.rawY - location[1],
+            ev.rawX - location[0],
+            ev.rawY - location[1],
             ev.action != MotionEvent.ACTION_UP &&
                     ev.action != MotionEvent.ACTION_CANCEL
         )

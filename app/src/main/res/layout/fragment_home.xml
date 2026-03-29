@@ -51,19 +51,22 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp"
-                android:background="@drawable/bg_search"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green_rounded">
+                android:background="@drawable/bg_search">
 
-                <TextView
+                <EditText
+                    android:id="@+id/etHomeSearch"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/rechercher_lieux"
-                    android:textColor="#7FA68A"
+                    android:hint="@string/rechercher_lieux"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#7FA68A"
                     android:textSize="10sp"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:fontFamily="@font/poppins_regular"
+                    android:background="@null"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"/>
 
                 <ImageView
                     android:layout_width="14dp"
@@ -71,7 +74,6 @@
                     android:src="@drawable/ic_search"
                     android:contentDescription="@string/app_name"
                     app:tint="#7FA68A"/>
-
             </LinearLayout>
 
 
@@ -243,22 +245,39 @@
 
             </GridLayout>
 
+            <!-- DISCOVER SECTION -->
             <LinearLayout
-                android:id="@+id/restaurantsHeader"
+                android:id="@+id/discoverHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_marginTop="14dp"
                 android:paddingHorizontal="16dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:text="@string/home_nearby_restaurants" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
-                <TextView android:id="@+id/tvVoirToutRestaurants" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/voir_tout_arrow" android:textColor="#2ECC71" android:textSize="11sp" android:fontFamily="@font/poppins_regular" android:clickable="true" android:focusable="true"/>
+                <TextView android:id="@+id/tvDiscoverTitle"
+                    android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="🌍 Autour de vous" android:textColor="#FFFFFF" android:textSize="14sp"
+                    android:fontFamily="@font/poppins_semibold"/>
+                <TextView android:id="@+id/tvVoirToutDiscover"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/voir_tout_arrow" android:textColor="#2ECC71" android:textSize="11sp"
+                    android:fontFamily="@font/poppins_regular" android:clickable="true" android:focusable="true"/>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvDiscoverLoading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⏳ Chargement des lieux..."
+                android:textColor="#7FA68A"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
+                android:paddingVertical="16dp"
+                android:visibility="gone"/>
+
             <HorizontalScrollView
-                android:id="@+id/restaurantsScrollView"
+                android:id="@+id/discoverScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -269,51 +288,11 @@
                 android:clipToPadding="false">
 
                 <LinearLayout
+                    android:id="@+id/discoverContainer"
                     android:layout_width="wrap_content"
-                    android:layout_height="155dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:baselineAligned="false">
-
-                    <LinearLayout android:id="@+id/restaurantCard1" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:layout_marginEnd="8dp" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
-                        <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
-                                android:text="@string/emoji_soup" android:textSize="36sp"/>
-                        </FrameLayout>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:text="@string/rest_name_1" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:text="@string/rest_loc_1" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
-                        <TextView android:layout_width="42dp" android:layout_height="16dp"
-                            android:text="@string/ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
-                    </LinearLayout>
-
-                    <LinearLayout android:id="@+id/restaurantCard2" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:layout_marginEnd="8dp" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
-                        <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
-                                android:text="@string/emoji_sandwich" android:textSize="36sp"/>
-                        </FrameLayout>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:text="@string/restaurant_cafe_arabe" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:text="@string/restaurant_cafe_arabe_distance" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
-                        <TextView android:layout_width="42dp" android:layout_height="16dp"
-                            android:text="@string/status_ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
-                    </LinearLayout>
-
-                    <LinearLayout android:id="@+id/restaurantCard3" android:layout_width="140dp" android:layout_height="155dp" android:orientation="vertical" android:background="@drawable/bg_restaurant_card" android:clickable="true" android:focusable="true" android:foreground="@drawable/ripple_green_rounded" android:elevation="2dp">
-                        <FrameLayout android:layout_width="match_parent" android:layout_height="80dp" android:background="#1E3D2A">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
-                                android:text="@string/emoji_pizza" android:textSize="36sp"/>
-                        </FrameLayout>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:text="@string/restaurant_pizza_roma" android:textColor="#FFFFFF" android:textSize="11sp" android:fontFamily="@font/poppins_semibold" android:layout_marginStart="10dp" android:layout_marginTop="7dp" android:maxLines="1"/>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:text="@string/restaurant_distance_hivernage" android:textColor="#7FA68A" android:textSize="9sp" android:fontFamily="@font/poppins_regular" android:layout_marginStart="10dp" android:layout_marginTop="2dp"/>
-                        <TextView android:layout_width="42dp" android:layout_height="16dp"
-                            android:text="@string/status_ouvert" android:textColor="#2ECC71" android:textSize="8sp" android:gravity="center" android:layout_marginStart="10dp" android:layout_marginTop="4dp" android:background="@drawable/bg_open_badge"/>
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:minHeight="130dp"/>
             </HorizontalScrollView>
 
         </LinearLayout>

@@ -39,7 +39,7 @@
             android:id="@+id/tvMarkAllRead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tout marquer lu"
+            android:text="@string/mark_all_read"
             android:textColor="#2ECC71"
             android:textSize="12sp"
             android:fontFamily="@font/poppins_regular"
@@ -61,12 +61,11 @@
             android:orientation="vertical"
             android:paddingBottom="24dp">
 
-            <!-- Empty state -->
             <TextView
                 android:id="@+id/tvEmptyNotifs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="🔕\n\nAucune notification\npour le moment"
+                android:text="@string/no_notifications"
                 android:textColor="#7FA68A"
                 android:textSize="14sp"
                 android:fontFamily="@font/poppins_regular"

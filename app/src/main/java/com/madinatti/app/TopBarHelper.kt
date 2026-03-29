@@ -8,6 +8,8 @@ import com.madinatti.app.databinding.LayoutTopbarBinding
 
 object TopBarHelper {
 
+    var onCityChanged: (() -> Unit)? = null
+
     fun setup(
         topBarBinding: LayoutTopbarBinding,
         showBackButton: Boolean,
@@ -30,23 +32,23 @@ object TopBarHelper {
             topBarBinding.imgLogo.visibility = View.VISIBLE
         }
 
-        if (fragmentManager != null) {
-            topBarBinding.citySelector.setOnClickListener {
-                CityPickerBottomSheet.newInstance { city ->
-                    topBarBinding.tvCityName.text = city
-
-                    topBarBinding.root.context
-                        .getSharedPreferences("madinatti_prefs", 0)
-                        .edit().putString("selected_city", city).apply()
-                }.show(fragmentManager, "cityPicker")
-            }
-        }
-
         val savedCity = topBarBinding.root.context
             .getSharedPreferences("madinatti_prefs", 0)
             .getString("selected_city", null)
         if (savedCity != null) {
             topBarBinding.tvCityName.text = savedCity
+        }
+
+        topBarBinding.citySelector.setOnClickListener {
+            if (fragmentManager != null) {
+                CityPickerBottomSheet.newInstance { city ->
+                    topBarBinding.tvCityName.text = city
+                    topBarBinding.root.context
+                        .getSharedPreferences("madinatti_prefs", 0)
+                        .edit().putString("selected_city", city).apply()
+                    onCityChanged?.invoke()
+                }.show(fragmentManager, "cityPicker")
+            }
         }
     }
 }

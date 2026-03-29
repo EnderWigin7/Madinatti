@@ -8,14 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 data class MyAdItem(
+    val adId: String = "",
     val emoji: String,
     val title: String,
     val price: String,
-    val status: String, // "active", "vendue", "expiree"
+    val status: String,
     val time: String,
-    val views: Int = 0,
-    val messages: Int = 0,
-    val category: String = "—"
+    val views: Int,
+    val messages: Int,
+    val category: String
 )
 
 class MyAdCardAdapter(

@@ -8,14 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.madinatti.app.databinding.FragmentEditProfileBinding
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 
 class EditProfileFragment : Fragment() {
 
@@ -25,8 +30,16 @@ class EditProfileFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private var selectedCity = ""
 
+    // ✅ MUST be at class level, not inside a function
+    private val pickImage = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let { uploadProfilePhoto(it) }
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -38,7 +51,6 @@ class EditProfileFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Status bar
         ViewCompat.setOnApplyWindowInsetsListener(binding.editProfileTopBar) { _, insets ->
             val h = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             binding.statusBarSpacer.layoutParams.height = h
@@ -46,20 +58,16 @@ class EditProfileFragment : Fragment() {
             insets
         }
 
-        // Back button
         binding.ivEditBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        // Load current user data from Firestore
         loadUserProfile()
 
-        // Password eye toggles
         setupPasswordToggle(binding.ivToggleCurrentPw, binding.etCurrentPassword)
         setupPasswordToggle(binding.ivToggleNewPw, binding.etNewPassword)
         setupPasswordToggle(binding.ivToggleConfirmPw, binding.etConfirmPassword)
 
-        // City picker — uses your existing bottom sheet style
         binding.cityPicker.setOnClickListener {
             CityPickerBottomSheet.newInstance { city ->
                 selectedCity = city
@@ -67,26 +75,22 @@ class EditProfileFragment : Fragment() {
             }.show(parentFragmentManager, "cityPicker")
         }
 
-        // Save button
         binding.tvSave.setOnClickListener {
+            (requireActivity() as? MainActivity)?.binding?.particleView?.triggerRippleFromView(binding.tvSave)
             saveProfile()
         }
 
-        // Change photo
         binding.btnChangePhoto.setOnClickListener {
-            // TODO: Cloudinary upload — will add in Phase 2C
-            Toast.makeText(requireContext(), "📸 Upload photo — bientôt disponible", Toast.LENGTH_SHORT).show()
+            pickImage.launch("image/*")
         }
         binding.tvChangePhotoLabel.setOnClickListener {
-            binding.btnChangePhoto.performClick()
+            pickImage.launch("image/*")
         }
 
-        // Delete account
         binding.btnDeleteAccount.setOnClickListener {
             confirmDeleteAccount()
         }
 
-        // Focus styling
         listOf(
             binding.etNomComplet, binding.etTelephone, binding.etAge,
             binding.etBio, binding.etCurrentPassword, binding.etNewPassword,
@@ -98,6 +102,65 @@ class EditProfileFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun uploadProfilePhoto(uri: android.net.Uri) {
+        val user = auth.currentUser ?: return
+        binding.tvSave.isEnabled = false
+        Toast.makeText(requireContext(), "⏳ Upload photo...", Toast.LENGTH_SHORT).show()
+
+        binding.tvAvatarFallback.visibility = View.GONE
+        binding.ivEditAvatar.visibility = View.VISIBLE
+        binding.ivEditAvatar.setImageURI(uri)
+
+        Thread {
+            try {
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                val bytes = inputStream?.readBytes() ?: return@Thread
+                inputStream.close()
+
+                val boundary = "----Boundary${System.currentTimeMillis()}"
+                val url = URL("https://api.cloudinary.com/v1_1/${PostAdFragment.CLOUDINARY_CLOUD}/image/upload")
+                val conn = url.openConnection() as HttpURLConnection
+                conn.doOutput = true
+                conn.requestMethod = "POST"
+                conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
+
+                val output = conn.outputStream
+                output.write("--$boundary\r\nContent-Disposition: form-data; name=\"upload_preset\"\r\n\r\n${PostAdFragment.CLOUDINARY_PRESET}\r\n".toByteArray())
+                output.write("--$boundary\r\nContent-Disposition: form-data; name=\"folder\"\r\n\r\navatars\r\n".toByteArray())
+                output.write("--$boundary\r\nContent-Disposition: form-data; name=\"public_id\"\r\n\r\navatar_${user.uid}_${System.currentTimeMillis()}\r\n".toByteArray())
+
+                output.write("--$boundary\r\nContent-Disposition: form-data; name=\"file\"; filename=\"avatar.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n".toByteArray())
+                output.write(bytes)
+                output.write("\r\n--$boundary--\r\n".toByteArray())
+                output.flush()
+
+                val response = conn.inputStream.bufferedReader().readText()
+                val json = JSONObject(response)
+                val avatarUrl = json.getString("secure_url")
+
+                activity?.runOnUiThread {
+                    if (_binding == null || !isAdded) return@runOnUiThread
+                    db.collection("users").document(user.uid)
+                        .update("avatarUrl", avatarUrl)
+                        .addOnSuccessListener {
+                            binding.tvSave.isEnabled = true
+                            Toast.makeText(requireContext(), "✅ Photo mise à jour!", Toast.LENGTH_SHORT).show()
+                            Glide.with(this)
+                                .load(avatarUrl)
+                                .circleCrop()
+                                .into(binding.ivEditAvatar)
+                        }
+                }
+            } catch (e: Exception) {
+                activity?.runOnUiThread {
+                    if (_binding == null) return@runOnUiThread
+                    binding.tvSave.isEnabled = true
+                    Toast.makeText(requireContext(), "❌ Erreur: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }.start()
     }
 
     private fun setupPasswordToggle(toggleIcon: ImageView, editText: android.widget.EditText) {
@@ -116,23 +179,19 @@ class EditProfileFragment : Fragment() {
 
     private fun loadUserProfile() {
         val user = auth.currentUser ?: return
-
-        // Set email (read-only)
         binding.etEmail.setText(user.email ?: "")
 
-        // Load from Firestore
         db.collection("users").document(user.uid)
             .get()
             .addOnSuccessListener { doc ->
+                if (_binding == null || !isAdded) return@addOnSuccessListener
                 if (doc.exists()) {
                     binding.etNomComplet.setText(doc.getString("name") ?: "")
                     binding.etTelephone.setText(doc.getString("phone") ?: "")
                     binding.etBio.setText(doc.getString("bio") ?: "")
 
                     val age = doc.getLong("age")
-                    if (age != null && age > 0) {
-                        binding.etAge.setText(age.toString())
-                    }
+                    if (age != null && age > 0) binding.etAge.setText(age.toString())
 
                     val city = doc.getString("city") ?: ""
                     if (city.isNotEmpty()) {
@@ -140,13 +199,14 @@ class EditProfileFragment : Fragment() {
                         binding.tvSelectedCity.text = city
                     }
 
-                    // Avatar
                     val avatarUrl = doc.getString("avatarUrl") ?: ""
                     if (avatarUrl.isNotEmpty()) {
                         binding.tvAvatarFallback.visibility = View.GONE
                         binding.ivEditAvatar.visibility = View.VISIBLE
-                        // Load with Glide when Cloudinary is set up
-                        // Glide.with(this).load(avatarUrl).circleCrop().into(binding.ivEditAvatar)
+                        Glide.with(this)
+                            .load(avatarUrl)
+                            .circleCrop()
+                            .into(binding.ivEditAvatar)
                     }
                 }
             }
@@ -154,7 +214,6 @@ class EditProfileFragment : Fragment() {
 
     private fun saveProfile() {
         val user = auth.currentUser ?: return
-
         val name = binding.etNomComplet.text.toString().trim()
         val phone = binding.etTelephone.text.toString().trim()
         val ageStr = binding.etAge.text.toString().trim()
@@ -163,7 +222,6 @@ class EditProfileFragment : Fragment() {
         val newPw = binding.etNewPassword.text.toString()
         val confirmPw = binding.etConfirmPassword.text.toString()
 
-        // Validation
         if (name.isEmpty()) {
             binding.etNomComplet.error = "Nom requis"
             binding.etNomComplet.requestFocus()
@@ -177,7 +235,6 @@ class EditProfileFragment : Fragment() {
             return
         }
 
-        // ── 1. Update Firestore profile ──
         val updates = hashMapOf<String, Any>(
             "name" to name,
             "phone" to phone,
@@ -189,17 +246,13 @@ class EditProfileFragment : Fragment() {
         binding.tvSave.isEnabled = false
         binding.tvSave.text = "..."
 
-        // Update Firebase Auth display name
         user.updateProfile(
-            UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
-                .build()
+            UserProfileChangeRequest.Builder().setDisplayName(name).build()
         )
 
         db.collection("users").document(user.uid)
             .update(updates)
             .addOnSuccessListener {
-                // ── 2. Change password if requested ──
                 if (newPw.isNotEmpty()) {
                     changePassword(currentPw, newPw, confirmPw)
                 } else {
@@ -212,41 +265,31 @@ class EditProfileFragment : Fragment() {
             .addOnFailureListener { e ->
                 binding.tvSave.isEnabled = true
                 binding.tvSave.text = "Enregistrer"
-                Toast.makeText(requireContext(), "❌ Erreur: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "❌ ${e.localizedMessage}", Toast.LENGTH_LONG).show()
             }
     }
 
     private fun changePassword(currentPw: String, newPw: String, confirmPw: String) {
         val user = auth.currentUser ?: return
-
         if (currentPw.isEmpty()) {
             binding.etCurrentPassword.error = "Mot de passe actuel requis"
-            binding.etCurrentPassword.requestFocus()
-            resetSaveButton()
-            return
+            resetSaveButton(); return
         }
         if (newPw.length < 6) {
             binding.etNewPassword.error = "Minimum 6 caractères"
-            binding.etNewPassword.requestFocus()
-            resetSaveButton()
-            return
+            resetSaveButton(); return
         }
         if (newPw != confirmPw) {
             binding.etConfirmPassword.error = "Ne correspondent pas"
-            binding.etConfirmPassword.requestFocus()
-            resetSaveButton()
-            return
+            resetSaveButton(); return
         }
-
-        // Re-authenticate first
         val credential = EmailAuthProvider.getCredential(user.email!!, currentPw)
         user.reauthenticate(credential)
             .addOnSuccessListener {
                 user.updatePassword(newPw)
                     .addOnSuccessListener {
                         resetSaveButton()
-                        Toast.makeText(requireContext(), "✅ Profil et mot de passe mis à jour!", Toast.LENGTH_SHORT).show()
-                        // Clear password fields
+                        Toast.makeText(requireContext(), "✅ Mot de passe mis à jour!", Toast.LENGTH_SHORT).show()
                         binding.etCurrentPassword.text.clear()
                         binding.etNewPassword.text.clear()
                         binding.etConfirmPassword.text.clear()
@@ -254,56 +297,37 @@ class EditProfileFragment : Fragment() {
                     }
                     .addOnFailureListener { e ->
                         resetSaveButton()
-                        Toast.makeText(requireContext(), "❌ Erreur mot de passe: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "❌ ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                     }
             }
             .addOnFailureListener {
                 resetSaveButton()
                 binding.etCurrentPassword.error = "Mot de passe actuel incorrect"
-                binding.etCurrentPassword.requestFocus()
             }
     }
 
     private fun confirmDeleteAccount() {
         android.app.AlertDialog.Builder(requireContext())
             .setTitle("⚠️ Supprimer le compte")
-            .setMessage("Cette action est irréversible. Toutes vos annonces et données seront supprimées.")
-            .setPositiveButton("Supprimer") { _, _ ->
-                deleteAccount()
-            }
+            .setMessage("Cette action est irréversible.")
+            .setPositiveButton("Supprimer") { _, _ -> deleteAccount() }
             .setNegativeButton("Annuler", null)
             .show()
     }
 
     private fun deleteAccount() {
         val user = auth.currentUser ?: return
-
-        // Delete Firestore profile
-        db.collection("users").document(user.uid)
-            .delete()
-            .addOnCompleteListener {
-                // Delete Firebase Auth account
-                user.delete()
-                    .addOnSuccessListener {
-                        Toast.makeText(requireContext(), "Compte supprimé", Toast.LENGTH_SHORT).show()
-                        requireContext().getSharedPreferences("madinatti_prefs", 0)
-                            .edit().clear().apply()
-                        startActivity(
-                            android.content.Intent(requireActivity(), AuthActivity::class.java)
-                                .addFlags(
-                                    android.content.Intent.FLAG_ACTIVITY_NEW_TASK or
-                                            android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                )
-                        )
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(
-                            requireContext(),
-                            "❌ Erreur. Reconnectez-vous et réessayez.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+        db.collection("users").document(user.uid).delete().addOnCompleteListener {
+            user.delete().addOnSuccessListener {
+                Toast.makeText(requireContext(), "Compte supprimé", Toast.LENGTH_SHORT).show()
+                requireContext().getSharedPreferences("madinatti_prefs", 0).edit().clear().apply()
+                startActivity(
+                    android.content.Intent(requireActivity(), AuthActivity::class.java)
+                        .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or
+                                android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                )
             }
+        }
     }
 
     private fun resetSaveButton() {

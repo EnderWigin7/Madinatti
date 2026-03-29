@@ -117,13 +117,41 @@
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/bg_prayer_row">
 
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/prayer_fajr" android:textColor="#7FA68A" android:textSize="13sp" android:fontFamily="@font/poppins_medium"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_sunrise" android:textSize="15sp" android:layout_marginEnd="12dp"/>
-                <View android:layout_width="1dp" android:layout_height="20dp" android:background="#33FFFFFF" android:layout_marginEnd="12dp"/>
-                <TextView android:id="@+id/tvFajr" android:layout_width="50dp" android:layout_height="wrap_content" android:text="@string/prayer_time_fajr" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_regular" android:gravity="end"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prayer_fajr"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_sunrise"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="12dp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#33FFFFFF"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:id="@+id/tvFajr"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prayer_time_fajr"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="end"/>
             </LinearLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1AFFFFFF"
+                android:layout_marginHorizontal="16dp"/>
 
             <!-- Sunrise -->
             <LinearLayout
@@ -135,13 +163,41 @@
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/bg_prayer_row">
 
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/prayer_sunrise" android:textColor="#7FA68A" android:textSize="13sp" android:fontFamily="@font/poppins_regular"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_dawn" android:textSize="15sp" android:layout_marginEnd="12dp"/>
-                <View android:layout_width="1dp" android:layout_height="20dp" android:background="#33FFFFFF" android:layout_marginEnd="12dp"/>
-                <TextView android:id="@+id/tvSunrise" android:layout_width="50dp" android:layout_height="wrap_content" android:text="@string/prayer_time_sunrise" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_regular" android:gravity="end"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prayer_sunrise"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_dawn"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="12dp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#33FFFFFF"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:id="@+id/tvSunrise"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prayer_time_sunrise"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="end"/>
             </LinearLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1AFFFFFF"
+                android:layout_marginHorizontal="16dp"/>
 
             <!-- Dhuhr -->
             <LinearLayout
@@ -153,13 +209,41 @@
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/bg_prayer_row">
 
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/prayer_dhuhr" android:textColor="#7FA68A" android:textSize="13sp" android:fontFamily="@font/poppins_regular"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_sun" android:textSize="15sp" android:layout_marginEnd="12dp"/>
-                <View android:layout_width="1dp" android:layout_height="20dp" android:background="#33FFFFFF" android:layout_marginEnd="12dp"/>
-                <TextView android:id="@+id/tvDhuhr" android:layout_width="50dp" android:layout_height="wrap_content" android:text="@string/prayer_time_dhuhr" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_regular" android:gravity="end"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prayer_dhuhr"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_sun"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="12dp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#33FFFFFF"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:id="@+id/tvDhuhr"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prayer_time_dhuhr"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="end"/>
             </LinearLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1AFFFFFF"
+                android:layout_marginHorizontal="16dp"/>
 
             <!-- Asr -->
             <LinearLayout
@@ -171,15 +255,43 @@
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/bg_prayer_row">
 
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/prayer_asr" android:textColor="#7FA68A" android:textSize="13sp" android:fontFamily="@font/poppins_regular"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_partly_sunny" android:textSize="15sp" android:layout_marginEnd="12dp"/>
-                <View android:layout_width="1dp" android:layout_height="20dp" android:background="#33FFFFFF" android:layout_marginEnd="12dp"/>
-                <TextView android:id="@+id/tvAsr" android:layout_width="50dp" android:layout_height="wrap_content" android:text="@string/prayer_time_asr" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_regular" android:gravity="end"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prayer_asr"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_partly_sunny"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="12dp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#33FFFFFF"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:id="@+id/tvAsr"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prayer_time_asr"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="end"/>
             </LinearLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1AFFFFFF"
+                android:layout_marginHorizontal="16dp"/>
 
-            <!-- Maghrib -->
+            <!-- ✅ Maghrib - NO hardcoded active, Kotlin handles it -->
             <LinearLayout
                 android:id="@+id/rowMaghrib"
                 android:layout_width="match_parent"
@@ -187,16 +299,44 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_prayer_row_active"
-                android:elevation="2dp">
+                android:background="@drawable/bg_prayer_row"
+                android:elevation="0dp">
 
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/prayer_maghrib" android:textColor="#FFFFFF" android:textSize="13sp" android:fontFamily="@font/poppins_semibold"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_sunset" android:textSize="15sp" android:layout_marginEnd="12dp"/>
-                <View android:layout_width="1dp" android:layout_height="20dp" android:background="#33FFFFFF" android:layout_marginEnd="12dp"/>
-                <TextView android:id="@+id/tvMaghrib" android:layout_width="50dp" android:layout_height="wrap_content" android:text="@string/prayer_time_maghrib" android:textColor="#2ECC71" android:textSize="14sp" android:fontFamily="@font/poppins_semibold" android:gravity="end"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prayer_maghrib"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_sunset"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="12dp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#33FFFFFF"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:id="@+id/tvMaghrib"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prayer_time_maghrib"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="end"/>
             </LinearLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" android:layout_marginHorizontal="16dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1AFFFFFF"
+                android:layout_marginHorizontal="16dp"/>
 
             <!-- Isha -->
             <LinearLayout
@@ -208,10 +348,34 @@
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/bg_prayer_row">
 
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/prayer_isha" android:textColor="#7FA68A" android:textSize="13sp" android:fontFamily="@font/poppins_regular"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_moon" android:textSize="15sp" android:layout_marginEnd="12dp"/>
-                <View android:layout_width="1dp" android:layout_height="20dp" android:background="#33FFFFFF" android:layout_marginEnd="12dp"/>
-                <TextView android:id="@+id/tvIsha" android:layout_width="50dp" android:layout_height="wrap_content" android:text="@string/prayer_time_isha" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_regular" android:gravity="end"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prayer_isha"
+                    android:textColor="#7FA68A"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/emoji_moon"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="12dp"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#33FFFFFF"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:id="@+id/tvIsha"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prayer_time_isha"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="end"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -230,14 +394,41 @@
             android:focusable="true"
             android:foreground="@drawable/ripple_green_rounded">
 
-            <TextView android:layout_width="44dp" android:layout_height="44dp" android:text="@string/qibla_emoji" android:textSize="28sp" android:gravity="center" android:layout_marginEnd="12dp"/>
+            <TextView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:text="@string/qibla_emoji"
+                android:textSize="28sp"
+                android:gravity="center"
+                android:layout_marginEnd="12dp"/>
 
-            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/prayer_qibla_direction" android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/prayer_qibla_subtitle" android:textColor="#7FA68A" android:textSize="11sp" android:fontFamily="@font/poppins_regular"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prayer_qibla_direction"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_semibold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prayer_qibla_subtitle"
+                    android:textColor="#7FA68A"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/poppins_regular"/>
             </LinearLayout>
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/qibla_chevron" android:textColor="#7FA68A" android:textSize="24sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/qibla_chevron"
+                android:textColor="#7FA68A"
+                android:textSize="24sp"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -1,7 +1,8 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    // ADD THIS
     id("com.google.gms.google-services")
 }
 
@@ -41,6 +42,8 @@ android {
 }
 
 dependencies {
+
+    implementation ("com.google.firebase:firebase-database-ktx")
     implementation("com.google.android.gms:play-services-location:21.1.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")

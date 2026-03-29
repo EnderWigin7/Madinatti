@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- TOP BAR — sticky -->
     <LinearLayout
         android:id="@+id/dmTopBar"
         android:layout_width="match_parent"
@@ -42,7 +41,7 @@
                 android:id="@+id/tvDmAvatar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:text="A"
+                android:text="@string/dm_avatar_default"
                 android:textColor="#0D1F17"
                 android:textSize="18sp"
                 android:fontFamily="@font/poppins_bold"
@@ -60,7 +59,7 @@
                     android:id="@+id/tvDmName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Aicha's"
+                    android:text="@string/dm_user_default"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"
                     android:fontFamily="@font/poppins_semibold"/>
@@ -69,13 +68,24 @@
                     android:id="@+id/tvDmStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="En ligne"
+                    android:text="@string/dm_status_online"
                     android:textColor="#2ECC71"
                     android:textSize="12sp"
                     android:fontFamily="@font/poppins_regular"/>
-
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/btnRateSeller"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="@string/dm_rate_seller"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginEnd="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                android:contentDescription="@string/dm_rate_desc"/>
 
             <ImageView
                 android:id="@+id/ivDmCall"
@@ -101,7 +111,6 @@
         android:clipToPadding="false"
         android:scrollbars="none"/>
 
-    <!-- INPUT BAR -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,22 +120,23 @@
         android:paddingVertical="10dp"
         android:background="#132D1F">
 
-        <!-- Attachment icon -->
         <TextView
+            android:id="@+id/btnAttach"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:text="📎"
+            android:text="@string/dm_attach"
             android:textSize="20sp"
             android:gravity="center"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"/>
 
-        <!-- Input field -->
         <EditText
             android:id="@+id/etMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Écrire un message..."
+            android:hint="@string/dm_hint_message"
             android:textColor="#FFFFFF"
             android:textColorHint="#7FA68A"
             android:textSize="13sp"
@@ -143,7 +153,7 @@
             android:id="@+id/btnSend"
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:text="➤"
+            android:text="@string/dm_send_icon"
             android:textColor="#0D1F17"
             android:textSize="18sp"
             android:gravity="center"

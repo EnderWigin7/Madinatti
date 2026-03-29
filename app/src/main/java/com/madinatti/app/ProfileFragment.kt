@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.madinatti.app.databinding.FragmentProfileBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
+import android.widget.LinearLayout
 
 class ProfileFragment : Fragment() {
 
@@ -55,7 +56,6 @@ class ProfileFragment : Fragment() {
 
         loadProfile()
 
-        // Setup menu
         setupMenuRows()
     }
 
@@ -69,14 +69,12 @@ class ProfileFragment : Fragment() {
         val user = auth.currentUser ?: return
         val prefs = requireContext().getSharedPreferences("user_cache", 0)
 
-        // INSTANT: Load cached data first (no flicker)
         binding.tvUserName.text = prefs.getString("name", user.displayName ?: "")
         binding.tvUserEmail.text = user.email ?: ""
         binding.tvUserCity.text = prefs.getString("city", "")
         binding.tvMemberSince.text = prefs.getString("memberSince", "")
         binding.tvAnnoncesCount.text = prefs.getString("adsCount", "0")
 
-        // THEN: Load fresh from Firestore (updates silently)
         db.collection("users").document(user.uid)
             .get()
             .addOnSuccessListener { doc ->
@@ -107,6 +105,11 @@ class ProfileFragment : Fragment() {
                     if (avatarUrl.isNotEmpty()) {
                         binding.tvAvatarFallback.visibility = View.GONE
                         binding.ivAvatar.visibility = View.VISIBLE
+                        com.bumptech.glide.Glide.with(this)
+                            .load(avatarUrl)
+                            .circleCrop()
+                            .placeholder(R.drawable.bg_avatar_circle)
+                            .into(binding.ivAvatar)
                     } else {
                         binding.tvAvatarFallback.visibility = View.VISIBLE
                         binding.ivAvatar.visibility = View.GONE
@@ -136,13 +139,11 @@ class ProfileFragment : Fragment() {
                 binding.tvFavorisCount.text = result.size().toString()
             }
 
-        // Messages count (unread)
         db.collection("chats")
             .whereArrayContains("participants", uid)
             .get()
             .addOnSuccessListener { result ->
                 if (_binding == null) return@addOnSuccessListener
-                // For now just show total chats
                 binding.tvMessagesCount.text = result.size().toString()
             }
     }
@@ -157,7 +158,9 @@ class ProfileFragment : Fragment() {
 
         binding.rowFavoris.setOnClickListener {
             triggerRipple(binding.rowFavoris)
-            Toast.makeText(requireContext(), "Favoris — bientôt disponible", Toast.LENGTH_SHORT).show()
+            androidx.navigation.Navigation
+                .findNavController(requireActivity(), R.id.navHostFragment)
+                .navigate(R.id.favoritesFragment)
         }
 
         binding.rowMessages.setOnClickListener {
@@ -166,24 +169,17 @@ class ProfileFragment : Fragment() {
                 ?.selectedItemId = R.id.messagesFragment
         }
 
-        binding.rowNotifications.setOnClickListener {
-            triggerRipple(binding.rowNotifications)
-            NotificationsBottomSheet.newInstance()
-                .show(parentFragmentManager, "notifications")
-        }
 
         binding.rowParametres.setOnClickListener {
             triggerRipple(binding.rowParametres)
-            Toast.makeText(requireContext(), "Paramètres — bientôt disponible", Toast.LENGTH_SHORT).show()
+            showSettingsSheet()
         }
 
-        binding.rowLangue.setOnClickListener {
-            triggerRipple(binding.rowLangue)
-            startActivity(Intent(requireContext(), LanguageActivity::class.java))
-        }
 
         binding.btnEditAvatar.setOnClickListener {
-            Toast.makeText(requireContext(), "📸 Upload photo — bientôt disponible", Toast.LENGTH_SHORT).show()
+            androidx.navigation.Navigation
+                .findNavController(requireActivity(), R.id.navHostFragment)
+                .navigate(R.id.editProfileFragment)
         }
 
         binding.tvCustomizeProfile.setOnClickListener {
@@ -194,25 +190,9 @@ class ProfileFragment : Fragment() {
 
         binding.btnLogout.setOnClickListener {
             triggerRipple(binding.btnLogout)
-
-            com.google.firebase.auth.FirebaseAuth.getInstance().signOut()
-
-            com.google.android.gms.auth.api.signin.GoogleSignIn
-                .getClient(
-                    requireContext(),
-                    com.google.android.gms.auth.api.signin.GoogleSignInOptions
-                        .Builder(com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .build()
-                ).signOut()
-
-            requireContext().getSharedPreferences("madinatti_prefs", 0)
-                .edit().clear().apply()
-
-            startActivity(
-                Intent(requireActivity(), AuthActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            )
+            (requireActivity() as? MainActivity)?.performLogout()
         }
+
     }
 
     private fun triggerRipple(view: View) {
@@ -224,4 +204,133 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun showSettingsSheet() {
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(
+            requireContext(), R.style.GlassBottomSheetDialog
+        )
+        val dp = resources.displayMetrics.density
+        val root = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, (16 * dp).toInt(), 0, (32 * dp).toInt())
+            setBackgroundResource(R.drawable.bg_bottom_sheet_glass)
+        }
+
+        // Drag handle
+        root.addView(View(requireContext()).apply {
+            layoutParams = LinearLayout.LayoutParams((40 * dp).toInt(), (4 * dp).toInt()).apply {
+                gravity = android.view.Gravity.CENTER_HORIZONTAL
+                bottomMargin = (16 * dp).toInt()
+            }
+            setBackgroundResource(R.drawable.bg_drag_handle)
+        })
+
+        // Title
+        root.addView(android.widget.TextView(requireContext()).apply {
+            text = "⚙️ Paramètres"
+            setTextColor(android.graphics.Color.WHITE)
+            textSize = 18f
+            typeface = resources.getFont(R.font.poppins_bold)
+            setPadding((24 * dp).toInt(), 0, (24 * dp).toInt(), (16 * dp).toInt())
+        })
+
+        // Settings items
+        val items = listOf(
+            Triple("🔔", "Notifications", "Gérer les alertes"),
+            Triple("🔒", "Confidentialité", "Données & sécurité"),
+            Triple("🎨", "Apparence", "Thème sombre activé"),
+            Triple("💾", "Stockage & cache", "Vider le cache"),
+            Triple("ℹ️", "À propos", "Madinatti v1.0"),
+            Triple("📋", "Conditions d'utilisation", ""),
+            Triple("🛡️", "Politique de confidentialité", "")
+        )
+
+        items.forEach { (emoji, title, subtitle) ->
+            val row = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                setPadding((24 * dp).toInt(), (14 * dp).toInt(), (24 * dp).toInt(), (14 * dp).toInt())
+                isClickable = true; isFocusable = true
+                val ta = context.obtainStyledAttributes(intArrayOf(android.R.attr.selectableItemBackground))
+                foreground = ta.getDrawable(0); ta.recycle()
+                setOnClickListener {
+                    when (title) {
+                        "Notifications" -> {
+                            android.widget.Toast.makeText(requireContext(),
+                                "🔔 Notifications activées", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                        "Stockage & cache" -> {
+                            requireContext().cacheDir.deleteRecursively()
+                            android.widget.Toast.makeText(requireContext(),
+                                "💾 Cache vidé!", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                        "À propos" -> {
+                            android.widget.Toast.makeText(requireContext(),
+                                "Madinatti v1.0 — Made with ❤️", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            android.widget.Toast.makeText(requireContext(),
+                                "$title — bientôt disponible", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+
+            row.addView(android.widget.TextView(requireContext()).apply {
+                text = emoji; textSize = 20f
+                layoutParams = LinearLayout.LayoutParams((36 * dp).toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
+            })
+
+            val textCol = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.VERTICAL
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                    marginStart = (8 * dp).toInt()
+                }
+            }
+            textCol.addView(android.widget.TextView(requireContext()).apply {
+                text = title
+                setTextColor(android.graphics.Color.WHITE)
+                textSize = 14f
+                typeface = resources.getFont(R.font.poppins_medium)
+            })
+            if (subtitle.isNotEmpty()) {
+                textCol.addView(android.widget.TextView(requireContext()).apply {
+                    text = subtitle
+                    setTextColor(android.graphics.Color.parseColor("#7FA68A"))
+                    textSize = 11f
+                    typeface = resources.getFont(R.font.poppins_regular)
+                })
+            }
+            row.addView(textCol)
+
+            row.addView(android.widget.TextView(requireContext()).apply {
+                text = "›"; setTextColor(android.graphics.Color.parseColor("#7FA68A")); textSize = 18f
+            })
+
+            root.addView(row)
+
+            // Divider
+            root.addView(View(requireContext()).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1
+                ).apply {
+                    marginStart = (24 * dp).toInt(); marginEnd = (24 * dp).toInt()
+                }
+                setBackgroundColor(android.graphics.Color.parseColor("#1AFFFFFF"))
+            })
+        }
+
+        root.addView(android.widget.TextView(requireContext()).apply {
+            text = "Madinatti v1.0 · GHM-LABS"
+            setTextColor(android.graphics.Color.parseColor("#4D7FA68A"))
+            textSize = 10f
+            typeface = resources.getFont(R.font.poppins_regular)
+            gravity = android.view.Gravity.CENTER
+            setPadding(0, (20 * dp).toInt(), 0, 0)
+        })
+
+        dialog.setContentView(root)
+        dialog.show()
+    }
+
 }

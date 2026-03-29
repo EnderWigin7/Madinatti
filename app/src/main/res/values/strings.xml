@@ -334,5 +334,38 @@
     <string name="notifications">Notifications</string>
     <string name="mark_all_read">Tout marquer lu</string>
     <string name="today">AUJOURD\'HUI</string>
+    <string name="hint_search_city">🔍 Rechercher une ville...</string>
+    <string name="no_notifications">🔔 Aucune notification\npour le moment</string>
+    <string name="dialog_additional_info">Quelques infos supplémentaires</string>
+    <string name="hint_phone_number">📱 Numéro de téléphone</string>
+    <string name="hint_age">🎂 Âge</string>
+    <string name="hint_choose_city">📍 Choisir une ville</string>
+
+    <string name="dm_avatar_default">A</string>
+    <string name="dm_user_default">Utilisateur</string>
+    <string name="dm_status_online">En ligne</string>
+    <string name="dm_send_icon">➤</string>
+    <string name="rate_seller">Évaluer</string>
+
+    <string name="dm_attach">📎</string>
+    <string name="dm_hint_message">Écrire un message…</string>
+    <string name="dm_rate_seller">⭐</string>
+    <string name="dm_rate_desc">Évaluer le vendeur</string>
+
+    <string name="dm_avatar_zero">0</string>
+    <string name="sold_badge">✅ VENDUE</string>
+
+    <string name="ad_location_placeholder">📍 Ville</string>
+    <string name="ad_expiry_placeholder">⏰ Expire bientôt</string>
+
+    <string name="avatar">avatar</string>
+
+    <string name="icon_person">🧑</string>
+    <string name="icon_edit">✏️</string>
+    <string name="change_photo">Changer la photo</string>
+    <string name="personal_info">INFORMATIONS PERSONNELLES</string>
+    <string name="full_name">Nom complet</string>
+    <string name="modifier_profil">Modifier le profil</string>
+    <string name="enregistrer">Enregistrer</string>
 
 </resources>

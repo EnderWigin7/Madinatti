@@ -28,6 +28,21 @@
             android:background="@drawable/bg_ad_image_placeholder">
 
             <ImageView
+                android:id="@+id/ivMainImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:contentDescription="@string/app_name"/>
+
+            <TextView
+                android:id="@+id/tvImageEmoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="64sp"/>
+
+            <ImageView
                 android:id="@+id/ivPrevImage"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
@@ -66,13 +81,6 @@
                 android:clickable="true"
                 android:focusable="true"/>
 
-            <TextView
-                android:id="@+id/tvImageEmoji"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/emoji_vase"
-                android:textSize="64sp"/>
 
             <TextView
                 android:id="@+id/tvImageCount"
@@ -115,36 +123,48 @@
                 android:fontFamily="@font/poppins_bold"
                 android:layout_marginTop="4dp"/>
 
-            <!-- Location + Time -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:orientation="vertical"
                 android:layout_marginTop="8dp">
 
                 <TextView
                     android:id="@+id/tvAdLocation"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ad_detail_location"
+                    android:text="@string/ad_location_placeholder"
                     android:textColor="#7FA68A"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_regular"/>
 
                 <TextView
-                    android:id="@+id/tvAdTime"
+                    android:id="@+id/tvAdExpiry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ad_detail_time"
+                    android:text="@string/ad_expiry_placeholder"
                     android:textColor="#7FA68A"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tvSoldBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sold_badge"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:background="@drawable/bg_interested_btn"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:layout_marginTop="6dp"
+                    android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -152,7 +172,6 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="16dp"/>
 
-        <!-- Description -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -198,10 +217,20 @@
                 android:layout_height="48dp"
                 android:background="@drawable/bg_avatar"
                 android:layout_marginEnd="12dp">
+
+                <ImageView
+                    android:id="@+id/ivSellerAvatar"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:contentDescription="@string/dm_avatar_default"/>
+
                 <TextView
+                    android:id="@+id/tvSellerInitial"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/ad_seller_initial"
+                    android:text="@string/dm_avatar_default"
                     android:textColor="#2ECC71"
                     android:textSize="20sp"
                     android:fontFamily="@font/poppins_bold"
@@ -224,6 +253,7 @@
                     android:fontFamily="@font/poppins_semibold"/>
 
                 <TextView
+                    android:id="@+id/tvSellerJoined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ad_seller_joined"
@@ -231,7 +261,6 @@
                     android:textSize="11sp"
                     android:fontFamily="@font/poppins_regular"/>
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout

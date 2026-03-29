@@ -19,13 +19,14 @@ class CityPickerBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         private val ALL_CITIES = listOf(
-            "Agadir", "Al Hoceima", "Azrou", "Béni Mellal", "Berrechid",
+            "Toutes les villes",
+            "Agadir", "Al Hoceima", "Azrou", "Beni Mellal", "Berrechid",
             "Casablanca", "Chefchaouen", "El Jadida", "Errachidia", "Essaouira",
-            "Fès", "Guelmim", "Ifrane", "Kénitra", "Khemisset",
-            "Khouribga", "Laâyoune", "Larache", "Marrakech", "Meknès",
+            "Fes", "Guelmim", "Ifrane", "Kenitra", "Khemisset",
+            "Khouribga", "Laayoune", "Larache", "Marrakech", "Meknes",
             "Mohammedia", "Nador", "Ouarzazate", "Oujda", "Rabat",
-            "Safi", "Salé", "Settat", "Sidi Kacem", "Tanger",
-            "Taza", "Témara", "Tétouan", "Tiznit"
+            "Safi", "Sale", "Settat", "Sidi Kacem", "Tanger",
+            "Taza", "Temara", "Tetouan", "Tiznit"
         )
 
         fun newInstance(onSelected: (String) -> Unit): CityPickerBottomSheet {
@@ -61,12 +62,19 @@ class CityPickerBottomSheet : BottomSheetDialogFragment() {
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
             override fun afterTextChanged(s: Editable?) {
-                val query = s.toString().lowercase().trim()
+                val query = normalize(s.toString().trim())
                 val filtered = if (query.isEmpty()) ALL_CITIES
-                else ALL_CITIES.filter { it.lowercase().contains(query) }
+                else ALL_CITIES.filter { normalize(it).contains(query) }
                 adapter.updateList(filtered)
             }
+
+            private fun normalize(text: String): String {
+                return java.text.Normalizer.normalize(text.lowercase(), java.text.Normalizer.Form.NFD)
+                    .replace("\\p{InCombiningDiacriticalMarks}+".toRegex(), "")
+            }
+
         })
     }
 

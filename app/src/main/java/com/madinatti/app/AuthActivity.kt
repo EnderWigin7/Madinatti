@@ -33,7 +33,8 @@ class AuthActivity : AppCompatActivity() {
             val account = task.getResult(ApiException::class.java)!!
             firebaseAuthWithGoogle(account.idToken!!)
         } catch (e: ApiException) {
-            Toast.makeText(this, "❌ Google Sign-In échoué", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                "❌ Google Sign-In échoué", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -52,9 +53,7 @@ class AuthActivity : AppCompatActivity() {
             return
         }
 
-        // ── Setup Google Sign-In ──
         setupGoogleSignIn()
-
         showFragment(LoginFragment(), slideRight = false)
         updateToggle(loginActive = true)
 
@@ -91,7 +90,6 @@ class AuthActivity : AppCompatActivity() {
 
         binding.btnSocialLogin.setOnClickListener {
             binding.particleView.triggerRippleFromView(binding.btnSocialLogin)
-
             val location = IntArray(2)
             binding.btnSocialLogin.getLocationOnScreen(location)
             val screenHeight = resources.displayMetrics.heightPixels
@@ -104,7 +102,7 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    // ── Google Sign-In Setup ──
+    // ── Google Sign-In ──
     private fun setupGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -113,10 +111,10 @@ class AuthActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 
-    // Called from SocialLoginDialog
     fun launchGoogleSignIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
+        googleSignInClient.signOut().addOnCompleteListener {
+            googleSignInLauncher.launch(googleSignInClient.signInIntent)
+        }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -125,26 +123,36 @@ class AuthActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 val user = result.user!!
                 val isNewUser = result.additionalUserInfo?.isNewUser == true
-
                 if (isNewUser) {
-                    // New Google user — show "Complete Profile" dialog
                     showCompleteProfileDialog(user)
                 } else {
-                    Toast.makeText(this, "👋 Bon retour ${user.displayName}!", Toast.LENGTH_SHORT).show()
+                    // Set online when logging in
+                    setUserOnlineStatus(user.uid, true)
+                    Toast.makeText(this,
+                        "👋 Bon retour ${user.displayName}!",
+                        Toast.LENGTH_SHORT).show()
                     goToMain()
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "❌ Erreur: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this,
+                    "❌ Erreur: ${e.localizedMessage}",
+                    Toast.LENGTH_LONG).show()
             }
     }
 
-    private fun showCompleteProfileDialog(user: com.google.firebase.auth.FirebaseUser) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_complete_profile, null)
+    private fun showCompleteProfileDialog(
+        user: com.google.firebase.auth.FirebaseUser
+    ) {
+        val dialogView = layoutInflater.inflate(
+            R.layout.dialog_complete_profile, null)
 
-        val etPhone = dialogView.findViewById<android.widget.EditText>(R.id.etDialogPhone)
-        val etAge = dialogView.findViewById<android.widget.EditText>(R.id.etDialogAge)
-        val tvCity = dialogView.findViewById<android.widget.TextView>(R.id.tvDialogCity)
+        val etPhone = dialogView.findViewById<android.widget.EditText>(
+            R.id.etDialogPhone)
+        val etAge = dialogView.findViewById<android.widget.EditText>(
+            R.id.etDialogAge)
+        val tvCity = dialogView.findViewById<android.widget.TextView>(
+            R.id.tvDialogCity)
         var selectedCity = ""
 
         tvCity.setOnClickListener {
@@ -161,8 +169,7 @@ class AuthActivity : AppCompatActivity() {
             .setCancelable(false)
             .setPositiveButton("Continuer") { _, _ ->
                 val phone = etPhone.text.toString().trim()
-                val ageStr = etAge.text.toString().trim()
-                val age = ageStr.toIntOrNull() ?: 0
+                val age = etAge.text.toString().trim().toIntOrNull() ?: 0
 
                 val userProfile = hashMapOf(
                     "uid" to user.uid,
@@ -177,17 +184,61 @@ class AuthActivity : AppCompatActivity() {
                     "adsCount" to 0,
                     "rating" to 0.0,
                     "isVerified" to true,
-                    "authProvider" to "google"
+                    "authProvider" to "google",
+                    "isOnline" to true,  // ← Set online on first create
+                    "lastSeen" to com.google.firebase.Timestamp.now()
                 )
 
                 db.collection("users").document(user.uid)
                     .set(userProfile)
                     .addOnCompleteListener {
-                        Toast.makeText(this, "✅ Bienvenue ${user.displayName}!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,
+                            "✅ Bienvenue ${user.displayName}!",
+                            Toast.LENGTH_SHORT).show()
                         goToMain()
                     }
             }
             .show()
+    }
+
+    // ── Set online status helper ──
+    private fun setUserOnlineStatus(uid: String, online: Boolean) {
+        db.collection("users").document(uid)
+            .update(mapOf(
+                "isOnline" to online,
+                "lastSeen" to com.google.firebase.Timestamp.now()
+            ))
+    }
+
+    // ── Proper logout - sets offline BEFORE signing out ──
+    fun logout() {
+        val uid = auth.currentUser?.uid
+        if (uid != null) {
+            // Set offline first, then sign out
+            db.collection("users").document(uid)
+                .update(mapOf(
+                    "isOnline" to false,
+                    "lastSeen" to com.google.firebase.Timestamp.now()
+                ))
+                .addOnCompleteListener {
+                    // Sign out after Firestore update
+                    auth.signOut()
+                    googleSignInClient.signOut()
+                    redirectToAuth()
+                }
+        } else {
+            auth.signOut()
+            redirectToAuth()
+        }
+    }
+
+    private fun redirectToAuth() {
+        startActivity(
+            Intent(this, AuthActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        finish()
     }
 
     private fun goToMain() {
@@ -195,9 +246,11 @@ class AuthActivity : AppCompatActivity() {
         prefs.edit().putBoolean("has_seen_splash", true).apply()
         startActivity(
             Intent(this, MainActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        overridePendingTransition(
+            android.R.anim.fade_in, android.R.anim.fade_out)
         finish()
     }
 
@@ -209,9 +262,11 @@ class AuthActivity : AppCompatActivity() {
         val indicator = binding.segmentIndicator
         indicator.post {
             indicator.animate()
-                .translationX(if (loginActive) 0f else indicator.width.toFloat())
+                .translationX(
+                    if (loginActive) 0f else indicator.width.toFloat())
                 .setDuration(250)
-                .setInterpolator(android.view.animation.DecelerateInterpolator())
+                .setInterpolator(
+                    android.view.animation.DecelerateInterpolator())
                 .start()
         }
         indicator.setBackgroundResource(
@@ -219,14 +274,16 @@ class AuthActivity : AppCompatActivity() {
             else R.drawable.bg_segment_right
         )
         binding.tvSegmentLogin.setTextColor(
-            if (loginActive) android.graphics.Color.parseColor("#0D1F17")
+            if (loginActive)
+                android.graphics.Color.parseColor("#0D1F17")
             else android.graphics.Color.WHITE
         )
         binding.tvSegmentRegister.setTextColor(
             if (loginActive) android.graphics.Color.WHITE
             else android.graphics.Color.parseColor("#0D1F17")
         )
-        binding.btnAuthAction.text = if (loginActive) "Se connecter" else "S'inscrire"
+        binding.btnAuthAction.text =
+            if (loginActive) "Se connecter" else "S'inscrire"
     }
 
     private fun showFragment(fragment: Fragment, slideRight: Boolean) {
@@ -244,7 +301,8 @@ class AuthActivity : AppCompatActivity() {
         binding.particleView.onExternalTouch(
             ev.rawX - location[0],
             ev.rawY - location[1],
-            ev.action != MotionEvent.ACTION_UP && ev.action != MotionEvent.ACTION_CANCEL
+            ev.action != MotionEvent.ACTION_UP &&
+                    ev.action != MotionEvent.ACTION_CANCEL
         )
         return super.dispatchTouchEvent(ev)
     }

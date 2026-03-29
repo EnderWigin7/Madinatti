@@ -28,25 +28,52 @@
 
     <fragment android:id="@+id/postAdFragment"
         android:name="com.madinatti.app.PostAdFragment"
-        android:label="Publier"/>
+        android:label="Publier">
+        <argument android:name="adId"
+            app:argType="string" app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument android:name="editTitle"
+            app:argType="string" app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument android:name="editPrice"
+            app:argType="string" app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument android:name="editCategory"
+            app:argType="string" app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
 
     <fragment android:id="@+id/qiblaFragment"
         android:name="com.madinatti.app.QiblaFragment"
         android:label="Qibla"/>
 
-    <fragment
-        android:id="@+id/dmFragment"
+    <fragment android:id="@+id/dmFragment"
         android:name="com.madinatti.app.DmFragment"
-        android:label="DM"/>
+        android:label="DM">
+        <argument android:name="chatId"
+            app:argType="string" app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument android:name="otherUserId"
+            app:argType="string" app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument android:name="otherUserName"
+            app:argType="string" app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument android:name="adTitle"
+            app:argType="string" app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
 
-    <fragment
-        android:id="@+id/editProfileFragment"
+    <fragment android:id="@+id/editProfileFragment"
         android:name="com.madinatti.app.EditProfileFragment"
         android:label="Edit Profile"/>
 
-    <fragment
-        android:id="@+id/mesAnnoncesFragment"
+    <fragment android:id="@+id/mesAnnoncesFragment"
         android:name="com.madinatti.app.MesAnnoncesFragment"
         android:label="Mes Annonces"/>
+
+    <fragment android:id="@+id/favoritesFragment"
+        android:name="com.madinatti.app.FavoritesFragment"
+        android:label="Favoris"/>
 
 </navigation>

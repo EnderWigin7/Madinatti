@@ -36,7 +36,7 @@ class RegisterFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Focus styling
+
         listOf(
             binding.etNom, binding.etEmail, binding.etPhone,
             binding.etAge, binding.etPassword, binding.etConfirmPassword

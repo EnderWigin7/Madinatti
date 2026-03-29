@@ -22,7 +22,6 @@
             android:orientation="vertical"
             android:paddingBottom="32dp">
 
-            <!-- PROFILE HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +30,6 @@
                 android:paddingTop="24dp"
                 android:paddingBottom="20dp">
 
-                <!-- Avatar -->
                 <FrameLayout
                     android:layout_width="100dp"
                     android:layout_height="100dp">
@@ -284,41 +282,10 @@
                 <View android:layout_width="match_parent" android:layout_height="0.5dp"
                     android:background="#1E3D2A" android:layout_marginHorizontal="16dp"/>
 
-                <!-- Notifications -->
-                <LinearLayout
-                    android:id="@+id/rowNotifications"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="16dp"
-                    android:background="@drawable/bg_surface"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/ripple_green">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="🔔   Notifications"
-                        android:textColor="#FFFFFF"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/poppins_regular"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="›"
-                        android:textColor="#7FA68A"
-                        android:textSize="20sp"/>
-
-                </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="0.5dp"
                     android:background="#1E3D2A" android:layout_marginHorizontal="16dp"/>
 
-                <!-- Paramètres -->
                 <LinearLayout
                     android:id="@+id/rowParametres"
                     android:layout_width="match_parent"
@@ -352,36 +319,6 @@
                 <View android:layout_width="match_parent" android:layout_height="0.5dp"
                     android:background="#1E3D2A" android:layout_marginHorizontal="16dp"/>
 
-                <!-- Langue -->
-                <LinearLayout
-                    android:id="@+id/rowLangue"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="16dp"
-                    android:background="@drawable/bg_surface"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/ripple_green">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="🌍   Langue"
-                        android:textColor="#FFFFFF"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/poppins_regular"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="›"
-                        android:textColor="#7FA68A"
-                        android:textSize="20sp"/>
-
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -391,7 +328,6 @@
                 android:background="#1E3D2A"
                 android:layout_marginTop="8dp"/>
 
-            <!-- LOGOUT -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

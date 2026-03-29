@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- TOP BAR — title only, no city selector -->
     <LinearLayout
         android:id="@+id/messagesTopBar"
         android:layout_width="match_parent"
@@ -33,10 +32,10 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins_semibold"/>
-
         </LinearLayout>
     </LinearLayout>
 
+    <!-- SEARCH BAR -->
     <LinearLayout
         android:id="@+id/messagesSearchBar"
         android:layout_width="match_parent"
@@ -65,17 +64,14 @@
             android:src="@drawable/ic_search"
             android:contentDescription="@string/app_name"
             app:tint="#7FA68A"/>
-
     </LinearLayout>
 
-    <!-- DIVIDER -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#1E3D2A"
         android:layout_marginTop="10dp"/>
 
-    <!-- RÉCENTS label -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,7 +83,6 @@
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"/>
 
-    <!-- CONVERSATION LIST -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -98,341 +93,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Conversation 1 — UNREAD -->
-            <LinearLayout
-                android:id="@+id/convAicha"
+            <TextView
+                android:id="@+id/tvEmptyChats"
                 android:layout_width="match_parent"
-                android:layout_height="98dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
+                android:layout_height="wrap_content"
+                android:text="💬 Aucune conversation\nCommencez à discuter depuis une annonce!"
+                android:textColor="#7FA68A"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
+                android:padding="32dp"
+                android:visibility="gone"/>
 
-                <!-- Avatar -->
-                <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:text="A"
-                        android:textColor="#FFFFFF"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:gravity="center"
-                        android:background="@drawable/bg_avatar_circle"/>
-
-                    <!-- Online dot -->
-                    <View
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_gravity="bottom|end"
-                        android:background="@drawable/bg_online_dot"/>
-
-                </FrameLayout>
-
-                <!-- Content -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-
-                    <!-- Name + timestamp -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Aicha's"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/poppins_semibold"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10:23"
-                            android:textColor="#7FA68A"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/poppins_regular"/>
-
-                    </LinearLayout>
-
-                    <!-- Last message -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="2dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="C'est encore disponible le tapis?"
-                            android:textColor="#FFFFFF"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/poppins_regular"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
-
-                        <!-- Unread badge -->
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:text="2"
-                            android:textColor="#0D1F17"
-                            android:textSize="10sp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:gravity="center"
-                            android:background="@drawable/bg_unread_badge"
-                            android:layout_marginStart="8dp"/>
-
-                    </LinearLayout>
-
-                    <!-- Ad chip -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="22dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:paddingHorizontal="8dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@drawable/bg_ad_chip">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="🛋️ Tapis tissé 2*3M"
-                            android:textColor="#2ECC71"
-                            android:textSize="10sp"
-                            android:fontFamily="@font/poppins_regular"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Conversation 2 — UNREAD -->
             <LinearLayout
-                android:id="@+id/convMohamed"
+                android:id="@+id/dynamicChatList"
                 android:layout_width="match_parent"
-                android:layout_height="98dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@drawable/bg_surface"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
-
-                <FrameLayout android:layout_width="50dp" android:layout_height="50dp">
-                    <TextView android:layout_width="50dp" android:layout_height="50dp"
-                        android:text="👤" android:textSize="22sp" android:gravity="center"
-                        android:background="@drawable/bg_avatar_circle"/>
-                    <View android:layout_width="12dp" android:layout_height="12dp"
-                        android:layout_gravity="bottom|end" android:background="@drawable/bg_online_dot"/>
-                </FrameLayout>
-
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical">
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:text="Mohamed B."
-                            android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="09:15" android:textColor="#7FA68A" android:textSize="11sp"
-                            android:fontFamily="@font/poppins_regular"/>
-                    </LinearLayout>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="2dp">
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:text="Je prends pour 1500, c'est bon?"
-                            android:textColor="#FFFFFF" android:textSize="12sp" android:fontFamily="@font/poppins_regular"
-                            android:maxLines="1" android:ellipsize="end"/>
-                        <TextView android:layout_width="20dp" android:layout_height="20dp"
-                            android:text="1" android:textColor="#0D1F17" android:textSize="10sp"
-                            android:fontFamily="@font/poppins_bold" android:gravity="center"
-                            android:background="@drawable/bg_unread_badge" android:layout_marginStart="8dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout android:layout_width="wrap_content" android:layout_height="22dp"
-                        android:gravity="center_vertical" android:paddingHorizontal="8dp"
-                        android:layout_marginTop="4dp" android:background="@drawable/bg_ad_chip">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="🛋️ Tapis tissé 2*3M" android:textColor="#2ECC71"
-                            android:textSize="10sp" android:fontFamily="@font/poppins_regular"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Conversation 3 — READ -->
-            <LinearLayout
-                android:id="@+id/convSara"
-                android:layout_width="match_parent"
-                android:layout_height="98dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@color/background"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
-
-                <FrameLayout android:layout_width="50dp" android:layout_height="50dp">
-                    <TextView android:layout_width="50dp" android:layout_height="50dp"
-                        android:text="👩" android:textSize="22sp" android:gravity="center"
-                        android:background="@drawable/bg_avatar_circle"/>
-                </FrameLayout>
-
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical">
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:text="Sara K."
-                            android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Hier" android:textColor="#7FA68A" android:textSize="11sp"
-                            android:fontFamily="@font/poppins_regular"/>
-                    </LinearLayout>
-
-                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:text="Vous: Prix négociable?" android:textColor="#7FA68A"
-                        android:textSize="12sp" android:fontFamily="@font/poppins_regular"
-                        android:maxLines="1" android:ellipsize="end" android:layout_marginTop="2dp"/>
-
-                    <LinearLayout android:layout_width="wrap_content" android:layout_height="22dp"
-                        android:gravity="center_vertical" android:paddingHorizontal="8dp"
-                        android:layout_marginTop="4dp" android:background="@drawable/bg_ad_chip">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="🪔 Lampe traditionnelle" android:textColor="#2ECC71"
-                            android:textSize="10sp" android:fontFamily="@font/poppins_regular"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Conversation 4 — READ -->
-            <LinearLayout
-                android:id="@+id/convKarim"
-                android:layout_width="match_parent"
-                android:layout_height="98dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@color/background"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
-
-                <FrameLayout android:layout_width="50dp" android:layout_height="50dp">
-                    <TextView android:layout_width="50dp" android:layout_height="50dp"
-                        android:text="🧑" android:textSize="22sp" android:gravity="center"
-                        android:background="@drawable/bg_avatar_circle"/>
-                </FrameLayout>
-
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical">
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:text="Karim A."
-                            android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Lundi" android:textColor="#7FA68A" android:textSize="11sp"
-                            android:fontFamily="@font/poppins_regular"/>
-                    </LinearLayout>
-
-                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:text="Vous: Disponible ce weekend!" android:textColor="#7FA68A"
-                        android:textSize="12sp" android:fontFamily="@font/poppins_regular"
-                        android:maxLines="1" android:ellipsize="end" android:layout_marginTop="2dp"/>
-
-                    <LinearLayout android:layout_width="wrap_content" android:layout_height="22dp"
-                        android:gravity="center_vertical" android:paddingHorizontal="8dp"
-                        android:layout_marginTop="4dp" android:background="@drawable/bg_ad_chip">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="🛋️ Tapis tissé 2*3M" android:textColor="#2ECC71"
-                            android:textSize="10sp" android:fontFamily="@font/poppins_regular"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="0.5dp" android:background="#1E3D2A"/>
-
-            <!-- Conversation 5 — READ -->
-            <LinearLayout
-                android:id="@+id/convFatima"
-                android:layout_width="match_parent"
-                android:layout_height="98dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp"
-                android:background="@color/background"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_green">
-
-                <FrameLayout android:layout_width="50dp" android:layout_height="50dp">
-                    <TextView android:layout_width="50dp" android:layout_height="50dp"
-                        android:text="👤" android:textSize="22sp" android:gravity="center"
-                        android:background="@drawable/bg_avatar_circle"/>
-                </FrameLayout>
-
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:gravity="center_vertical">
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:text="Fatima Z."
-                            android:textColor="#FFFFFF" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Dim" android:textColor="#7FA68A" android:textSize="11sp"
-                            android:fontFamily="@font/poppins_regular"/>
-                    </LinearLayout>
-
-                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:text="D'accord merci!" android:textColor="#7FA68A"
-                        android:textSize="12sp" android:fontFamily="@font/poppins_regular"
-                        android:maxLines="1" android:ellipsize="end" android:layout_marginTop="2dp"/>
-
-                    <LinearLayout android:layout_width="wrap_content" android:layout_height="22dp"
-                        android:gravity="center_vertical" android:paddingHorizontal="8dp"
-                        android:layout_marginTop="4dp" android:background="@drawable/bg_ad_chip">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="🪔 Lampe traditionnelle" android:textColor="#2ECC71"
-                            android:textSize="10sp" android:fontFamily="@font/poppins_regular"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

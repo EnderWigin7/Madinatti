@@ -16,18 +16,36 @@
         android:layout_height="match_parent">
 
        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#1E3D2A">
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
 
-           <TextView
-               android:id="@+id/tvEventImageEmoji"
+           <FrameLayout
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:textSize="52sp"/>
-        </FrameLayout>
+               android:background="#1E3D2A">
+
+               <ImageView
+                   android:id="@+id/ivEventImage"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:scaleType="centerCrop"
+                   android:visibility="gone"
+                   android:contentDescription="@string/app_name"/>
+
+               <TextView
+                   android:id="@+id/tvEventImageEmoji"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:textSize="52sp"/>
+           </FrameLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:background="@drawable/bg_event_image_fade"/>
+       </FrameLayout>
 
 
         <View
@@ -46,7 +64,6 @@
         android:paddingTop="12dp"
         android:paddingBottom="10dp">
 
-        <!-- Emoji + Title -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

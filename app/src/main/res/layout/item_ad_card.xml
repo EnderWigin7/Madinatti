@@ -16,6 +16,16 @@
         android:layout_height="110dp"
         android:background="#1E3D2A">
 
+        <!-- Real image from Cloudinary -->
+        <ImageView
+            android:id="@+id/ivAdImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:contentDescription="@string/app_name"/>
+
+        <!-- Fallback emoji when no image -->
         <TextView
             android:id="@+id/tvAdEmoji"
             android:layout_width="wrap_content"
