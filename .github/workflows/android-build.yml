@@ -37,3 +37,17 @@ jobs:
           name: Madinatti-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
+
+
+      - name: Update Latest Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Madinatti — Latest Build
+          body: |
+            🤖 Build automatique — toujours à jour avec le dernier code
+            📅 Mis à jour automatiquement à chaque modification
+          files: app/build/outputs/apk/debug/app-debug.apk
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

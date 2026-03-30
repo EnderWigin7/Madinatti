@@ -29,9 +29,6 @@
 
 
 
-        <activity
-            android:name=".LanguageActivity"
-            android:exported="false"/>
 
         <activity android:name=".AuthActivity" android:exported="false"/>
 

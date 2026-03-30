@@ -20,12 +20,15 @@ class SplashActivity : AppCompatActivity() {
         window.setDecorFitsSystemWindows(false)
 
         val prefs = getSharedPreferences("madinatti_prefs", MODE_PRIVATE)
+
+        // If already seen splash → go directly to Auth (skip splash + language)
         if (prefs.getBoolean("has_seen_splash", false)) {
             startActivity(Intent(this, AuthActivity::class.java))
             finish()
             return
         }
 
+        // First time only → show splash, then go to Auth (skip language)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -38,23 +41,30 @@ class SplashActivity : AppCompatActivity() {
             interpolator = LinearInterpolator()
             addUpdateListener { anim ->
                 val v = anim.animatedValue as Float
-                binding.imgBackground.translationX = (Math.sin(v.toDouble()) * 14).toFloat()
-                binding.imgBackground.translationY = (Math.sin(v.toDouble() * 0.7) * 9).toFloat()
+                binding.imgBackground.translationX =
+                    (Math.sin(v.toDouble()) * 14).toFloat()
+                binding.imgBackground.translationY =
+                    (Math.sin(v.toDouble() * 0.7) * 9).toFloat()
             }
         }.start()
 
-        // Fade in elements
-        listOf(binding.imgLogo, binding.tvAppName, binding.tvTagline, binding.btnCommencer).forEach {
-            it.alpha = 0f
-        }
+        listOf(
+            binding.imgLogo, binding.tvAppName,
+            binding.tvTagline, binding.btnCommencer
+        ).forEach { it.alpha = 0f }
         binding.btnCommencer.translationY = 40f
 
         AnimatorSet().apply {
-            play(ObjectAnimator.ofFloat(binding.imgLogo, "alpha", 0f, 1f).setDuration(700))
-            play(ObjectAnimator.ofFloat(binding.tvAppName, "alpha", 0f, 1f).setDuration(600)).after(300)
-            play(ObjectAnimator.ofFloat(binding.tvTagline, "alpha", 0f, 1f).setDuration(500)).after(500)
-            play(ObjectAnimator.ofFloat(binding.btnCommencer, "alpha", 0f, 1f).setDuration(500)).after(800)
-            play(ObjectAnimator.ofFloat(binding.btnCommencer, "translationY", 40f, 0f).apply {
+            play(ObjectAnimator.ofFloat(
+                binding.imgLogo, "alpha", 0f, 1f).setDuration(700))
+            play(ObjectAnimator.ofFloat(
+                binding.tvAppName, "alpha", 0f, 1f).setDuration(600)).after(300)
+            play(ObjectAnimator.ofFloat(
+                binding.tvTagline, "alpha", 0f, 1f).setDuration(500)).after(500)
+            play(ObjectAnimator.ofFloat(
+                binding.btnCommencer, "alpha", 0f, 1f).setDuration(500)).after(800)
+            play(ObjectAnimator.ofFloat(
+                binding.btnCommencer, "translationY", 40f, 0f).apply {
                 duration = 500
                 interpolator = OvershootInterpolator()
             }).after(800)
@@ -70,8 +80,15 @@ class SplashActivity : AppCompatActivity() {
                         .withEndAction {
                             it.animate().scaleX(1f).scaleY(1f).setDuration(100)
                                 .withEndAction {
-                                    startActivity(Intent(this, LanguageActivity::class.java))
-                                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                                    prefs.edit()
+                                        .putBoolean("has_seen_splash", true)
+                                        .putString("app_language", "fr")
+                                        .apply()
+                                    startActivity(Intent(
+                                        this, AuthActivity::class.java))
+                                    overridePendingTransition(
+                                        android.R.anim.fade_in,
+                                        android.R.anim.fade_out)
                                     finish()
                                 }.start()
                         }.start()

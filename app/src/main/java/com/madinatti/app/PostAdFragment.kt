@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 import java.net.HttpURLConnection
@@ -25,7 +24,6 @@ class PostAdFragment : Fragment() {
     private var existingImageUrls = mutableListOf<String>()
     private val selectedImageUris = mutableListOf<android.net.Uri>()
 
-    // Stores original createdAt for edit mode expiresAt recalculation
     private var originalCreatedAt: Timestamp? = null
 
     companion object {
@@ -63,8 +61,7 @@ class PostAdFragment : Fragment() {
         if (uris.isNotEmpty()) {
             val totalAllowed = 5 - existingImageUrls.size - selectedImageUris.size
             if (totalAllowed <= 0) {
-                Toast.makeText(requireContext(),
-                    "Maximum 5 photos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Maximum 5 photos", Toast.LENGTH_SHORT).show()
                 return@registerForActivityResult
             }
             selectedImageUris.addAll(uris.take(totalAllowed))
@@ -107,12 +104,8 @@ class PostAdFragment : Fragment() {
         val editAdId   = arguments?.getString("adId")
         val isEditMode = !editAdId.isNullOrEmpty()
 
-        // ──────────────────────────────────────────
-        // EDIT MODE SETUP
-        // ──────────────────────────────────────────
         if (isEditMode) {
-            view.findViewById<TextView>(R.id.tvScreenTitle)
-                ?.text = "Modifier l'annonce"
+            view.findViewById<TextView>(R.id.tvScreenTitle)?.text = "Modifier l'annonce"
             val publishLayout = view.findViewById<LinearLayout>(R.id.btnPublish)
             (publishLayout?.getChildAt(0) as? TextView)?.text = "Modifier"
 
@@ -120,12 +113,10 @@ class PostAdFragment : Fragment() {
                 .collection("ads").document(editAdId!!)
                 .get()
                 .addOnSuccessListener { doc ->
-                    if (!isAdded || doc == null || !doc.exists())
-                        return@addOnSuccessListener
+                    if (!isAdded || doc == null || !doc.exists()) return@addOnSuccessListener
 
                     etTitle?.setText(doc.getString("title") ?: "")
-                    etPrice?.setText(
-                        (doc.getDouble("price")?.toInt() ?: "").toString())
+                    etPrice?.setText((doc.getDouble("price")?.toInt() ?: "").toString())
                     etDescription?.setText(doc.getString("description") ?: "")
 
                     val cat = doc.getString("category")
@@ -142,7 +133,6 @@ class PostAdFragment : Fragment() {
                         tvCity?.setTextColor(android.graphics.Color.WHITE)
                     }
 
-                    // Store original createdAt for recalculating expiresAt
                     originalCreatedAt = doc.getTimestamp("createdAt")
 
                     val duration = doc.get("duration")?.let {
@@ -155,7 +145,6 @@ class PostAdFragment : Fragment() {
                     } ?: 30
                     etDuration?.setText(duration.toString())
 
-                    // Show expiry preview using Calendar (DST safe)
                     val createdAt = originalCreatedAt
                     if (createdAt != null) {
                         val cal = Calendar.getInstance().apply {
@@ -163,18 +152,15 @@ class PostAdFragment : Fragment() {
                             add(Calendar.DAY_OF_YEAR, duration)
                         }
                         tvExpiry?.text = "Expire le: ${
-                            SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE)
-                                .format(cal.time)
+                            SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(cal.time)
                         }"
                     }
 
-                    tvCharCount?.text =
-                        "${etDescription?.text?.length ?: 0}/500"
+                    tvCharCount?.text = "${etDescription?.text?.length ?: 0}/500"
 
                     existingImageUrls.clear()
                     existingImageUrls.addAll(
-                        (doc.get("imageUrls") as? List<*>)
-                            ?.mapNotNull { it?.toString() } ?: emptyList()
+                        (doc.get("imageUrls") as? List<*>)?.mapNotNull { it?.toString() } ?: emptyList()
                     )
                     showAllImages()
                 }
@@ -207,38 +193,24 @@ class PostAdFragment : Fragment() {
         }
 
         etDescription?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(
-                s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 tvCharCount?.text = "${s?.length ?: 0}/500"
             }
         })
 
-        // Duration watcher - uses Calendar for DST-safe date math
         etDuration?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(
-                s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val days = s?.toString()?.toIntOrNull()
                 if (days != null && days > 0) {
-                    // Edit mode: calculate from original createdAt
-                    // New mode: calculate from now
-                    val baseDate = if (isEditMode && originalCreatedAt != null)
-                        originalCreatedAt!!.toDate()
-                    else
-                        Date()
-
                     val cal = Calendar.getInstance().apply {
-                        time = baseDate
                         add(Calendar.DAY_OF_YEAR, days)
                     }
                     tvExpiry?.text = "Expire le: ${
-                        SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE)
-                            .format(cal.time)
+                        SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(cal.time)
                     }"
                 } else {
                     tvExpiry?.text = ""
@@ -248,30 +220,24 @@ class PostAdFragment : Fragment() {
 
         btnAddPhoto?.setOnClickListener {
             if (existingImageUrls.size + selectedImageUris.size >= 5) {
-                Toast.makeText(requireContext(),
-                    "Maximum 5 photos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Maximum 5 photos", Toast.LENGTH_SHORT).show()
             } else {
                 pickImages.launch("image/*")
             }
         }
 
-        // ──────────────────────────────────────────
-        // PUBLISH / MODIFY CLICK
-        // ──────────────────────────────────────────
         btnPublish?.setOnClickListener {
             val title       = etTitle?.text?.toString()?.trim() ?: ""
             val price       = etPrice?.text?.toString()?.trim() ?: ""
             val description = etDescription?.text?.toString()?.trim() ?: ""
             val durationStr = etDuration?.text?.toString()?.trim() ?: "30"
 
-            // ── Validations ──
             if (title.isEmpty()) {
                 etTitle?.error = "Titre requis"
                 return@setOnClickListener
             }
             if (selectedCategory == null) {
-                Toast.makeText(requireContext(),
-                    "Choisissez une catégorie", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Choisissez une catégorie", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (price.isEmpty()) {
@@ -279,8 +245,7 @@ class PostAdFragment : Fragment() {
                 return@setOnClickListener
             }
             if (selectedCity == null) {
-                Toast.makeText(requireContext(),
-                    "Choisissez une ville", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Choisissez une ville", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (description.isEmpty()) {
@@ -288,52 +253,35 @@ class PostAdFragment : Fragment() {
                 return@setOnClickListener
             }
             if (existingImageUrls.isEmpty() && selectedImageUris.isEmpty()) {
-                Toast.makeText(requireContext(),
-                    "📸 Au moins une photo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "📸 Au moins une photo", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null) {
-                Toast.makeText(requireContext(),
-                    "Connectez-vous", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Connectez-vous", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             btnPublish.isEnabled = false
-            showLoading(
-                if (isEditMode) "⏳ Modification..." else "⏳ Publication...")
+            showLoading(if (isEditMode) "⏳ Modification..." else "⏳ Publication...")
 
             val db       = FirebaseFirestore.getInstance()
             val priceVal = price.toDoubleOrNull() ?: 0.0
             val duration = durationStr.toIntOrNull() ?: 30
 
             if (isEditMode) {
-                // ──────────────────────────────────────────
-                // EDIT MODE
-                // Calculate expiresAt using Calendar (DST safe)
-                // Base = original createdAt, not now
-                // ──────────────────────────────────────────
-                val baseDate = if (originalCreatedAt != null)
-                    originalCreatedAt!!.toDate()
-                else
-                    Date()
-
+                val nowDate = Date()
                 val expiryCalendar = Calendar.getInstance().apply {
-                    time = baseDate
+                    time = nowDate
                     add(Calendar.DAY_OF_YEAR, duration)
-                    // Set to end of day so it doesn't expire mid-day
                     set(Calendar.HOUR_OF_DAY, 23)
                     set(Calendar.MINUTE, 59)
                     set(Calendar.SECOND, 59)
                 }
 
                 val newExpiresAt = Timestamp(expiryCalendar.time)
-
-                android.util.Log.d("PostAd",
-                    "Edit: createdAt=$baseDate" +
-                            " duration=$duration days" +
-                            " newExpiresAt=${expiryCalendar.time}")
+                val updatedAt    = Timestamp(nowDate)
 
                 val updateData = hashMapOf<String, Any>(
                     "title"       to title,
@@ -343,42 +291,33 @@ class PostAdFragment : Fragment() {
                     "city"        to selectedCity!!,
                     "emoji"       to (emojiMap[selectedCategory] ?: "📦"),
                     "duration"    to duration,
-                    "expiresAt"   to newExpiresAt  // ← Always recalculated
+                    "expiresAt"   to newExpiresAt,
+                    "updatedAt"   to updatedAt
                 )
 
                 if (selectedImageUris.isNotEmpty()) {
                     uploadToCloudinary(editAdId!!) { newUrls ->
-                        updateData["imageUrls"] = existingImageUrls + newUrls
+                        val allUrls: List<String> = existingImageUrls + newUrls
+                        updateData["imageUrls"] = allUrls
                         db.collection("ads").document(editAdId)
                             .update(updateData)
-                            .addOnSuccessListener {
-                                onPublishSuccess(
-                                    "✅ Annonce modifiée!", btnPublish)
-                            }
-                            .addOnFailureListener { e ->
-                                onPublishFailure(e, btnPublish)
-                            }
+                            .addOnSuccessListener { onPublishSuccess("✅ Annonce modifiée!", btnPublish) }
+                            .addOnFailureListener { e -> onPublishFailure(e, btnPublish) }
                     }
                 } else {
-                    updateData["imageUrls"] = existingImageUrls
+                    updateData["imageUrls"] = existingImageUrls.toList()
                     db.collection("ads").document(editAdId!!)
                         .update(updateData)
-                        .addOnSuccessListener {
-                            onPublishSuccess("✅ Annonce modifiée!", btnPublish)
-                        }
-                        .addOnFailureListener { e ->
-                            onPublishFailure(e, btnPublish)
-                        }
+                        .addOnSuccessListener { onPublishSuccess("✅ Annonce modifiée!", btnPublish) }
+                        .addOnFailureListener { e -> onPublishFailure(e, btnPublish) }
                 }
 
             } else {
-                // ──────────────────────────────────────────
-                // NEW AD
-                // Also use Calendar for DST safety
-                // ──────────────────────────────────────────
-                val adId    = db.collection("ads").document().id
-                val nowDate = Date()
+                // CREATE NEW AD
+                val newAdRef = db.collection("ads").document()
+                val adId = newAdRef.id
 
+                val nowDate = Date()
                 val expiryCalendar = Calendar.getInstance().apply {
                     time = nowDate
                     add(Calendar.DAY_OF_YEAR, duration)
@@ -387,242 +326,44 @@ class PostAdFragment : Fragment() {
                     set(Calendar.SECOND, 59)
                 }
 
-                val nowTimestamp      = Timestamp(nowDate)
-                val expiresAtTimestamp = Timestamp(expiryCalendar.time)
+                val adData = hashMapOf<String, Any>(
+                    "id"          to adId,
+                    "title"       to title,
+                    "description" to description,
+                    "price"       to priceVal,
+                    "category"    to selectedCategory!!,
+                    "city"        to selectedCity!!,
+                    "emoji"       to (emojiMap[selectedCategory] ?: "📦"),
+                    "userId"      to user.uid,
+                    "duration"    to duration,
+                    "createdAt"   to Timestamp(nowDate),
+                    "expiresAt"   to Timestamp(expiryCalendar.time),
+                    "status"      to "active"
+                )
 
-                android.util.Log.d("PostAd",
-                    "New ad: now=$nowDate" +
-                            " duration=$duration days" +
-                            " expiresAt=${expiryCalendar.time}")
-
-                uploadToCloudinary(adId) { imageUrls ->
-                    db.collection("ads").document(adId).set(
-                        hashMapOf(
-                            "id"          to adId,
-                            "userId"      to user.uid,
-                            "userName"    to (user.displayName ?: "Anonyme"),
-                            "title"       to title,
-                            "description" to description,
-                            "price"       to priceVal,
-                            "category"    to selectedCategory!!,
-                            "city"        to selectedCity!!,
-                            "imageUrls"   to imageUrls,
-                            "emoji"       to (emojiMap[selectedCategory] ?: "📦"),
-                            "status"      to "active",
-                            "views"       to 0,
-                            "createdAt"   to nowTimestamp,
-                            "expiresAt"   to expiresAtTimestamp,
-                            "duration"    to duration
-                        )
-                    ).addOnSuccessListener {
-                        db.collection("users").document(user.uid)
-                            .update("adsCount", FieldValue.increment(1))
-                        onPublishSuccess("✅ Annonce publiée!", btnPublish)
-                    }.addOnFailureListener { e ->
-                        onPublishFailure(e, btnPublish)
+                if (selectedImageUris.isNotEmpty()) {
+                    uploadToCloudinary(adId) { urls ->
+                        adData["imageUrls"] = urls
+                        newAdRef.set(adData)
+                            .addOnSuccessListener { onPublishSuccess("✅ Annonce publiée!", btnPublish) }
+                            .addOnFailureListener { e -> onPublishFailure(e, btnPublish) }
                     }
+                } else {
+                    adData["imageUrls"] = emptyList<String>()
+                    newAdRef.set(adData)
+                        .addOnSuccessListener { onPublishSuccess("✅ Annonce publiée!", btnPublish) }
+                        .addOnFailureListener { e -> onPublishFailure(e, btnPublish) }
                 }
             }
         }
-    }
+    } // ← CLOSES onViewCreated
 
-    private fun showLoading(msg: String) {
-        loadingDialog = android.app.AlertDialog.Builder(
-            requireContext(), R.style.AppAlertDialog
-        ).setView(LinearLayout(requireContext()).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = android.view.Gravity.CENTER
-            setPadding(64, 48, 64, 48)
-            setBackgroundResource(R.drawable.bg_bottom_sheet_glass)
-            addView(ProgressBar(requireContext()))
-            addView(TextView(requireContext()).apply {
-                text = msg
-                setTextColor(android.graphics.Color.WHITE)
-                textSize = 14f
-                gravity = android.view.Gravity.CENTER
-                setPadding(0, 24, 0, 0)
-            })
-        }).setCancelable(false).create()
-        loadingDialog?.show()
-    }
-
-    private fun onPublishSuccess(msg: String, btn: View) {
-        loadingDialog?.dismiss()
-        loadingDialog = null
-        btn.isEnabled = true
-        if (isAdded) {
-            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
-    }
-
-    private fun onPublishFailure(e: Exception, btn: View) {
-        loadingDialog?.dismiss()
-        loadingDialog = null
-        btn.isEnabled = true
-        if (isAdded) Toast.makeText(
-            requireContext(),
-            "❌ ${e.localizedMessage}",
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    private fun uploadToCloudinary(
-        adId: String,
-        onComplete: (List<String>) -> Unit
-    ) {
-        if (selectedImageUris.isEmpty()) {
-            onComplete(emptyList())
-            return
-        }
-
-        val urls   = Collections.synchronizedList(mutableListOf<String>())
-        val errors = Collections.synchronizedList(mutableListOf<Int>())
-        var completed = 0
-        val total     = selectedImageUris.size
-
-        val timeoutHandler = android.os.Handler(android.os.Looper.getMainLooper())
-        val timeoutRunnable = Runnable {
-            if (!isAdded) return@Runnable
-            loadingDialog?.dismiss()
-            loadingDialog = null
-            view?.findViewById<View>(R.id.btnPublish)?.isEnabled = true
-            Toast.makeText(
-                requireContext(),
-                "❌ Délai dépassé. Vérifiez votre connexion et réessayez.",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-        timeoutHandler.postDelayed(timeoutRunnable, 60_000L)
-
-        selectedImageUris.forEachIndexed { index, uri ->
-            Thread {
-                try {
-                    val bytes = requireContext().contentResolver
-                        .openInputStream(uri)?.readBytes()
-
-                    if (bytes == null || bytes.isEmpty()) {
-                        errors.add(index)
-                        checkIfDone(
-                            ++completed, total, urls, errors,
-                            timeoutHandler, timeoutRunnable, onComplete
-                        )
-                        return@Thread
-                    }
-
-                    val boundary = "----CB${System.currentTimeMillis()}"
-                    val conn = URL(
-                        "https://api.cloudinary.com/v1_1/" +
-                                "$CLOUDINARY_CLOUD/image/upload"
-                    ).openConnection() as HttpURLConnection
-
-                    conn.connectTimeout = 30_000
-                    conn.readTimeout    = 30_000
-                    conn.doOutput       = true
-                    conn.requestMethod  = "POST"
-                    conn.setRequestProperty(
-                        "Content-Type",
-                        "multipart/form-data; boundary=$boundary"
-                    )
-
-                    val out = conn.outputStream
-
-                    fun writePart(name: String, value: String) {
-                        out.write((
-                                "--$boundary\r\n" +
-                                        "Content-Disposition: form-data;" +
-                                        " name=\"$name\"\r\n\r\n$value\r\n"
-                                ).toByteArray())
-                    }
-
-                    writePart("upload_preset", CLOUDINARY_PRESET)
-                    writePart("folder", "ads/$adId")
-
-                    val fileHeader = "--$boundary\r\n" +
-                            "Content-Disposition: form-data;" +
-                            " name=\"file\";" +
-                            " filename=\"p$index.jpg\"\r\n" +
-                            "Content-Type: image/jpeg\r\n\r\n"
-                    out.write(fileHeader.toByteArray())
-                    out.write(bytes)
-                    out.write("\r\n".toByteArray())
-                    out.write("--$boundary--\r\n".toByteArray())
-                    out.flush()
-                    out.close()
-
-                    if (conn.responseCode == 200) {
-                        val url = JSONObject(
-                            conn.inputStream.bufferedReader().readText()
-                        ).getString("secure_url")
-                        urls.add(url)
-                        android.util.Log.d("Cloudinary",
-                            "Image $index uploaded: $url")
-                    } else {
-                        val err = conn.errorStream
-                            ?.bufferedReader()?.readText() ?: "Unknown"
-                        android.util.Log.e("Cloudinary",
-                            "Failed [${conn.responseCode}]: $err")
-                        errors.add(index)
-                    }
-
-                } catch (e: java.net.SocketTimeoutException) {
-                    android.util.Log.e("Cloudinary",
-                        "Timeout image $index")
-                    errors.add(index)
-                } catch (e: Exception) {
-                    android.util.Log.e("Cloudinary",
-                        "Error image $index: ${e.message}")
-                    errors.add(index)
-                } finally {
-                    checkIfDone(
-                        ++completed, total, urls, errors,
-                        timeoutHandler, timeoutRunnable, onComplete
-                    )
-                }
-            }.start()
-        }
-    }
-
-    private fun checkIfDone(
-        completed: Int, total: Int,
-        urls: List<String>, errors: List<Int>,
-        timeoutHandler: android.os.Handler,
-        timeoutRunnable: Runnable,
-        onComplete: (List<String>) -> Unit
-    ) {
-        if (completed < total) return
-        timeoutHandler.removeCallbacks(timeoutRunnable)
-
-        activity?.runOnUiThread {
-            if (!isAdded) return@runOnUiThread
-            when {
-                urls.isEmpty() -> {
-                    loadingDialog?.dismiss()
-                    loadingDialog = null
-                    view?.findViewById<View>(R.id.btnPublish)?.isEnabled = true
-                    Toast.makeText(
-                        requireContext(),
-                        "❌ Échec de l'upload. Vérifiez votre connexion.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                errors.isNotEmpty() -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "⚠️ ${errors.size} image(s) non uploadée(s)," +
-                                " publication avec ${urls.size} image(s)",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    onComplete(urls)
-                }
-                else -> onComplete(urls)
-            }
-        }
-    }
+    // ══════════════════════════════════════════════════════════════════
+    // HELPER FUNCTIONS - These are now at CLASS level (outside onViewCreated)
+    // ══════════════════════════════════════════════════════════════════
 
     private fun showAllImages() {
-        val container = view?.findViewById<LinearLayout>(R.id.photoContainer)
-            ?: return
+        val container = view?.findViewById<LinearLayout>(R.id.photoContainer) ?: return
         while (container.childCount > 1) container.removeViewAt(1)
         val dp = resources.displayMetrics.density
 
@@ -650,9 +391,7 @@ class PostAdFragment : Fragment() {
                 gravity = android.view.Gravity.CENTER
                 layoutParams = android.widget.FrameLayout.LayoutParams(
                     (24 * dp).toInt(), (24 * dp).toInt()
-                ).apply {
-                    gravity = android.view.Gravity.TOP or android.view.Gravity.END
-                }
+                ).apply { gravity = android.view.Gravity.TOP or android.view.Gravity.END }
                 setOnClickListener {
                     existingImageUrls.remove(url)
                     showAllImages()
@@ -687,9 +426,7 @@ class PostAdFragment : Fragment() {
                 gravity = android.view.Gravity.CENTER
                 layoutParams = android.widget.FrameLayout.LayoutParams(
                     (24 * dp).toInt(), (24 * dp).toInt()
-                ).apply {
-                    gravity = android.view.Gravity.TOP or android.view.Gravity.END
-                }
+                ).apply { gravity = android.view.Gravity.TOP or android.view.Gravity.END }
                 setOnClickListener {
                     selectedImageUris.remove(uri)
                     showAllImages()
@@ -701,8 +438,140 @@ class PostAdFragment : Fragment() {
         }
 
         container.getChildAt(0)?.visibility =
-            if (existingImageUrls.size + selectedImageUris.size >= 5)
-                View.GONE else View.VISIBLE
+            if (existingImageUrls.size + selectedImageUris.size >= 5) View.GONE else View.VISIBLE
+    }
+
+    private fun showLoading(msg: String) {
+        loadingDialog = android.app.AlertDialog.Builder(requireContext(), R.style.AppAlertDialog)
+            .setView(LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = android.view.Gravity.CENTER
+                setPadding(64, 48, 64, 48)
+                setBackgroundResource(R.drawable.bg_bottom_sheet_glass)
+                addView(ProgressBar(requireContext()))
+                addView(TextView(requireContext()).apply {
+                    text = msg
+                    setTextColor(android.graphics.Color.WHITE)
+                    textSize = 14f
+                    gravity = android.view.Gravity.CENTER
+                    setPadding(0, 24, 0, 0)
+                })
+            }).setCancelable(false).create()
+        loadingDialog?.show()
+    }
+
+    private fun onPublishSuccess(msg: String, btn: View) {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+        btn.isEnabled = true
+        if (isAdded) {
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    private fun onPublishFailure(e: Exception, btn: View) {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+        btn.isEnabled = true
+        if (isAdded) {
+            Toast.makeText(requireContext(), "❌ ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun uploadToCloudinary(adId: String, onComplete: (List<String>) -> Unit) {
+        if (selectedImageUris.isEmpty()) {
+            onComplete(emptyList())
+            return
+        }
+
+        val urls    = mutableListOf<String>()
+        val total   = selectedImageUris.size
+        var current = 0
+
+        val timeoutHandler = android.os.Handler(android.os.Looper.getMainLooper())
+        val timeoutRunnable = Runnable {
+            if (!isAdded) return@Runnable
+            loadingDialog?.dismiss()
+            loadingDialog = null
+            view?.findViewById<View>(R.id.btnPublish)?.isEnabled = true
+            Toast.makeText(requireContext(), "❌ Délai dépassé. Vérifiez votre connexion.", Toast.LENGTH_LONG).show()
+        }
+        timeoutHandler.postDelayed(timeoutRunnable, (total * 30_000L))
+
+        fun uploadNext() {
+            if (current >= total) {
+                timeoutHandler.removeCallbacks(timeoutRunnable)
+                activity?.runOnUiThread {
+                    if (!isAdded) return@runOnUiThread
+                    if (urls.isEmpty()) {
+                        loadingDialog?.dismiss()
+                        loadingDialog = null
+                        view?.findViewById<View>(R.id.btnPublish)?.isEnabled = true
+                        Toast.makeText(requireContext(), "❌ Échec de l'upload.", Toast.LENGTH_LONG).show()
+                    } else {
+                        if (urls.size < total) {
+                            Toast.makeText(requireContext(),
+                                "⚠️ ${total - urls.size} image(s) non uploadée(s)", Toast.LENGTH_SHORT).show()
+                        }
+                        onComplete(urls)
+                    }
+                }
+                return
+            }
+
+            val uri   = selectedImageUris[current]
+            val index = current
+            current++
+
+            Thread {
+                try {
+                    val bytes = requireContext().contentResolver.openInputStream(uri)?.readBytes()
+
+                    if (bytes == null || bytes.isEmpty()) {
+                        activity?.runOnUiThread { uploadNext() }
+                        return@Thread
+                    }
+
+                    val boundary = "----CB${System.currentTimeMillis()}"
+                    val conn = URL("https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD/image/upload")
+                        .openConnection() as HttpURLConnection
+
+                    conn.connectTimeout = 20_000
+                    conn.readTimeout    = 20_000
+                    conn.doOutput       = true
+                    conn.requestMethod  = "POST"
+                    conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
+
+                    val out = conn.outputStream
+
+                    fun writePart(name: String, value: String) {
+                        out.write(("--$boundary\r\nContent-Disposition: form-data; name=\"$name\"\r\n\r\n$value\r\n").toByteArray())
+                    }
+
+                    writePart("upload_preset", CLOUDINARY_PRESET)
+                    writePart("folder", "ads/$adId")
+
+                    val fileHeader = "--$boundary\r\nContent-Disposition: form-data; name=\"file\"; filename=\"p$index.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n"
+                    out.write(fileHeader.toByteArray())
+                    out.write(bytes)
+                    out.write("\r\n".toByteArray())
+                    out.write("--$boundary--\r\n".toByteArray())
+                    out.flush()
+                    out.close()
+
+                    if (conn.responseCode == 200) {
+                        val url = JSONObject(conn.inputStream.bufferedReader().readText()).getString("secure_url")
+                        urls.add(url)
+                    }
+                } catch (e: Exception) {
+                    android.util.Log.e("Cloudinary", "Error: ${e.message}")
+                }
+                activity?.runOnUiThread { uploadNext() }
+            }.start()
+        }
+
+        uploadNext()
     }
 
     private fun showPickerSheet(
@@ -710,17 +579,14 @@ class PostAdFragment : Fragment() {
         selected: String?, searchable: Boolean,
         onSelect: (String) -> Unit
     ) {
-        val dialog = BottomSheetDialog(
-            requireContext(), R.style.GlassBottomSheetDialog)
+        val dialog = BottomSheetDialog(requireContext(), R.style.GlassBottomSheetDialog)
         val root = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(0, 24, 0, 32)
             setBackgroundResource(R.drawable.bg_picker_dropdown)
         }
         root.addView(View(requireContext()).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                dpToPx(40), dpToPx(4)
-            ).apply {
+            layoutParams = LinearLayout.LayoutParams(dpToPx(40), dpToPx(4)).apply {
                 gravity = android.view.Gravity.CENTER_HORIZONTAL
                 bottomMargin = dpToPx(16)
             }
@@ -734,9 +600,7 @@ class PostAdFragment : Fragment() {
             setPadding(dpToPx(24), 0, dpToPx(24), dpToPx(12))
         })
         root.addView(View(requireContext()).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, 1
-            ).apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1).apply {
                 marginStart = dpToPx(24)
                 marginEnd   = dpToPx(24)
             }
@@ -766,18 +630,13 @@ class PostAdFragment : Fragment() {
                 }
             }
             sb.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?, st: Int, c: Int, a: Int) {}
-                override fun onTextChanged(
-                    s: CharSequence?, st: Int, b: Int, c: Int) {}
+                override fun beforeTextChanged(s: CharSequence?, st: Int, c: Int, a: Int) {}
+                override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
                 override fun afterTextChanged(s: Editable?) {
                     scrollContainer.removeAllViews()
                     val q = s?.toString()?.lowercase() ?: ""
                     items.filter { it.lowercase().contains(q) }.forEach {
-                        scrollContainer.addView(
-                            makePickerItem(it, it == selected) {
-                                onSelect(it); dialog.dismiss()
-                            })
+                        scrollContainer.addView(makePickerItem(it, it == selected) { onSelect(it); dialog.dismiss() })
                     }
                 }
             })
@@ -785,14 +644,10 @@ class PostAdFragment : Fragment() {
         }
 
         val sv = android.widget.ScrollView(requireContext()).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(280)
-            )
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(280))
         }
         items.forEach {
-            scrollContainer.addView(makePickerItem(it, it == selected) {
-                onSelect(it); dialog.dismiss()
-            })
+            scrollContainer.addView(makePickerItem(it, it == selected) { onSelect(it); dialog.dismiss() })
         }
         sv.addView(scrollContainer)
         root.addView(sv)
@@ -800,10 +655,7 @@ class PostAdFragment : Fragment() {
         dialog.show()
     }
 
-    private fun makePickerItem(
-        text: String, isSelected: Boolean,
-        onClick: () -> Unit
-    ): LinearLayout {
+    private fun makePickerItem(text: String, isSelected: Boolean, onClick: () -> Unit): LinearLayout {
         return LinearLayout(requireContext()).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = android.view.Gravity.CENTER_VERTICAL
@@ -811,25 +663,18 @@ class PostAdFragment : Fragment() {
             setOnClickListener { onClick() }
             isClickable = true
             isFocusable = true
-            val ta = context.obtainStyledAttributes(
-                intArrayOf(android.R.attr.selectableItemBackground))
+            val ta = context.obtainStyledAttributes(intArrayOf(android.R.attr.selectableItemBackground))
             foreground = ta.getDrawable(0)
             ta.recycle()
             addView(TextView(context).apply {
                 this.text = text
                 setTextColor(
-                    if (isSelected)
-                        android.graphics.Color.parseColor("#2ECC71")
-                    else
-                        android.graphics.Color.parseColor("#CCFFFFFF")
+                    if (isSelected) android.graphics.Color.parseColor("#2ECC71")
+                    else android.graphics.Color.parseColor("#CCFFFFFF")
                 )
                 textSize = 14f
-                typeface = resources.getFont(
-                    if (isSelected) R.font.poppins_semibold
-                    else R.font.poppins_regular
-                )
-                layoutParams = LinearLayout.LayoutParams(
-                    0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+                typeface = resources.getFont(if (isSelected) R.font.poppins_semibold else R.font.poppins_regular)
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             })
             if (isSelected) addView(TextView(context).apply {
                 this.text = "✓"
@@ -839,8 +684,7 @@ class PostAdFragment : Fragment() {
         }
     }
 
-    private fun dpToPx(dp: Int): Int =
-        (dp * resources.displayMetrics.density).toInt()
+    private fun dpToPx(dp: Int): Int = (dp * resources.displayMetrics.density).toInt()
 
     override fun onDestroyView() {
         loadingDialog?.dismiss()

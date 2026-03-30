@@ -143,10 +143,8 @@ class AdDetailBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-        // ── Expiry (real-time listener) ──
         loadAdExpiry(adId, view)
 
-        // ── Bookmark ──
         val ivSave = view.findViewById<ImageView>(R.id.ivSaveAd)
         val currentUid = auth.currentUser?.uid
 
@@ -297,10 +295,6 @@ class AdDetailBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    // ─────────────────────────────────────────────
-    // EXPIRY - real-time listener so it updates
-    // immediately if ad is edited while sheet is open
-    // ─────────────────────────────────────────────
     private fun loadAdExpiry(adId: String, view: View) {
         if (adId.isEmpty()) {
             view.findViewById<TextView>(R.id.tvAdExpiry)?.visibility = View.GONE
@@ -319,7 +313,6 @@ class AdDetailBottomSheet : BottomSheetDialogFragment() {
                     return@addSnapshotListener
                 }
 
-                // ── Sold check ──
                 val status = doc.getString("status") ?: "active"
                 if (status == "vendue") {
                     tvSoldBadge?.visibility = View.VISIBLE
@@ -581,4 +574,26 @@ class AdDetailBottomSheet : BottomSheetDialogFragment() {
     }
 
     override fun getTheme(): Int = R.style.GlassBottomSheetDialog
+
+    private fun loadAdDates(adId: String, view: View) {
+        if (adId.isEmpty()) return
+
+        db.collection("ads").document(adId).get()
+            .addOnSuccessListener { doc ->
+                if (!isAdded || doc == null) return@addOnSuccessListener
+
+                val tvDate = view.findViewById<TextView>(R.id.tvAdLocation)
+
+                val createdAt  = doc.getTimestamp("createdAt")
+                val updatedAt  = doc.getTimestamp("updatedAt")
+
+                val sdf = java.text.SimpleDateFormat(
+                    "dd/MM/yyyy", java.util.Locale.FRANCE)
+
+                if (updatedAt != null) {
+                    view.findViewById<TextView>(R.id.tvAdExpiry)?.let { tv ->
+                    }
+                }
+            }
+    }
 }
