@@ -57,7 +57,6 @@ class SocialLoginDialog : DialogFragment() {
             .setInterpolator(OvershootInterpolator(1.1f))
             .start()
 
-        // Apple — not supported yet
         binding.btnApple.setOnClickListener {
             animateRow(it) {
                 Toast.makeText(requireContext(), "🍎 Apple Sign-In — bientôt disponible", Toast.LENGTH_SHORT).show()

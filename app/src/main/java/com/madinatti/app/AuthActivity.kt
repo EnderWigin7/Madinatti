@@ -33,8 +33,16 @@ class AuthActivity : AppCompatActivity() {
             val account = task.getResult(ApiException::class.java)!!
             firebaseAuthWithGoogle(account.idToken!!)
         } catch (e: ApiException) {
-            Toast.makeText(this,
-                "❌ Google Sign-In échoué", Toast.LENGTH_SHORT).show()
+            android.util.Log.e("GoogleSignIn", "Error code: ${e.statusCode}, Message: ${e.message}")
+
+            val errorMessage = when (e.statusCode) {
+                7 -> "❌ Erreur réseau. Vérifiez votre connexion internet."
+                10 -> "❌ Configuration Google invalide (SHA-1 manquant). Contactez le support."
+                12501 -> "❌ Connexion annulée par l'utilisateur."
+                12502 -> "❌ Connexion en cours... Réessayez."
+                else -> "❌ Google Sign-In échoué (code: ${e.statusCode})"
+            }
+            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         }
     }
 

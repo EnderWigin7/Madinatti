@@ -283,7 +283,7 @@ class PostAdFragment : Fragment() {
                 val newExpiresAt = Timestamp(expiryCalendar.time)
                 val updatedAt    = Timestamp(nowDate)
 
-                val updateData = hashMapOf<String, Any>(
+                val updateData = mutableMapOf<String, Any?>(
                     "title"       to title,
                     "description" to description,
                     "price"       to priceVal,
