@@ -47,6 +47,11 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
+      - name: Check APK signing certificate SHA-1
+        run: |
+              cd app/build/outputs/apk/debug/
+              keytool -printcert -jarfile app-debug.apk | grep SHA1
+
       - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
