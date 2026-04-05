@@ -32,7 +32,6 @@ class EvenementsFragment : Fragment() {
         loadEvents(rv, tvCount)
     }
 
-    // Refresh when coming back from FavoritesFragment
     override fun onResume() {
         super.onResume()
         val rv = view?.findViewById<RecyclerView>(R.id.rvEvents) ?: return
@@ -48,8 +47,8 @@ class EvenementsFragment : Fragment() {
             .getSharedPreferences("madinatti_prefs", 0)
             .getString("selected_city", null)
 
+        // Remove orderBy to avoid index/type issues
         db.collection("events")
-            .orderBy("date", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { result ->
                 if (!isAdded) return@addOnSuccessListener
@@ -60,6 +59,7 @@ class EvenementsFragment : Fragment() {
                     val docCity = doc.getString("city") ?: ""
                     if (city != null &&
                         city != "Toutes les villes" &&
+                        docCity.isNotEmpty() &&
                         docCity != city) continue
 
                     events.add(EventItem(
@@ -81,6 +81,8 @@ class EvenementsFragment : Fragment() {
                         imageUrl = doc.getString("imageUrl") ?: ""
                     ))
                 }
+                
+                events.sortBy { it.date }
 
                 tvCount?.text = if (events.isNotEmpty())
                     "${events.size} à venir" else "0 événement"
@@ -96,9 +98,10 @@ class EvenementsFragment : Fragment() {
                     }
                 )
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
                 if (!isAdded) return@addOnFailureListener
-                tvCount?.text = "0 événement"
+                android.util.Log.e("Events", "Failed: ${e.message}")
+                tvCount?.text = "Erreur de chargement"
                 rv.adapter = EventCardAdapter(emptyList(), {}, { _, _ -> })
             }
     }
@@ -111,13 +114,11 @@ class EvenementsFragment : Fragment() {
             .collection("interested")
             .document(uid)
 
-        // Sync with savedEvents so FavoritesFragment sees changes
         val savedEventRef = db.collection("users")
             .document(uid)
             .collection("savedEvents")
             .document(event.docId)
 
-        // Use event.isInterested which is already toggled by the adapter
         if (!event.isInterested) {
             interestedRef.delete()
             savedEventRef.delete()
