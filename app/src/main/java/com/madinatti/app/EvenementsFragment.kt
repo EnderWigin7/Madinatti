@@ -81,7 +81,7 @@ class EvenementsFragment : Fragment() {
                         imageUrl = doc.getString("imageUrl") ?: ""
                     ))
                 }
-                
+
                 events.sortBy { it.date }
 
                 tvCount?.text = if (events.isNotEmpty())
